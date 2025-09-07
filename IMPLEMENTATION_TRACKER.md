@@ -1,6 +1,12 @@
-# Echo-Roots Implementation Tracker
+# Echo-Roots Implementation ### ✅ **T4: Storage Interfaces & DuckDB** - Complete
+**Status**: ✅ Done (2025-01-21)  
+**Documentation**: [T4_COMPLETE.md](T4_COMPLETE.md)  
+**Files**: 4 created, 1 updated, 5 tests passing  
+**Summary**: Hybrid storage architecture with DuckDB core, protocol-based interfaces, migration system, repository patterns
 
-## Task Overview (T0-T12)
+### 🔄 **T5: Ingestion Pipeline** - Next
+**Status**: 📋 Ready to start  
+**Dependencies**: T1, T2, T3, T4 complete Task Overview (T0-T12)
 
 ### ✅ **T0: SCAFFOLD** - Complete
 **Status**: ✅ Done (2025-09-07)  
@@ -8,33 +14,35 @@
 **Files**: 25 created, 2 modified  
 **Summary**: Project structure, packaging, CLI framework, development environment  
 
-### 🔄 **T1: Core Data Models** - Next
+### ✅ **T1: Core Data Models** - Complete
+**Status**: ✅ Done (2025-09-07)  
+**Documentation**: [T1_COMPLETE.md](T1_COMPLETE.md)  
+**Files**: 4 created, 152 tests passing  
+**Summary**: Pydantic v2 models for IngestionItem, ExtractionResult, Category, Attribute, SemanticTerm, DomainPack
+
+### ✅ **T2: Domain Adapter & Configuration** - Complete
+**Status**: ✅ Done (2025-09-07)  
+**Documentation**: [T2_COMPLETE.md](T2_COMPLETE.md)  
+**Files**: 4 created, 97 tests passing  
+**Summary**: Domain pack loading, field mapping, schema merging, YAML configuration system
+
+### ✅ **T3: LLM Extraction Pipeline** - Complete
+**Status**: ✅ Done (2025-09-07)  
+**Documentation**: [T3_COMPLETE.md](T3_COMPLETE.md)  
+**Files**: 3 created, 13 tests passing  
+**Summary**: LLM-based extraction with OpenAI integration, validation, and quality scoring
+
+### � **T4: Storage Interfaces & DuckDB** - Next
 **Status**: 📋 Ready to start  
-**Dependencies**: T0 complete  
-**Files to create**:
-- `src/echo_roots/models/core.py` - IngestionItem, ExtractionResult, ElevationProposal, Mapping
-- `src/echo_roots/models/taxonomy.py` - Category, Attribute, SemanticTerm
-- `src/echo_roots/models/domain.py` - DomainPack for YAML parsing
-- `tests/test_models/test_core.py` - Core model validation tests
-- `tests/test_models/test_taxonomy.py` - Taxonomy model tests
-- `tests/test_models/test_domain.py` - Domain pack tests
-
-### 📋 **T2: Domain Adapter & Configuration** - Pending
-**Status**: ⏳ Waiting for T1  
-**Files to create**:
-- `src/echo_roots/domain/adapter.py` - Domain field mapping
-- `src/echo_roots/domain/loader.py` - YAML domain pack loading
-- `src/echo_roots/domain/merger.py` - Schema merging utilities
-
-### 📋 **T3: Storage Interfaces & DuckDB** - Pending  
-**Status**: ⏳ Waiting for T1  
+**Dependencies**: T1, T2, T3 complete  
 **Files to create**:
 - `src/echo_roots/storage/interfaces.py` - Abstract storage interfaces
 - `src/echo_roots/storage/duckdb_backend.py` - Core DuckDB implementation
-- `src/echo_roots/storage/migrations.py` - Schema versioning
+- `src/echo_roots/storage/migrations.py` - Schema versioning and setup
+- `src/echo_roots/storage/repository.py` - High-level repository patterns
 
-### 📋 **T4: Ingestion Pipeline** - Pending
-**Status**: ⏳ Waiting for T2,T3  
+### 📋 **T5: Ingestion Pipeline** - Pending
+**Status**: ⏳ Waiting for T4  
 
 ### 📋 **T5: LLM Processing Pipeline** - Pending
 **Status**: ⏳ Waiting for T2,T3  
