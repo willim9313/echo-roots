@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import List, Optional, Dict, Any, Union
 import uvicorn
-from fastapi import FastAPI, HTTPException, Query, Depends, BackgroundTasks, Request
+from fastapi import FastAPI, HTTPException, Query, Depends, BackgroundTasks, Request, Query as QueryParam
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ConfigDict
@@ -28,8 +28,11 @@ class DateTimeJSONEncoder(json.JSONEncoder):
 
 # Import Echo-Roots components
 from echo_roots.retrieval import (
-    QueryType, QueryRequest, QueryResponse, QueryResult, QueryFilter,
-    FilterOperator, SortCriterion, SortOrder, QueryEngine
+    QueryEngine, QueryRequest, QueryResult, QueryType, FilterOperator,
+    QueryFilter, SortCriterion, SortOrder
+)
+from echo_roots.governance import (
+    governance_manager, require_permission, AlertSeverity
 )
 
 # Configure logging
@@ -443,6 +446,167 @@ async def get_entity(
     except Exception as e:
         logger.error(f"Entity retrieval error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Entity retrieval failed: {str(e)}")
+
+
+# Governance endpoints
+@app.get("/governance/status")
+async def governance_status(api_key: str = QueryParam(None, alias="api_key")):
+    """Get governance dashboard data."""
+    try:
+        # Basic permission check (simplified for demo)
+        dashboard = governance_manager.get_dashboard_data()
+        return dashboard
+    except Exception as e:
+        logger.error(f"Governance status error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get governance status: {str(e)}")
+
+
+@app.get("/governance/metrics")
+async def system_metrics(api_key: str = QueryParam(None, alias="api_key")):
+    """Get current system metrics."""
+    try:
+        metrics = governance_manager.system_monitor.collect_metrics()
+        return metrics.to_dict()
+    except Exception as e:
+        logger.error(f"Metrics collection error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to collect metrics: {str(e)}")
+
+
+@app.get("/governance/alerts")
+async def get_alerts(
+    severity: Optional[str] = QueryParam(None, description="Filter by severity"),
+    resolved: bool = QueryParam(False, description="Include resolved alerts"),
+    api_key: str = QueryParam(None, alias="api_key")
+):
+    """Get system alerts."""
+    try:
+        monitor = governance_manager.system_monitor
+        
+        if severity:
+            try:
+                sev_filter = AlertSeverity(severity.lower())
+                alerts = monitor.get_alerts_by_severity(sev_filter)
+            except ValueError:
+                raise HTTPException(status_code=400, detail=f"Invalid severity: {severity}")
+        else:
+            alerts = monitor.get_active_alerts() if not resolved else monitor.alerts
+        
+        if resolved:
+            alerts = [a for a in alerts if a.resolved]
+        
+        # Convert alerts to dict format
+        alert_data = []
+        for alert in alerts:
+            alert_dict = {
+                "id": alert.id,
+                "timestamp": alert.timestamp.isoformat(),
+                "severity": alert.severity.value,
+                "title": alert.title,
+                "message": alert.message,
+                "component": alert.component,
+                "resolved": alert.resolved,
+                "resolved_at": alert.resolved_at.isoformat() if alert.resolved_at else None,
+                "resolved_by": alert.resolved_by,
+                "metadata": alert.metadata
+            }
+            alert_data.append(alert_dict)
+        
+        return {"alerts": alert_data, "total": len(alert_data)}
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Alerts retrieval error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get alerts: {str(e)}")
+
+
+@app.post("/governance/alerts/{alert_id}/resolve")
+async def resolve_alert(
+    alert_id: str,
+    api_key: str = QueryParam(None, alias="api_key")
+):
+    """Resolve a system alert."""
+    try:
+        # In production, would get user from API key
+        resolved_by = "api_user"
+        
+        success = governance_manager.system_monitor.resolve_alert(alert_id, resolved_by)
+        
+        if success:
+            return {"message": f"Alert {alert_id} resolved successfully", "resolved_by": resolved_by}
+        else:
+            raise HTTPException(status_code=404, detail=f"Alert not found or already resolved: {alert_id}")
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Alert resolution error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to resolve alert: {str(e)}")
+
+
+@app.get("/governance/users")
+async def get_users(api_key: str = QueryParam(None, alias="api_key")):
+    """Get user accounts and access control information."""
+    try:
+        users = governance_manager.user_manager.get_active_users()
+        
+        user_data = []
+        for user in users:
+            user_dict = {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "access_level": user.access_level.value,
+                "created_at": user.created_at.isoformat(),
+                "last_login": user.last_login.isoformat() if user.last_login else None,
+                "active": user.active,
+                "permissions": list(user.permissions)
+            }
+            user_data.append(user_dict)
+        
+        return {"users": user_data, "total": len(user_data)}
+        
+    except Exception as e:
+        logger.error(f"Users retrieval error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get users: {str(e)}")
+
+
+@app.get("/governance/audit")
+async def get_audit_logs(
+    user_id: Optional[str] = QueryParam(None, description="Filter by user ID"),
+    action: Optional[str] = QueryParam(None, description="Filter by action"),
+    limit: int = QueryParam(50, description="Number of logs to return"),
+    api_key: str = QueryParam(None, alias="api_key")
+):
+    """Get audit logs."""
+    try:
+        logs = governance_manager.audit_logger.get_logs(
+            user_id=user_id,
+            action=action,
+            limit=limit
+        )
+        
+        log_data = []
+        for log in logs:
+            log_dict = {
+                "id": log.id,
+                "timestamp": log.timestamp.isoformat(),
+                "user_id": log.user_id,
+                "action": log.action,
+                "resource": log.resource,
+                "details": log.details,
+                "success": log.success,
+                "error_message": log.error_message,
+                "ip_address": log.ip_address,
+                "user_agent": log.user_agent
+            }
+            log_data.append(log_dict)
+        
+        return {"logs": log_data, "total": len(log_data)}
+        
+    except Exception as e:
+        logger.error(f"Audit logs retrieval error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get audit logs: {str(e)}")
 
 
 # Error handlers

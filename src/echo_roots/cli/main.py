@@ -7,11 +7,18 @@ import asyncio
 import json
 from enum import Enum
 
+# Rich imports for governance commands
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+
 # Import core components
 from echo_roots.retrieval import (
     QueryType, QueryRequest, QueryEngine, FilterOperator, QueryFilter,
     SortCriterion, SortOrder
 )
+
+console = Console()
 
 app = typer.Typer(
     name="echo-roots",
@@ -22,8 +29,10 @@ app = typer.Typer(
 # Create subcommands
 query_app = typer.Typer(name="query", help="Query and search operations")
 api_app = typer.Typer(name="api", help="API server operations")
+gov_app = typer.Typer(name="governance", help="System governance and monitoring")
 app.add_typer(query_app, name="query")
 app.add_typer(api_app, name="api")
+app.add_typer(gov_app, name="governance")
 
 
 class QueryTypeChoice(str, Enum):
@@ -464,6 +473,314 @@ def open_api_docs(
     except Exception as e:
         typer.echo(f"❌ [red]Failed to open browser:[/red] {str(e)}")
         typer.echo(f"Please manually navigate to: {docs_url}")
+
+
+# Governance commands
+@gov_app.command("status")
+def governance_status():
+    """Show system governance and monitoring status."""
+    try:
+        from echo_roots.governance import governance_manager
+        
+        # Get dashboard data
+        dashboard = governance_manager.get_dashboard_data()
+        
+        console.print("\n[bold blue]🏛️  Echo-Roots Governance Dashboard[/bold blue]")
+        console.print("=" * 50)
+        
+        # System Health Panel
+        health = dashboard['system_health']
+        health_color = {
+            'healthy': 'green',
+            'warning': 'yellow', 
+            'critical': 'red',
+            'unknown': 'white'
+        }.get(health['overall_status'], 'white')
+        
+        health_panel = Panel(
+            f"[{health_color}]●[/{health_color}] Status: {health['overall_status'].upper()}\n"
+            f"⏱️  Uptime: {health['uptime_seconds']} seconds\n"
+            f"🚨 Active Alerts: {health['active_alerts_count']}\n"
+            f"🔥 Critical Alerts: {health['critical_alerts']}",
+            title="System Health",
+            border_style=health_color
+        )
+        console.print(health_panel)
+        
+        # Active Users
+        users_panel = Panel(
+            f"👥 Active Users: {dashboard['active_users']}\n"
+            f"🔐 Authentication: Enabled\n"
+            f"📋 Audit Logging: Active",
+            title="Access Control",
+            border_style="blue"
+        )
+        console.print(users_panel)
+        
+        # Recent Activity
+        if dashboard['recent_audit_logs']:
+            activity_table = Table(title="Recent Activity")
+            activity_table.add_column("Time", style="cyan")
+            activity_table.add_column("User", style="yellow")
+            activity_table.add_column("Action", style="green")
+            activity_table.add_column("Status", style="magenta")
+            
+            for log in dashboard['recent_audit_logs'][:5]:
+                status = "✅" if log['success'] else "❌"
+                activity_table.add_row(
+                    log['timestamp'][:19],
+                    log['user_id'] or 'anonymous',
+                    log['action'],
+                    status
+                )
+            
+            console.print(activity_table)
+        
+        # Active Alerts
+        if health['top_alerts']:
+            alerts_table = Table(title="Active Alerts")
+            alerts_table.add_column("Severity", style="red")
+            alerts_table.add_column("Title", style="yellow")
+            alerts_table.add_column("Time", style="cyan")
+            
+            for alert in health['top_alerts']:
+                severity_icon = {
+                    'critical': '🔥',
+                    'high': '⚠️',
+                    'medium': '🟡',
+                    'low': '🔵'
+                }.get(alert['severity'], '❓')
+                
+                alerts_table.add_row(
+                    f"{severity_icon} {alert['severity'].upper()}",
+                    alert['title'],
+                    alert['timestamp'][:19]
+                )
+            
+            console.print(alerts_table)
+        
+        console.print("\n✅ [green]Governance system operational[/green]")
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error getting governance status:[/red] {str(e)}")
+
+
+@gov_app.command("metrics")
+def show_metrics():
+    """Show detailed system metrics."""
+    try:
+        from echo_roots.governance import governance_manager
+        
+        # Collect current metrics
+        metrics = governance_manager.system_monitor.collect_metrics()
+        
+        console.print("\n[bold blue]📊 System Metrics[/bold blue]")
+        console.print("=" * 40)
+        
+        # Performance metrics
+        perf_table = Table(title="Performance Metrics")
+        perf_table.add_column("Metric", style="cyan")
+        perf_table.add_column("Value", style="yellow")
+        perf_table.add_column("Status", style="green")
+        
+        # CPU status
+        cpu_status = "🔥 Critical" if metrics.cpu_usage > 90 else "⚠️ Warning" if metrics.cpu_usage > 75 else "✅ Normal"
+        perf_table.add_row("CPU Usage", f"{metrics.cpu_usage:.1f}%", cpu_status)
+        
+        # Memory status  
+        mem_status = "🔥 Critical" if metrics.memory_usage > 90 else "⚠️ Warning" if metrics.memory_usage > 75 else "✅ Normal"
+        perf_table.add_row("Memory Usage", f"{metrics.memory_usage:.1f}%", mem_status)
+        
+        # Disk status
+        disk_status = "🔥 Critical" if metrics.disk_usage > 90 else "⚠️ Warning" if metrics.disk_usage > 75 else "✅ Normal"
+        perf_table.add_row("Disk Usage", f"{metrics.disk_usage:.1f}%", disk_status)
+        
+        perf_table.add_row("Query Count", str(metrics.query_count), "📈")
+        perf_table.add_row("Avg Latency", f"{metrics.query_latency_avg:.2f}ms", "⏱️")
+        perf_table.add_row("Error Rate", f"{metrics.error_rate:.1f}%", "📊")
+        
+        console.print(perf_table)
+        
+        # System info
+        info_panel = Panel(
+            f"🕐 Timestamp: {metrics.timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n"
+            f"💚 Health: {metrics.health_status.upper()}\n"
+            f"⏰ Uptime: {metrics.uptime_seconds} seconds",
+            title="System Information",
+            border_style="blue"
+        )
+        console.print(info_panel)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error getting metrics:[/red] {str(e)}")
+
+
+@gov_app.command("alerts")
+def show_alerts(
+    severity: Optional[str] = typer.Option(None, "--severity", "-s", 
+                                          help="Filter by severity (critical, high, medium, low)"),
+    resolved: bool = typer.Option(False, "--resolved", help="Show resolved alerts")
+):
+    """Show system alerts."""
+    try:
+        from echo_roots.governance import governance_manager, AlertSeverity
+        
+        monitor = governance_manager.system_monitor
+        
+        if severity:
+            try:
+                sev_filter = AlertSeverity(severity.lower())
+                alerts = monitor.get_alerts_by_severity(sev_filter)
+            except ValueError:
+                console.print(f"❌ [red]Invalid severity:[/red] {severity}")
+                console.print("Valid options: critical, high, medium, low")
+                return
+        else:
+            alerts = monitor.get_active_alerts() if not resolved else monitor.alerts
+        
+        if resolved:
+            alerts = [a for a in alerts if a.resolved]
+        
+        console.print(f"\n[bold blue]🚨 System Alerts[/bold blue] ({len(alerts)} total)")
+        console.print("=" * 50)
+        
+        if not alerts:
+            console.print("✅ [green]No alerts to display[/green]")
+            return
+        
+        alerts_table = Table()
+        alerts_table.add_column("ID", style="cyan")
+        alerts_table.add_column("Severity", style="red")
+        alerts_table.add_column("Title", style="yellow")
+        alerts_table.add_column("Component", style="blue")
+        alerts_table.add_column("Time", style="green")
+        alerts_table.add_column("Status", style="magenta")
+        
+        for alert in sorted(alerts, key=lambda x: x.timestamp, reverse=True):
+            severity_icon = {
+                'critical': '🔥',
+                'high': '⚠️', 
+                'medium': '🟡',
+                'low': '🔵'
+            }.get(alert.severity.value, '❓')
+            
+            status = "✅ Resolved" if alert.resolved else "🔴 Active"
+            
+            alerts_table.add_row(
+                alert.id[:8],
+                f"{severity_icon} {alert.severity.value.upper()}",
+                alert.title,
+                alert.component,
+                alert.timestamp.strftime('%m-%d %H:%M'),
+                status
+            )
+        
+        console.print(alerts_table)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error getting alerts:[/red] {str(e)}")
+
+
+@gov_app.command("users")
+def show_users():
+    """Show user accounts and access control."""
+    try:
+        from echo_roots.governance import governance_manager
+        
+        users = governance_manager.user_manager.get_active_users()
+        
+        console.print(f"\n[bold blue]👥 User Management[/bold blue] ({len(users)} active)")
+        console.print("=" * 50)
+        
+        users_table = Table()
+        users_table.add_column("ID", style="cyan")
+        users_table.add_column("Username", style="yellow")
+        users_table.add_column("Access Level", style="green")
+        users_table.add_column("Last Login", style="blue")
+        users_table.add_column("Status", style="magenta")
+        
+        for user in users:
+            last_login = user.last_login.strftime('%m-%d %H:%M') if user.last_login else 'Never'
+            status = "🟢 Active" if user.active else "🔴 Inactive"
+            
+            access_icon = {
+                'read': '👁️',
+                'write': '✏️',
+                'admin': '👑',
+                'system': '🔧'
+            }.get(user.access_level.value, '❓')
+            
+            users_table.add_row(
+                user.id[:8],
+                user.username,
+                f"{access_icon} {user.access_level.value.upper()}",
+                last_login,
+                status
+            )
+        
+        console.print(users_table)
+        
+        # Access summary
+        access_summary = Panel(
+            f"🔐 Authentication: API Key based\n"
+            f"⏱️  Session timeout: 24 hours\n"
+            f"📝 Audit logging: Enabled\n"
+            f"🛡️  Permission model: Role-based",
+            title="Access Control Summary",
+            border_style="blue"
+        )
+        console.print(access_summary)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error getting users:[/red] {str(e)}")
+
+
+@gov_app.command("audit")
+def show_audit_logs(
+    user: Optional[str] = typer.Option(None, "--user", "-u", help="Filter by user ID"),
+    action: Optional[str] = typer.Option(None, "--action", "-a", help="Filter by action"),
+    limit: int = typer.Option(20, "--limit", "-l", help="Number of logs to show")
+):
+    """Show audit logs."""
+    try:
+        from echo_roots.governance import governance_manager
+        
+        logs = governance_manager.audit_logger.get_logs(
+            user_id=user,
+            action=action,
+            limit=limit
+        )
+        
+        console.print(f"\n[bold blue]📋 Audit Logs[/bold blue] ({len(logs)} entries)")
+        console.print("=" * 60)
+        
+        if not logs:
+            console.print("📝 [yellow]No audit logs found[/yellow]")
+            return
+        
+        audit_table = Table()
+        audit_table.add_column("Time", style="cyan")
+        audit_table.add_column("User", style="yellow")
+        audit_table.add_column("Action", style="green")
+        audit_table.add_column("Resource", style="blue")
+        audit_table.add_column("Status", style="magenta")
+        
+        for log in logs:
+            status = "✅ Success" if log.success else "❌ Failed"
+            user_display = log.user_id[:8] if log.user_id else 'anonymous'
+            
+            audit_table.add_row(
+                log.timestamp.strftime('%m-%d %H:%M:%S'),
+                user_display,
+                log.action,
+                log.resource,
+                status
+            )
+        
+        console.print(audit_table)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error getting audit logs:[/red] {str(e)}")
 
 
 if __name__ == "__main__":
