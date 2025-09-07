@@ -14,9 +14,20 @@ Key models:
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from uuid import uuid4
+from enum import Enum
 
 from pydantic import BaseModel, Field, field_validator, model_validator
 from pydantic.types import UUID4
+
+
+class ProcessingStatus(str, Enum):
+    """Status of item processing through the ingestion pipeline."""
+    
+    PENDING = "pending"
+    PROCESSING = "processing"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    SKIPPED = "skipped"
 
 
 class IngestionItem(BaseModel):
