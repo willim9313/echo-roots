@@ -1,10 +1,17 @@
 # Technology Stack
 
+## Core Environment
+- **Python 3.13+**: Modern Python with enhanced error messages and performance
+- **UV Package Manager**: Fast, modern dependency management
+- **Pydantic v2**: Type-safe data validation and serialization
+- **FastAPI**: High-performance REST API framework
+- **Typer**: Modern CLI framework with rich output
+
 ## Principles
 - Support Chinese + English (simplified & traditional).
 - Avoid rigid ontology; prefer property graphs + controlled vocab.
 - Python-first for pipelines and APIs.
-- Maintain raw + normalized data in parallel .
+- Maintain raw + normalized data in parallel.
 
 ## Storage & Graph
 - **Neo4j**: core graph (A & C).
@@ -16,13 +23,22 @@
   - Acts as the staging layer before data flows into graph/vector stores.
 - Optional: OpenSearch/ES for keyword search .
 
-## Models
-- **Embeddings**: Gemma (main), multilingual-e5 (backup).
-- **LLM Hosting**: vLLM (local), Gemini API (cloud).
-- **Framework**: LlamaIndex (segmentation, extraction, clustering).
-- **Utilities**: tiktoken (token budgeting), DeepEval (evaluation) .
+## Models & AI
+- **Embeddings**: sentence-transformers (multilingual support)
+- **LLM Integration**: OpenAI API (GPT-4/3.5-turbo)
+- **Framework**: Custom semantic enrichment engine
+- **Utilities**: tiktoken (token budgeting), DeepEval (evaluation)
 
-## Services
-- Query APIs: GraphQL/REST (`/taxonomy`, `/attributes`, `/semantic`).
-- Governance UI: review candidates, merges, rollbacks.
-- Export: CSV/Parquet/JSONL snapshots .
+## Development & Quality
+- **Testing**: pytest with comprehensive coverage
+- **Linting**: Ruff (fast Python linter and formatter)
+- **Type Checking**: MyPy with strict configuration
+- **CI/CD**: GitHub Actions with automated testing
+- **Pre-commit**: Quality gates before commits
+
+## Services & Interfaces
+- **REST API**: FastAPI with comprehensive endpoints (`/query`, `/search`, `/governance`)
+- **CLI Interface**: Typer-based commands with rich formatting
+- **Governance System**: User management, audit logging, system monitoring
+- **Documentation**: Auto-generated API docs and interactive knowledge base
+- **Export**: Multiple formats (JSON, CSV, Parquet) with datetime handling

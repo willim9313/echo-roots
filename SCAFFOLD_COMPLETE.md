@@ -42,12 +42,14 @@ echo-roots/
 - ✅ **Python 3.13+ virtual environment** configured
 - ✅ **UV package manager** installed and working
 - ✅ **Development dependencies** installed:
-  - pytest + coverage
+  - pytest + coverage + extensions
   - ruff (linting + formatting)  
   - mypy (type checking)
   - pre-commit hooks
   - typer (CLI framework)
-- ✅ **CI/CD pipeline** configured for multi-Python testing
+  - fastapi + uvicorn (API server)
+  - psutil (system monitoring)
+- ✅ **CI/CD pipeline** configured for Python 3.13
 
 ### Package Configuration
 - ✅ **Pydantic v2** as core data modeling framework

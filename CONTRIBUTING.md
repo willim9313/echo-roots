@@ -19,8 +19,8 @@ To keep contributions consistent and usable by Copilot/coding agents, please fol
 
 ## 2. Code Style
 
-* **Python 3.11+** required.
-* Follow **PEP8** with [Black](https://github.com/psf/black) for auto-formatting.
+* **Python 3.13+** required.
+* Follow **PEP8** with [Ruff](https://github.com/astral-sh/ruff) for linting and formatting.
 * Use **type hints** and **docstrings**:
 
   ```python

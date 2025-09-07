@@ -4,23 +4,21 @@ build-backend = "hatchling.build"
 
 [project]
 name = "echo-roots"
-version = "0.1.0"
+version = "1.0.0"
 description = "Practical framework for taxonomy construction, attribute normalization, and semantic enrichment"
 readme = "README.md"
 license = {file = "LICENSE.md"}
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 authors = [
     {name = "Echo-Roots Contributors"},
 ]
 keywords = ["taxonomy", "nlp", "knowledge-graph", "e-commerce", "normalization"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
@@ -57,7 +55,9 @@ dependencies = [
     # Utilities
     "httpx>=0.25.0",
     "python-dateutil>=2.8.0",
-    "pathlib2>=2.3.0; python_version < '3.11'",
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "psutil>=5.9.0",
 ]
 
 [project.optional-dependencies]
@@ -77,6 +77,9 @@ dev = [
     "pytest-cov>=4.1.0",
     "pytest-asyncio>=0.21.0",
     "pytest-mock>=3.11.0",
+    "pytest-repeat>=0.9.0",
+    "pytest-rerunfailures>=12.0",
+    "pytest-xdist>=3.8.0",
     "ruff>=0.1.0",
     "mypy>=1.7.0",
     "black>=23.0.0",
@@ -118,7 +121,7 @@ include = [
 
 # Ruff configuration
 [tool.ruff]
-target-version = "py310"
+target-version = "py313"
 line-length = 88
 select = [
     "E",   # pycodestyle errors
@@ -151,7 +154,7 @@ known-first-party = ["echo_roots"]
 
 # MyPy configuration
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.13"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true

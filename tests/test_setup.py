@@ -6,7 +6,7 @@ from pathlib import Path
 
 def test_python_version():
     """Test that we're running on a supported Python version."""
-    assert sys.version_info >= (3, 10), "Python 3.10+ required"
+    assert sys.version_info >= (3, 13), "Python 3.13+ required"
 
 
 def test_project_structure():
@@ -29,7 +29,8 @@ def test_package_import():
     """Test that the package can be imported."""
     try:
         import echo_roots
-        assert echo_roots.__version__ == "0.1.0"
+        assert echo_roots.__version__ == "1.0.0"
+        assert echo_roots.__python_requires__ == ">=3.13"
     except ImportError as e:
         # Expected to fail until we create the core models
         assert "echo_roots.models.core" in str(e)

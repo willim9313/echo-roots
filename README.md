@@ -2,6 +2,12 @@
 
 This project(EchoRoots) provides a practical framework for **taxonomy construction, attribute normalization, and semantic enrichment** in domains like e-commerce, media, and knowledge graphs.
 
+## Requirements
+
+- **Python 3.13+** 
+- **UV package manager** (recommended) or pip
+- **Git** for version control
+
 ## Quick Start
 
 ### 1. Setup Development Environment
