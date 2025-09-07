@@ -1,0 +1,14 @@
+# Treat all files as text by default and normalize line endings to LF
+* text=auto eol=lf
+
+# Ensure Markdown and docs diff nicely
+*.md diff=markdown
+
+# Treat JSON/CSV as text
+*.json text
+*.csv text
+
+# Large binary files (prevent diff)
+*.parquet binary
+*.db binary
+*.duckdb binary

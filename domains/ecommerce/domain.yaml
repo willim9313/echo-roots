@@ -1,0 +1,116 @@
+# domains/ecommerce/domain.yaml
+# Single-File Domain Pack (SFP) — minimal, copy-paste-ready
+
+# (A) 基本資訊
+domain: "ecommerce"
+taxonomy_version: "2025.09"
+
+# (B) 輸入欄位映射：把來源資料的不同欄位對齊到核心鍵
+# 任一命中即映射成功；缺漏者使用內建預設（例如 language=auto）
+input_mapping:
+  title: ["title", "name", "product_name"]
+  description: ["description", "desc", "long_description"]
+  language: ["lang", "language"]
+  source_uri: ["url", "link", "product_url"]
+  collected_at: ["ts", "collected_at", "timestamp"]
+  # 其他可原樣透傳到 raw_attributes（不必在這裡列出）
+
+# (C) 輸出結構（核心固定 + 可選屬性）
+# 核心欄位遵循 docs/Data-Schema.md；attributes 由各 domain 自訂
+output_schema:
+  core_item:
+    id: "str"                      # 若缺失，系統可用 (title + uri) 生成穩定 hash
+    title: "str"
+    description: "str|null"
+    language: "str"                # e.g., "en", "zh-TW"
+    source:
+      uri: "str"
+      collected_at: "datetime"
+    metadata: "dict"
+  attributes:
+    - key: brand
+      type: categorical
+    - key: color
+      type: categorical
+    - key: material
+      type: text
+    - key: model
+      type: text
+    - key: size
+      type: text
+
+# 可選：屬性提示（供 LLM 參考；不影響核心 schema 驗證）
+attribute_hints:
+  brand:
+    examples: ["Apple", "Samsung", "Nike"]
+    notes: "Prefer official manufacturer; avoid seller/store names."
+  color:
+    normalize_to_lower: true
+    allow_values: ["black","white","gray","silver","gold","blue","red","green","yellow","pink","purple","brown","beige","orange"]
+  size:
+    notes: "Keep original label (S/M/L, US 10, 42 EU); do not convert numerically unless confident."
+  material:
+    examples: ["cotton","leather","plastic","steel","aluminum","glass","wool"]
+
+# (D) 規則與簡易正規化
+rules:
+  normalize_map:
+    "t shirt": "T-Shirt"
+    "cellphone": "mobile phone"
+    "smart phone": "smartphone"
+  blocked_terms: ["NSFW", "counterfeit"]
+  # 可選：值層級的簡單映射（先小後大）
+  value_maps:
+    color:
+      "grey": "gray"
+      "silver grey": "silver"
+    brand:
+      "apple inc.": "Apple"
+
+# (E) Prompts（領域覆蓋；未提供時走內建 fallback）
+prompts:
+  attribute_extraction: |
+    You are a domain-aware attribute extractor for the "{{DOMAIN}}" domain.
+    Taxonomy version: {{TAXONOMY_VERSION}}
+
+    Goal:
+    - Extract the following attributes if present (otherwise omit): {{OUTPUT_KEYS_JSON}}.
+    - Use hints when helpful: {{ATTRIBUTE_HINTS}}.
+
+    Rules:
+    - Prefer controlled values if obvious (e.g., normalized color list).
+    - Return concise evidence (short phrase) for each extracted attribute.
+    - Keep original casing in raw text where relevant; output normalized values when applicable.
+    - If uncertain, skip rather than hallucinate.
+
+    Output JSON keys (strict):
+      - item_id (string)
+      - attributes: array of { name, value, evidence }
+      - terms: array of { term, context, confidence }
+      - metadata: { model, run_id, extracted_at }
+
+    Return one JSON object only.
+
+  taxonomy_extraction: |
+    You classify an e-commerce item into a taxonomy path suitable for "{{DOMAIN}}".
+    Constraints:
+    - Be conservative: prefer higher-level categories if leaf is uncertain.
+    - Provide "path": array of strings from root to chosen node (e.g., ["Electronics","Mobile Phones"]).
+    - Provide "confidence" (0.0-1.0) and a short "rationale".
+    - If insufficient info, return a short path with lower depth.
+
+    Return JSON only:
+      { "item_id": "...", "path": ["...","..."], "confidence": 0.0, "rationale": "..." }
+
+# (F) 評測（可選，最小化配置）
+evaluation:
+  metrics:
+    - name: taxonomy_path_accuracy
+      params: { level: 3 }
+    - name: attribute_value_normalized_rate
+
+# (G) 執行時選項（可選）
+runtime:
+  language_default: "auto"
+  dedupe_by: ["title","source.uri"]   # 對齊/去重鍵
+  skip_if_missing: ["title"]          # 缺少即跳過
