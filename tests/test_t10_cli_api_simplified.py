@@ -29,6 +29,16 @@ mock_query_engine.get_suggestions = AsyncMock(return_value=[
 mock_query_engine.get_entity_by_id = AsyncMock(return_value={
     "id": "test_1", "name": "Test Entity", "type": "concept"
 })
+mock_query_engine.get_performance_metrics = AsyncMock(return_value={
+    "total_queries": 100,
+    "success_rate": 0.95,
+    "average_execution_time_ms": 25.0
+})
+mock_query_engine.get_supported_query_types = Mock(return_value=[
+    Mock(value="exact"),
+    Mock(value="fuzzy"),
+    Mock(value="semantic")
+])
 
 
 class TestCLIInterface:
@@ -68,24 +78,33 @@ class TestAPIInterface:
     
     def setup_method(self):
         """Set up test fixtures."""
-        from echo_roots.cli.api_server import app
-        self.client = TestClient(app)
-    
-    @patch('echo_roots.cli.api_server.get_query_engine')
-    def test_health_endpoint(self, mock_get_engine):
-        """Test health endpoint."""
-        mock_get_engine.return_value = mock_query_engine
+        from echo_roots.cli.api_server import app, get_query_engine
         
+        # Override the dependency to return our mock
+        def get_mock_query_engine():
+            return mock_query_engine
+            
+        app.dependency_overrides[get_query_engine] = get_mock_query_engine
+        self.client = TestClient(app)
+        
+    def teardown_method(self):
+        """Clean up after test."""
+        from echo_roots.cli.api_server import app
+        app.dependency_overrides.clear()
+    
+    def test_health_endpoint(self, ):
+        """Test health endpoint."""
         response = self.client.get("/health")
+        # Print the response for debugging
+        if response.status_code != 200:
+            print(f"Response status: {response.status_code}")
+            print(f"Response text: {response.text}")
         assert response.status_code == 200
         data = response.json()
         assert "status" in data
     
-    @patch('echo_roots.cli.api_server.get_query_engine')
-    def test_search_endpoint_basic(self, mock_get_engine):
+    def test_search_endpoint_basic(self):
         """Test basic search endpoint."""
-        mock_get_engine.return_value = mock_query_engine
-        
         response = self.client.get("/search?q=test")
         # The endpoint may return 500 due to initialization issues
         # but we're testing that it doesn't crash on JSON serialization
@@ -98,14 +117,12 @@ class TestAPIInterface:
         except json.JSONDecodeError:
             pytest.fail("Response is not valid JSON")
     
-    @patch('echo_roots.cli.api_server.get_query_engine')
-    def test_query_endpoint_basic(self, mock_get_engine):
+    def test_query_endpoint_basic(self):
         """Test basic query endpoint."""
-        mock_get_engine.return_value = mock_query_engine
         
         query_data = {
             "query": "test query",
-            "search_type": "exact",
+            "query_type": "exact",
             "limit": 10
         }
         
@@ -127,8 +144,19 @@ class TestAPIErrorHandling:
     
     def setup_method(self):
         """Set up test fixtures."""
-        from echo_roots.cli.api_server import app
+        from echo_roots.cli.api_server import app, get_query_engine
+        
+        # Override the dependency to return our mock
+        def get_mock_query_engine():
+            return mock_query_engine
+            
+        app.dependency_overrides[get_query_engine] = get_mock_query_engine
         self.client = TestClient(app)
+        
+    def teardown_method(self):
+        """Clean up after test."""
+        from echo_roots.cli.api_server import app
+        app.dependency_overrides.clear()
     
     def test_404_endpoint(self):
         """Test 404 error handling."""
@@ -142,11 +170,8 @@ class TestAPIErrorHandling:
         except json.JSONDecodeError:
             pytest.fail("404 response is not valid JSON")
     
-    @patch('echo_roots.cli.api_server.get_query_engine')
-    def test_validation_error_handling(self, mock_get_engine):
+    def test_validation_error_handling(self):
         """Test validation error handling."""
-        mock_get_engine.return_value = mock_query_engine
-        
         # Send invalid query data
         response = self.client.post("/query", json={"invalid": "data"})
         assert response.status_code == 422

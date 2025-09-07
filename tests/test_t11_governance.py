@@ -3,7 +3,9 @@
 import pytest
 import asyncio
 import json
+import tempfile
 from datetime import datetime, timedelta
+from pathlib import Path
 from unittest.mock import Mock, patch, MagicMock
 from fastapi.testclient import TestClient
 
@@ -154,7 +156,16 @@ class TestAuditLogger:
     
     def setup_method(self):
         """Set up test fixtures."""
-        self.audit_logger = AuditLogger()
+        # Use a temporary file for testing to avoid pollution between tests
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.log')
+        temp_file.close()
+        self.audit_logger = AuditLogger(Path(temp_file.name))
+        
+    def teardown_method(self):
+        """Clean up after tests."""
+        # Clean up the temporary log file
+        if self.audit_logger.log_file.exists():
+            self.audit_logger.log_file.unlink()
     
     def test_log_action(self):
         """Test logging user actions."""

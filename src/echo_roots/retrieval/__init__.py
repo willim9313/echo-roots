@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
 from enum import Enum
 from typing import Dict, List, Optional, Any, Set, Tuple, Union, AsyncGenerator, Callable
 import logging
@@ -520,7 +520,7 @@ class ExactMatchProcessor(QueryProcessor):
     
     async def process_query(self, request: QueryRequest) -> QueryResponse:
         """Process exact match query."""
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         errors = await self.validate_query(request)
         
         if errors:
@@ -559,7 +559,7 @@ class ExactMatchProcessor(QueryProcessor):
                 exact_results = self._apply_sorting(exact_results, request.sort_criteria)
             
             # Calculate execution time
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             return QueryResponse(
                 query_id=request.query_id,
@@ -571,7 +571,7 @@ class ExactMatchProcessor(QueryProcessor):
             
         except Exception as e:
             logger.error(f"Error processing exact match query {request.query_id}: {e}")
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             return QueryResponse(
                 query_id=request.query_id,
@@ -641,7 +641,7 @@ class FuzzySearchProcessor(QueryProcessor):
     
     async def process_query(self, request: QueryRequest) -> QueryResponse:
         """Process fuzzy search query."""
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         errors = await self.validate_query(request)
         
         if errors:
@@ -685,7 +685,7 @@ class FuzzySearchProcessor(QueryProcessor):
             final_results = fuzzy_results[:request.limit]
             
             # Calculate execution time
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             return QueryResponse(
                 query_id=request.query_id,
@@ -697,7 +697,7 @@ class FuzzySearchProcessor(QueryProcessor):
             
         except Exception as e:
             logger.error(f"Error processing fuzzy search query {request.query_id}: {e}")
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             return QueryResponse(
                 query_id=request.query_id,
@@ -792,7 +792,7 @@ class SemanticSearchProcessor(QueryProcessor):
     
     async def process_query(self, request: QueryRequest) -> QueryResponse:
         """Process semantic search query."""
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         errors = await self.validate_query(request)
         
         if errors:
@@ -842,7 +842,7 @@ class SemanticSearchProcessor(QueryProcessor):
             final_results = semantic_results[:request.limit]
             
             # Calculate execution time
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             return QueryResponse(
                 query_id=request.query_id,
@@ -854,7 +854,7 @@ class SemanticSearchProcessor(QueryProcessor):
             
         except Exception as e:
             logger.error(f"Error processing semantic search query {request.query_id}: {e}")
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             return QueryResponse(
                 query_id=request.query_id,
@@ -932,7 +932,7 @@ class QueryEngine:
     
     async def process_query(self, request: QueryRequest) -> QueryResponse:
         """Process a query request using the appropriate processor."""
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         
         try:
             # Optimize query
@@ -971,7 +971,7 @@ class QueryEngine:
             
         except Exception as e:
             logger.error(f"Error in query engine for request {request.query_id}: {e}")
-            execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+            execution_time = (datetime.now(UTC) - start_time).total_seconds() * 1000
             
             error_response = QueryResponse(
                 query_id=request.query_id,

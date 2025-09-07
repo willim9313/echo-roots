@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
 from enum import Enum
 from typing import Dict, List, Optional, Any, Set, Tuple, Union, Callable
 import numpy as np
@@ -411,7 +411,7 @@ class SemanticSearchEngine:
         context: Optional[SearchContext] = None
     ) -> Tuple[List[SemanticSearchResult], SearchMetrics]:
         """Perform semantic search with specified strategy."""
-        start_time = datetime.utcnow()
+        start_time = datetime.now(UTC)
         
         if not config:
             config = SearchConfiguration()
@@ -420,7 +420,7 @@ class SemanticSearchEngine:
         cache_key = self._generate_cache_key(query, config)
         if config.enable_caching and cache_key in self.search_cache:
             cached_result, cached_time = self.search_cache[cache_key]
-            if (datetime.utcnow() - cached_time).seconds < config.cache_ttl_seconds:
+            if (datetime.now(UTC) - cached_time).seconds < config.cache_ttl_seconds:
                 metrics = SearchMetrics(
                     query_time_ms=0.0,
                     total_candidates=len(cached_result),
@@ -439,14 +439,14 @@ class SemanticSearchEngine:
         final_results = [result for result, factors in ranked_results[:config.max_results]]
         
         # Update metrics
-        end_time = datetime.utcnow()
+        end_time = datetime.now(UTC)
         metrics.query_time_ms = (end_time - start_time).total_seconds() * 1000
         metrics.final_results = len(final_results)
         metrics.ranking_used = config.ranking
         
         # Cache results
         if config.enable_caching:
-            self.search_cache[cache_key] = (final_results, datetime.utcnow())
+            self.search_cache[cache_key] = (final_results, datetime.now(UTC))
         
         # Update search context
         if context:

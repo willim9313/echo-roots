@@ -8,7 +8,7 @@ Provides HTTP endpoints for query, search, and system operations.
 import asyncio
 import logging
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import List, Optional, Dict, Any, Union
 import uvicorn
 from fastapi import FastAPI, HTTPException, Query, Depends, BackgroundTasks, Request, Query as QueryParam
@@ -286,7 +286,7 @@ async def execute_query(
             )
         
         # Generate unique query ID
-        query_id = f"api-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{hash(str(request.dict()))}"
+        query_id = f"api-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}-{hash(str(request.model_dump()))}"
         
         # Convert filters and sorts
         filters = [convert_api_filter_to_query_filter(f) for f in request.filters]
@@ -412,7 +412,7 @@ async def get_query_metrics(engine: QueryEngine = Depends(get_query_engine)):
     return {
         "query_metrics": metrics,
         "supported_query_types": [qt.value for qt in engine.get_supported_query_types()],
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(UTC).isoformat()
     }
 
 

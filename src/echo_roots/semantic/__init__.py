@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
 from enum import Enum
 from typing import Dict, List, Optional, Any, Set, Tuple, Union, AsyncGenerator
 import numpy as np
@@ -612,7 +612,7 @@ class ConceptExtractor:
         
         # Create concept
         concept = SemanticConcept(
-            concept_id=f"concept_{cluster_id}_{datetime.utcnow().timestamp()}",
+            concept_id=f"concept_{cluster_id}_{datetime.now(UTC).timestamp()}",
             concept_name=concept_name,
             concept_type=concept_type,
             description=f"Semantic concept derived from {len(cluster_entities)} related entities",
@@ -708,7 +708,7 @@ class SemanticEnrichmentEngine:
             
             # Create embedding record
             embedding = SemanticEmbedding(
-                embedding_id=f"emb_{entity_id}_{datetime.utcnow().timestamp()}",
+                embedding_id=f"emb_{entity_id}_{datetime.now(UTC).timestamp()}",
                 entity_id=entity_id,
                 entity_type=entity_type,
                 embedding_vector=embedding_vector,
@@ -718,7 +718,7 @@ class SemanticEnrichmentEngine:
                 metadata={
                     "source_text": entity_text,
                     "cleaned_text": cleaned_text,
-                    "processing_timestamp": datetime.utcnow().isoformat()
+                    "processing_timestamp": datetime.now(UTC).isoformat()
                 }
             )
             
@@ -727,7 +727,7 @@ class SemanticEnrichmentEngine:
             
             # Create enrichment task for relationship extraction
             rel_task = EnrichmentTask(
-                task_id=f"rel_task_{entity_id}_{datetime.utcnow().timestamp()}",
+                task_id=f"rel_task_{entity_id}_{datetime.now(UTC).timestamp()}",
                 entity_id=entity_id,
                 entity_type=entity_type,
                 task_type="relationship",
@@ -951,7 +951,7 @@ class SemanticEnrichmentEngine:
             total_embeddings=0,
             total_relationships=0,
             total_concepts=0,
-            last_updated=datetime.utcnow()
+            last_updated=datetime.now(UTC)
         )
         
         return stats

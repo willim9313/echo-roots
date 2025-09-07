@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
 from enum import Enum
 from typing import Dict, List, Optional, Any, Set, Tuple, Union, Generator
 import logging
@@ -228,7 +228,7 @@ class KnowledgeGraphBuilder:
             if current_node == target_node:
                 # Found path
                 return GraphPath(
-                    path_id=f"path_{len(path_nodes)}_{datetime.utcnow().timestamp()}",
+                    path_id=f"path_{len(path_nodes)}_{datetime.now(UTC).timestamp()}",
                     nodes=path_nodes,
                     edges=path_edges,
                     total_weight=total_weight,
@@ -923,7 +923,7 @@ class SemanticIntegrator:
         configuration: Dict[str, Any] = None
     ) -> str:
         """Create a new integration task."""
-        task_id = f"integration_{integration_type.value}_{datetime.utcnow().timestamp()}"
+        task_id = f"integration_{integration_type.value}_{datetime.now(UTC).timestamp()}"
         
         task = IntegrationTask(
             task_id=task_id,
@@ -943,7 +943,7 @@ class SemanticIntegrator:
         
         task = self.integration_tasks[task_id]
         task.status = "running"
-        task.started_at = datetime.utcnow()
+        task.started_at = datetime.now(UTC)
         
         try:
             if task.integration_type == IntegrationType.TAXONOMY_ENRICHMENT:
@@ -955,7 +955,7 @@ class SemanticIntegrator:
             # Add other integration types as needed
             
             task.status = "completed"
-            task.completed_at = datetime.utcnow()
+            task.completed_at = datetime.now(UTC)
             task.progress = 1.0
             return True
             

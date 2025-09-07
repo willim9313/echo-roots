@@ -5,7 +5,7 @@ from typing import Dict, List, Optional, Set, Tuple, Any, DefaultDict
 from collections import defaultdict, deque
 import logging
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 from .manager import (
     VocabularyTerm, VocabularyType, VocabularyRepository, 
@@ -752,7 +752,7 @@ class VocabularyAnalyzer:
         
         # Recommend removing unused terms
         unused_terms = [t for t in terms if t.usage_count == 0 and 
-                       (datetime.utcnow() - t.created_at).days > 90]
+                       (datetime.now(UTC) - t.created_at).days > 90]
         
         if unused_terms:
             recommendation = VocabularyRecommendation(

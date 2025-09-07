@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
 from enum import Enum
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 import re
@@ -557,7 +557,7 @@ class VocabularyManager:
     
     async def get_vocabulary_stats(self, force_refresh: bool = False) -> VocabularyStats:
         """Get vocabulary statistics."""
-        if not force_refresh and self._stats_cache and self._cache_expiry and datetime.utcnow() < self._cache_expiry:
+        if not force_refresh and self._stats_cache and self._cache_expiry and datetime.now(UTC) < self._cache_expiry:
             return self._stats_cache
         
         stats = VocabularyStats()
@@ -590,7 +590,7 @@ class VocabularyManager:
         
         # Cache stats
         self._stats_cache = stats
-        self._cache_expiry = datetime.utcnow().replace(hour=datetime.utcnow().hour + 1)  # Cache for 1 hour
+        self._cache_expiry = datetime.now(UTC).replace(hour=datetime.now(UTC).hour + 1)  # Cache for 1 hour
         
         return stats
     
