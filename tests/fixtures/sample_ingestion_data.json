@@ -1,0 +1,63 @@
+[
+  {
+    "item_id": "ecom-001",
+    "title": "Apple iPhone 15 Pro Max",
+    "description": "The most advanced iPhone with titanium design, A17 Pro chip, and professional camera system",
+    "raw_category": "Electronics > Smartphones",
+    "raw_attributes": {
+      "brand": "Apple",
+      "model": "iPhone 15 Pro Max",
+      "color": "Natural Titanium",
+      "storage": "256GB",
+      "price": 1199.99,
+      "condition": "new"
+    },
+    "source": "ecommerce-api",
+    "language": "en",
+    "metadata": {
+      "collected_at": "2025-09-07T09:00:00Z",
+      "source_url": "https://example.com/iphone-15-pro-max"
+    }
+  },
+  {
+    "item_id": "ecom-002", 
+    "title": "Samsung Galaxy S24 Ultra",
+    "description": "Premium Android flagship with S Pen, 200MP camera, and AI-powered features",
+    "raw_category": "Electronics > Smartphones",
+    "raw_attributes": {
+      "brand": "Samsung",
+      "model": "Galaxy S24 Ultra",
+      "color": "Titanium Black",
+      "storage": "512GB", 
+      "price": 1299.99,
+      "condition": "new"
+    },
+    "source": "ecommerce-api",
+    "language": "en",
+    "metadata": {
+      "collected_at": "2025-09-07T09:15:00Z",
+      "source_url": "https://example.com/galaxy-s24-ultra"
+    }
+  },
+  {
+    "item_id": "ecom-003",
+    "title": "Sony WH-1000XM5 Wireless Headphones",
+    "description": "Industry-leading noise canceling headphones with exceptional sound quality",
+    "raw_category": "Electronics > Audio > Headphones",
+    "raw_attributes": {
+      "brand": "Sony",
+      "model": "WH-1000XM5",
+      "type": "Over-ear",
+      "color": "Black",
+      "wireless": true,
+      "noise_canceling": true,
+      "price": 399.99
+    },
+    "source": "ecommerce-api", 
+    "language": "en",
+    "metadata": {
+      "collected_at": "2025-09-07T09:30:00Z",
+      "source_url": "https://example.com/sony-wh-1000xm5"
+    }
+  }
+]

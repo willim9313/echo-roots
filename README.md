@@ -4,19 +4,45 @@ This project(EchoRoots) provides a practical framework for **taxonomy constructi
 
 ## Quick Start
 
-1. Read [docs/OVERVIEW.md](docs/OVERVIEW.md) to understand the project scope.
-2. Explore [docs/TAXONOMY.md](docs/TAXONOMY.md) for the domain model.
-3. Review [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for system design.
-4. Check [docs/TECH\_STACK.md](docs/TECH_STACK.md) for chosen technologies.
+### 1. Setup Development Environment
 
-### Run with a Domain Pack
+```bash
+# Clone the repository
+git clone https://github.com/willim9313/echo-roots.git
+cd echo-roots
+
+# Install UV package manager (if not already installed)
+pip install uv
+
+# Set up the project (creates virtual environment, installs dependencies)
+python scripts/setup.py
+```
+
+### 2. Verify Installation
+
+```bash
+# Activate virtual environment
+source .venv/bin/activate
+
+# Run tests
+uv run pytest
+
+# Check code quality
+uv run ruff check src/ tests/
+uv run ruff format --check src/ tests/
+
+# Verify CLI is working
+uv run echo-roots --help
+```
+
+### 3. Run with a Domain Pack
 
 By default the framework runs with a **generic schema**.
 To adapt to a specific domain, provide a **Single-File Domain Pack** (`domain.yaml`):
 
 ```bash
-uv run app --domain-pack domains/ecommerce
-uv run app --domain-pack domains/zh-news
+uv run echo-roots --domain-pack domains/ecommerce
+uv run echo-roots --domain-pack domains/zh-news
 ```
 
 A `domain.yaml` defines:
@@ -26,6 +52,17 @@ A `domain.yaml` defines:
 * **rules / prompts** (optional) → normalization maps, blocked terms, or custom extraction prompts
 
 👉 See `domains/ecommerce/domain.yaml` for a working example.
+
+### 4. Development Workflow
+
+```bash
+# Run development utilities
+python scripts/dev.py test                    # Run tests
+python scripts/dev.py test --coverage         # Run with coverage
+python scripts/dev.py lint --fix              # Auto-fix linting issues
+python scripts/dev.py typecheck               # Run type checking
+python scripts/dev.py clean                   # Clean build artifacts
+```
 
 ## Repo Layout
 

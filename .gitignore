@@ -1,20 +1,59 @@
 # Python
 __pycache__/
 *.py[cod]
+*$py.class
 *.egg-info/
 .eggs/
 *.pyo
 *.pyd
+*.so
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg
+MANIFEST
+
+# Testing / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
 
 # Environments
 .env
+.env.local
+.env.production
 .venv/
 venv/
+ENV/
+env.bak/
+venv.bak/
 .envrc
 
 # IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # OS junk
 .DS_Store
@@ -25,6 +64,7 @@ Thumbs.db
 /data/processed/*
 !data/**/.gitkeep
 logs/
+exports/
 *.log
 
 # Build & cache
@@ -32,3 +72,23 @@ logs/
 *.db
 *.sqlite
 *.duckdb
+*.duckdb.wal
+.duckdb/
+
+# Echo-roots specific
+config/secrets.yaml
+secrets/
+tmp/
+temp/
+*.tmp
+
+# UV package manager
+.uv/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter
+.ipynb_checkpoints

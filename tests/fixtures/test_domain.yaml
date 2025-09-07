@@ -1,0 +1,63 @@
+domain: "ecommerce-test"
+taxonomy_version: "2025.09"
+
+input_mapping:
+  title: ["title", "name", "product_name"]
+  description: ["description", "desc", "long_description"]
+  language: ["lang", "language"]
+  source_uri: ["url", "link", "product_url"]
+  collected_at: ["ts", "collected_at", "timestamp"]
+
+output_schema:
+  core_item:
+    id: "str"
+    title: "str"
+    description: "str|null"
+    language: "str"
+    source:
+      uri: "str"
+      collected_at: "datetime"
+    metadata: "dict"
+  attributes:
+    - key: brand
+      type: categorical
+    - key: color
+      type: categorical
+    - key: material
+      type: text
+    - key: size
+      type: text
+
+attribute_hints:
+  brand:
+    examples: ["Apple", "Samsung", "Sony", "Nike"]
+    notes: "Prefer official manufacturer names"
+  color:
+    normalize_to_lower: true
+    allow_values: ["black", "white", "gray", "silver", "blue", "red", "green"]
+  size:
+    notes: "Keep original size format (S/M/L, US 10, etc.)"
+
+rules:
+  normalize_map:
+    "cellphone": "mobile phone"
+    "smartphone": "mobile phone"
+    "headphone": "headphones"
+  blocked_terms: ["NSFW", "fake", "replica"]
+  value_maps:
+    color:
+      "grey": "gray"
+      "silver grey": "silver"
+
+prompts:
+  attribute_extraction: |
+    Extract e-commerce attributes from the item.
+    Focus on: {{OUTPUT_KEYS_JSON}}
+    Use hints: {{ATTRIBUTE_HINTS}}
+    
+    Return JSON with: item_id, attributes, terms, metadata
+
+runtime:
+  language_default: "auto"
+  dedupe_by: ["title", "source.uri"]
+  skip_if_missing: ["title"]
