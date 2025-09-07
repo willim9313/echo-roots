@@ -1,0 +1,35 @@
+# Echo-Roots Core Dependencies
+# Generated from pyproject.toml for compatibility with pip and other tools
+# For development installation, use: pip install -e ".[dev]"
+# For full features, use: pip install -e ".[full]"
+
+# Core data processing
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+pydantic-extra-types>=2.1.0
+
+# Storage backends (DuckDB is core)
+duckdb>=0.9.0
+polars>=0.20.0
+pyarrow>=14.0.0
+
+# Domain and configuration
+pyyaml>=6.0
+jsonschema>=4.20.0
+
+# CLI and utilities
+typer>=0.9.0
+rich>=13.0.0
+click>=8.1.0
+
+# Utilities
+httpx>=0.25.0
+python-dateutil>=2.8.0
+
+# Optional dependencies (install separately if needed):
+# Graph storage: neo4j>=5.0.0
+# Vector storage: qdrant-client>=1.7.0
+# Search: opensearch-py>=2.0.0
+# LLM features: openai>=1.0.0, tiktoken>=0.5.0
+# Embeddings: sentence-transformers>=2.2.0, torch>=2.0.0
+# Evaluation: deepeval>=0.20.0

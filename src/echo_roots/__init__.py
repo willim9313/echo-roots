@@ -15,8 +15,36 @@ Key components:
 __version__ = "0.1.0"
 __author__ = "Echo-Roots Contributors"
 
-# Core exports for public API - will be available after T2 implementation
+# Core exports for public API
+from echo_roots.models.core import (
+    AttributeExtraction,
+    ElevationProposal,
+    ExtractionResult,
+    IngestionItem,
+    Mapping,
+    SemanticTerm,
+)
+from echo_roots.models.domain import DomainPack
+from echo_roots.models.taxonomy import (
+    Attribute,
+    Category,
+    SemanticCandidate,
+)
+
 __all__ = [
-    "__author__",
     "__version__",
+    "__author__",
+    # Core models
+    "IngestionItem",
+    "ExtractionResult",
+    "AttributeExtraction",
+    "SemanticTerm",
+    "ElevationProposal",
+    "Mapping",
+    # Taxonomy models
+    "Category",
+    "Attribute",
+    "SemanticCandidate",
+    # Domain models
+    "DomainPack",
 ]
