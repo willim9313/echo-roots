@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Echo-Roots Developer Guide</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 40px; }
+        pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        code { background: #f6f8fa; padding: 2px 4px; border-radius: 3px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<h1 id="echo-roots-developer-guide">Echo-Roots Developer Guide</h1>
+<p><strong>Version:</strong> 1.0.0<br />
+<strong>Updated:</strong> 2025-09-07<br />
+<strong>Authors:</strong> Echo-Roots Team<br />
+<strong>Tags:</strong> developer, architecture, api, extension  </p>
+<hr />
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>Echo-Roots follows a modular, layered architecture designed for scalability and extensibility.</p>
+<h2 id="core-components">Core Components</h2>
+<h3 id="t0-t2-foundation-layer">T0-T2: Foundation Layer</h3>
+<ul>
+<li><strong>Storage</strong>: DuckDB-based storage with pluggable backends</li>
+<li><strong>Models</strong>: Core data structures and validation</li>
+<li><strong>Configuration</strong>: YAML-based configuration management</li>
+</ul>
+<h3 id="t3-t5-processing-layer">T3-T5: Processing Layer</h3>
+<ul>
+<li><strong>Pipelines</strong>: Data ingestion, validation, and extraction</li>
+<li><strong>Domain Integration</strong>: Domain-specific adapters and mergers</li>
+<li><strong>Semantic Processing</strong>: Graph analytics and enrichment</li>
+</ul>
+<h3 id="t6-t8-intelligence-layer">T6-T8: Intelligence Layer</h3>
+<ul>
+<li><strong>Taxonomy Management</strong>: Hierarchical structure management</li>
+<li><strong>Vocabulary</strong>: Term and concept management</li>
+<li><strong>Semantic Search</strong>: Advanced search and similarity</li>
+</ul>
+<h3 id="t9-query-layer">T9: Query Layer</h3>
+<ul>
+<li><strong>Retrieval Interface</strong>: Unified query processing</li>
+<li><strong>Multiple Search Types</strong>: Exact, fuzzy, semantic matching</li>
+<li><strong>Performance Optimization</strong>: Caching and optimization</li>
+</ul>
+<h3 id="t10-t11-interface-layer">T10-T11: Interface Layer</h3>
+<ul>
+<li><strong>CLI</strong>: Rich command-line interface</li>
+<li><strong>REST API</strong>: Full HTTP API with OpenAPI docs</li>
+<li><strong>Governance</strong>: Monitoring, access control, audit logging</li>
+</ul>
+<h3 id="t12-knowledge-layer">T12: Knowledge Layer</h3>
+<ul>
+<li><strong>Documentation</strong>: Automated doc generation</li>
+<li><strong>Knowledge Management</strong>: Learning resources and guides</li>
+</ul>
+<h2 id="extension-development">Extension Development</h2>
+<h2 id="creating-custom-components">Creating Custom Components</h2>
+<h3 id="custom-search-strategies">Custom Search Strategies</h3>
+<p>```python
+from echo_roots.retrieval import SearchStrategy</p>
+<p>class CustomSearchStrategy(SearchStrategy):
+    def search(self, query: str, limit: int = 10) -&gt; List[SearchResult]:
+        # Implement custom search logic
+        pass
+```</p>
+<h3 id="custom-domain-adapters">Custom Domain Adapters</h3>
+<p>```python
+from echo_roots.domain import DomainAdapter</p>
+<p>class MyDomainAdapter(DomainAdapter):
+    def load_domain_data(self, source: Path) -&gt; Dict[str, Any]:
+        # Implement domain-specific loading
+        pass
+```</p>
+<h3 id="custom-pipeline-components">Custom Pipeline Components</h3>
+<p>```python
+from echo_roots.pipelines import PipelineComponent</p>
+<p>class CustomProcessor(PipelineComponent):
+    async def process(self, data: Any) -&gt; Any:
+        # Implement custom processing
+        pass
+```</p>
+<h2 id="api-integration">API Integration</h2>
+<h3 id="authentication">Authentication</h3>
+<p>```python
+from echo_roots.governance import governance_manager</p>
+<h1 id="authenticate-requests">Authenticate requests</h1>
+<p>authorized, user = await governance_manager.authorize_request(api_key, "read_access")
+```</p>
+<h3 id="custom-endpoints">Custom Endpoints</h3>
+<p>```python
+from fastapi import FastAPI
+from echo_roots.cli.api_server import app</p>
+<p>@app.get("/custom/endpoint")
+async def custom_endpoint():
+    return {"message": "Custom functionality"}
+```</p>
+</body>
+</html>
+        

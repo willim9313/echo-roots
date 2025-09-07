@@ -1,0 +1,1752 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Echo-Roots API Reference</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 40px; }
+        pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+        code { background: #f6f8fa; padding: 2px 4px; border-radius: 3px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<h1 id="echo-roots-api-reference">Echo-Roots API Reference</h1>
+<p><strong>Version:</strong> 1.0.0<br />
+<strong>Updated:</strong> 2025-09-07<br />
+<strong>Authors:</strong> Echo-Roots Team<br />
+<strong>Tags:</strong> api, reference, python  </p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This document provides a comprehensive reference for the Echo-Roots taxonomy framework API.</p>
+<h2 id="module-init">Module: <strong>init</strong></h2>
+<p>Echo-Roots: Practical taxonomy construction and semantic enrichment framework.</p>
+<p>This package provides tools for building, managing, and evolving taxonomies
+with controlled vocabularies and semantic layers across domains like e-commerce,
+media, and knowledge graphs.</p>
+<p>Key components:
+- Domain adapters for flexible input mapping
+- A/C/D taxonomy framework (Classification/Controlled/Dynamic)
+- Multi-storage backend support (DuckDB core + optional Neo4j/Qdrant)
+- LLM-powered attribute extraction and normalization
+- Governance workflows for taxonomy evolution</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/__init__.py</code></p>
+<h2 id="module-init_1">Module: <strong>init</strong></h2>
+<p>Comprehensive documentation system with automated generation, knowledge management,
+interactive help, and integrated learning resources for the Echo-Roots taxonomy framework.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/documentation/__init__.py</code></p>
+<h3 id="classes">Classes</h3>
+<h4 id="documentationtype"><code>DocumentationType</code></h4>
+<p>Types of documentation that can be generated.</p>
+<p><strong>Inherits from:</strong> Enum</p>
+<h4 id="contentformat"><code>ContentFormat</code></h4>
+<p>Supported content formats.</p>
+<p><strong>Inherits from:</strong> Enum</p>
+<h4 id="documentsection"><code>DocumentSection</code></h4>
+<p>Represents a section within a document.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>to_markdown(self)</code>: Convert section to markdown format</li>
+<li><code>to_dict(self)</code>: Convert section to dictionary</li>
+</ul>
+<h4 id="document"><code>Document</code></h4>
+<p>Represents a complete document.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>add_section(self, section)</code>: Add a section to the document</li>
+<li><code>to_markdown(self)</code>: Convert entire document to markdown</li>
+<li><code>to_html(self)</code>: Convert document to HTML</li>
+</ul>
+<h4 id="codeanalyzer"><code>CodeAnalyzer</code></h4>
+<p>Analyzes Python code to extract documentation information.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>analyze_module(self, module_path)</code>: Analyze a Python module and extract documentation info</li>
+<li><code>_analyze_class(self, node)</code>: Analyze a class definition</li>
+<li><code>_analyze_function(self, node)</code>: Analyze a function definition</li>
+</ul>
+<h4 id="documentgenerator"><code>DocumentGenerator</code></h4>
+<p>Generates documentation from various sources.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>generate_api_reference(self, module_paths)</code>: Generate API reference documentation from Python modules</li>
+<li><code>_create_module_section(self, module_info)</code>: Create a documentation section for a module</li>
+<li><code>_format_class_docs(self, class_info)</code>: Format class documentation</li>
+<li><code>_format_function_docs(self, func_info)</code>: Format function documentation</li>
+<li><code>generate_user_guide(self)</code>: Generate comprehensive user guide</li>
+<li><code>generate_developer_guide(self)</code>: Generate developer guide with architecture and extension information</li>
+<li><code>generate_changelog(self, version_history)</code>: Generate changelog from version history</li>
+</ul>
+<h4 id="knowledgebase"><code>KnowledgeBase</code></h4>
+<p>Manages knowledge base with searchable documentation and learning resources.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, base_path)</code></li>
+<li><code>add_document(self, doc_id, document)</code>: Add a document to the knowledge base</li>
+<li><code>_update_index(self, doc_id, document)</code>: Update search index with document content</li>
+<li><code>_save_document(self, doc_id, document)</code>: Save document to disk in multiple formats</li>
+<li><code>search(self, query, limit)</code>: Search the knowledge base</li>
+<li><code>get_document(self, doc_id)</code>: Get a document by ID</li>
+<li><code>list_documents(self)</code>: List all documents</li>
+<li><code>generate_index_page(self)</code>: Generate HTML index page for the knowledge base</li>
+</ul>
+<h4 id="documentationmanager"><code>DocumentationManager</code></h4>
+<p>Main documentation management system.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, docs_path)</code></li>
+<li><code>initialize(self)</code>: Initialize the documentation system</li>
+<li><code>generate_all_docs(self)</code>: Generate comprehensive documentation set</li>
+<li><code>search_docs(self, query, limit)</code>: Search documentation</li>
+<li><code>get_doc_stats(self)</code>: Get documentation statistics</li>
+</ul>
+<h4 id="interactivehelp"><code>InteractiveHelp</code></h4>
+<p>Interactive help system for CLI and API.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>show_command_help(self, command)</code>: Show detailed help for a specific command</li>
+<li><code>show_topic_help(self, topic)</code>: Show help for a specific topic</li>
+</ul>
+<h2 id="module-ingestion">Module: ingestion</h2>
+<p>T5: Ingestion Pipeline</p>
+<p>Main orchestration pipeline that connects domain adaptation (T2), 
+LLM extraction (T3), and storage (T4) for end-to-end data processing.</p>
+<p>This module provides:
+- IngestionConfig: Configuration for ingestion workflows
+- IngestionPipeline: Main orchestrator for end-to-end processing
+- BatchProcessor: Handles batch ingestion with progress tracking
+- StreamProcessor: Handles continuous/streaming ingestion
+- PipelineCoordinator: High-level workflow management</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/pipelines/ingestion.py</code></p>
+<h3 id="classes_1">Classes</h3>
+<h4 id="ingestionconfig"><code>IngestionConfig</code></h4>
+<p>Configuration for ingestion pipeline operations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__post_init__(self)</code>: Validate configuration after initialization</li>
+</ul>
+<h4 id="ingestionstats"><code>IngestionStats</code></h4>
+<p>Statistics tracking for ingestion operations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>success_rate(self)</code>: Calculate success rate as percentage</li>
+<li><code>average_quality(self)</code>: Calculate average quality score</li>
+<li><code>processing_time(self)</code>: Calculate total processing time in seconds</li>
+<li><code>add_error(self, item_id, error, context)</code>: Add an error to the tracking</li>
+<li><code>to_dict(self)</code>: Convert stats to dictionary for serialization</li>
+</ul>
+<h4 id="ingestionpipeline"><code>IngestionPipeline</code></h4>
+<p>Main ingestion pipeline orchestrator.</p>
+<p>Coordinates the complete data flow:
+Raw Data → Domain Adaptation → LLM Extraction → Storage</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, config, llm_client, storage_backend)</code></li>
+</ul>
+<h4 id="batchprocessor"><code>BatchProcessor</code></h4>
+<p>Specialized processor for large batch operations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, pipeline)</code></li>
+</ul>
+<h4 id="streamprocessor"><code>StreamProcessor</code></h4>
+<p>Processor for streaming/continuous ingestion.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, pipeline)</code></li>
+<li><code>stop_stream(self)</code>: Stop stream processing</li>
+</ul>
+<h4 id="pipelinecoordinator"><code>PipelineCoordinator</code></h4>
+<p>High-level coordinator for managing multiple ingestion pipelines.</p>
+<p>Useful for scenarios with multiple domains or processing configurations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>register_pipeline(self, name, config)</code>: Register a named pipeline configuration</li>
+</ul>
+<h2 id="module-init_2">Module: <strong>init</strong></h2>
+<p>Data processing and transformation pipelines.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/pipelines/__init__.py</code></p>
+<h2 id="module-extraction">Module: extraction</h2>
+<p>LLM-based extraction pipeline for attribute and term extraction.</p>
+<p>This module provides the core extraction pipeline that processes IngestionItem objects
+through LLM models to extract structured attributes and semantic terms according to
+domain-specific configurations.</p>
+<p>Key components:
+- ExtractorConfig: Configuration for LLM extraction settings
+- PromptBuilder: Builds domain-specific prompts for LLM calls
+- LLMExtractor: Main extraction engine with LLM integration
+- ExtractionPipeline: High-level pipeline orchestrator
+- BatchProcessor: Efficient batch processing of multiple items</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/pipelines/extraction.py</code></p>
+<h3 id="classes_2">Classes</h3>
+<h4 id="extractorconfig"><code>ExtractorConfig</code></h4>
+<p>Configuration for LLM-based extraction.</p>
+<p>Controls model selection, prompt behavior, and processing parameters
+for the extraction pipeline.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="extractionerror"><code>ExtractionError</code></h4>
+<p>Base exception for extraction pipeline errors.</p>
+<p><strong>Inherits from:</strong> Exception</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, message, item_id, cause)</code></li>
+</ul>
+<h4 id="promptbuilder"><code>PromptBuilder</code></h4>
+<p>Builds domain-specific prompts for LLM extraction.</p>
+<p>Constructs prompts by combining base templates with domain-specific
+configurations, attribute hints, and output schema specifications.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize prompt builder with domain pack</li>
+<li><code>_load_base_template(self)</code>: Load the base extraction prompt template</li>
+<li><code>build_prompt(self, item)</code>: Build extraction prompt for a specific item</li>
+<li><code>build_batch_prompt(self, items)</code>: Build prompt for batch extraction of multiple items</li>
+</ul>
+<h4 id="llmclient"><code>LLMClient</code></h4>
+<p>Protocol for LLM client implementations.</p>
+<p>Defines the interface that LLM clients must implement to work
+with the extraction pipeline.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="mockllmclient"><code>MockLLMClient</code></h4>
+<p>Mock LLM client for testing and development.</p>
+<p>Provides deterministic responses for testing the extraction pipeline
+without requiring actual LLM API calls.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, delay_seconds)</code>: Initialize mock client</li>
+</ul>
+<h4 id="llmextractor"><code>LLMExtractor</code></h4>
+<p>Main LLM extraction engine.</p>
+<p>Orchestrates the extraction process including prompt building,
+LLM calls, response parsing, and validation.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack, llm_client, config)</code>: Initialize extractor</li>
+<li><code>_parse_llm_response(self, response_text)</code>: Parse LLM response into structured data</li>
+<li><code>_validate_extraction(self, result)</code>: Validate extraction result against domain schema</li>
+</ul>
+<h4 id="extractionpipeline"><code>ExtractionPipeline</code></h4>
+<p>High-level extraction pipeline orchestrator.</p>
+<p>Provides a simple interface for domain-based extraction with
+automatic domain loading and configuration.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domains_path, llm_client, config)</code>: Initialize extraction pipeline</li>
+<li><code>get_extractor(self, domain)</code>: Get or create extractor for a domain</li>
+<li><code>list_available_domains(self)</code>: List available domains for extraction</li>
+</ul>
+<h2 id="module-openai_client">Module: openai_client</h2>
+<p>OpenAI client implementation for LLM extraction.</p>
+<p>Provides integration with OpenAI's API for real LLM-based extraction.
+Supports both synchronous and asynchronous calls with proper error handling.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/pipelines/openai_client.py</code></p>
+<h3 id="classes_3">Classes</h3>
+<h4 id="openaiclient"><code>OpenAIClient</code></h4>
+<p>OpenAI client implementation for LLM extraction.</p>
+<p>Provides integration with OpenAI's GPT models for attribute and term extraction.
+Handles API authentication, rate limiting, and error recovery.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, api_key, organization, base_url)</code>: Initialize OpenAI client</li>
+<li><code>__str__(self)</code></li>
+</ul>
+<h4 id="azureopenaiclient"><code>AzureOpenAIClient</code></h4>
+<p>Azure OpenAI client implementation.</p>
+<p>Specialized client for Azure's OpenAI service with endpoint and deployment handling.</p>
+<p><strong>Inherits from:</strong> OpenAIClient</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, azure_endpoint, deployment_name, api_version, api_key)</code>: Initialize Azure OpenAI client</li>
+<li><code>__str__(self)</code></li>
+</ul>
+<h4 id="mockllmclient_1"><code>MockLLMClient</code></h4>
+<p>Mock LLM client for testing purposes.</p>
+<p>Provides realistic but deterministic responses for testing
+the extraction pipeline without making actual API calls.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code>: Initialize mock client</li>
+<li><code>_extract_mock_title(self, prompt)</code>: Extract a mock title from the prompt text</li>
+</ul>
+<h3 id="functions">Functions</h3>
+<h4 id="create_openai_clientapi_key"><code>create_openai_client(api_key)</code></h4>
+<p>Create a standard OpenAI client.</p>
+<p>Args:
+    api_key: OpenAI API key (uses environment variable if None)</p>
+<p>Returns:
+    Configured OpenAIClient</p>
+<p><strong>Returns:</strong> <code>OpenAIClient</code></p>
+<h4 id="create_azure_clientazure_endpoint-deployment_name-api_version-api_key"><code>create_azure_client(azure_endpoint, deployment_name, api_version, api_key)</code></h4>
+<p>Create an Azure OpenAI client.</p>
+<p>Args:
+    azure_endpoint: Azure OpenAI endpoint URL
+    deployment_name: Azure deployment name<br />
+    api_version: Azure API version
+    api_key: Azure API key (uses environment variable if None)</p>
+<p>Returns:
+    Configured AzureOpenAIClient</p>
+<p><strong>Returns:</strong> <code>AzureOpenAIClient</code></p>
+<h2 id="module-validation">Module: validation</h2>
+<p>Validation and post-processing for extraction results.</p>
+<p>This module provides validation, normalization, and quality assurance
+for extraction results from LLM processing.</p>
+<p>Key components:
+- ExtractionValidator: Validates extraction results against domain schemas
+- ResultNormalizer: Normalizes and cleans extraction data
+- QualityAnalyzer: Analyzes extraction quality and confidence
+- PostProcessor: Orchestrates validation and normalization pipeline</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/pipelines/validation.py</code></p>
+<h3 id="classes_4">Classes</h3>
+<h4 id="validationissue"><code>ValidationIssue</code></h4>
+<p>Represents a validation issue found during extraction validation.</p>
+<h4 id="qualitymetrics"><code>QualityMetrics</code></h4>
+<p>Quality metrics for an extraction result.</p>
+<h4 id="extractionvalidator"><code>ExtractionValidator</code></h4>
+<p>Validates extraction results against domain schemas and quality standards.</p>
+<p>Performs comprehensive validation including schema compliance,
+data quality checks, and domain-specific validation rules.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize validator with domain configuration</li>
+<li><code>_get_expected_attributes(self)</code>: Extract expected attributes from domain pack schema</li>
+<li><code>_get_validation_rules(self)</code>: Extract validation rules from domain pack</li>
+<li><code>validate(self, result)</code>: Validate an extraction result comprehensively</li>
+<li><code>_validate_schema_compliance(self, result)</code>: Validate that result complies with expected schema</li>
+<li><code>_validate_attributes(self, attributes)</code>: Validate individual attributes</li>
+<li><code>_validate_terms(self, terms)</code>: Validate semantic terms</li>
+<li><code>_validate_quality(self, result)</code>: Validate overall extraction quality</li>
+<li><code>_validate_domain_rules(self, result)</code>: Validate against domain-specific rules</li>
+</ul>
+<h4 id="resultnormalizer"><code>ResultNormalizer</code></h4>
+<p>Normalizes and cleans extraction results.</p>
+<p>Applies normalization rules to ensure consistent formatting
+and clean up common extraction issues.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize normalizer with domain configuration</li>
+<li><code>normalize(self, result)</code>: Normalize an extraction result</li>
+<li><code>_normalize_attribute(self, attr)</code>: Normalize a single attribute</li>
+<li><code>_normalize_term(self, term)</code>: Normalize a semantic term</li>
+<li><code>_normalize_attribute_name(self, name)</code>: Normalize attribute name to standard format</li>
+<li><code>_normalize_attribute_value(self, attr_name, value)</code>: Normalize attribute value based on type and hints</li>
+<li><code>_clean_text(self, text)</code>: Clean and normalize text</li>
+</ul>
+<h4 id="qualityanalyzer"><code>QualityAnalyzer</code></h4>
+<p>Analyzes extraction result quality and provides metrics.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize quality analyzer</li>
+<li><code>analyze(self, result, validation_issues)</code>: Analyze extraction result quality</li>
+<li><code>_calculate_schema_compliance_score(self, result, issues)</code>: Calculate how well the result complies with the schema</li>
+<li><code>_calculate_coverage_score(self, result)</code>: Calculate attribute coverage score</li>
+<li><code>_calculate_evidence_quality_score(self, result)</code>: Calculate evidence quality score based on evidence length and content</li>
+<li><code>_calculate_total_quality_score(self, schema_score, coverage_score, evidence_score, issues)</code>: Calculate overall quality score</li>
+</ul>
+<h4 id="postprocessor"><code>PostProcessor</code></h4>
+<p>Orchestrates validation and normalization of extraction results.</p>
+<p>Provides a unified interface for post-processing extraction results
+with validation, normalization, and quality analysis.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize post-processor</li>
+<li><code>process(self, result, normalize, validate)</code>: Process an extraction result with validation and normalization</li>
+<li><code>process_batch(self, results, normalize, validate)</code>: Process multiple extraction results</li>
+</ul>
+<h2 id="module-init_3">Module: <strong>init</strong></h2>
+<p>Utility functions and helpers.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/utils/__init__.py</code></p>
+<h2 id="module-domain">Module: domain</h2>
+<p>Domain pack models for YAML configuration.</p>
+<p>This module defines the Pydantic v2 models for parsing and validating
+domain.yaml files. Domain packs provide flexible configuration for
+adapting the core framework to specific domains like e-commerce,
+media, or knowledge graphs.</p>
+<p>Key models:
+- DomainPack: Complete domain configuration
+- AttributeConfig: Domain-specific attribute definitions
+- ValidationRule: Custom validation rules for attributes</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/models/domain.py</code></p>
+<h3 id="classes_5">Classes</h3>
+<h4 id="attributeconfig"><code>AttributeConfig</code></h4>
+<p>Configuration for a domain-specific attribute.</p>
+<p>Defines how an attribute should be processed, validated, and normalized
+within a specific domain context.</p>
+<p>Attributes:
+    key: Attribute identifier (e.g., "brand", "color")
+    type: Data type for validation
+    examples: Example values for LLM guidance
+    notes: Human-readable notes about the attribute
+    normalize_to_lower: Whether to normalize values to lowercase
+    allow_values: Restricted set of allowed values
+    required: Whether this attribute is required
+    max_length: Maximum length for text values
+    pattern: Regex pattern for validation</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="validationrule"><code>ValidationRule</code></h4>
+<p>Custom validation rule for domain-specific processing.</p>
+<p>Defines rules for validating and normalizing data within
+a domain context.</p>
+<p>Attributes:
+    field: Target field for validation
+    rule_type: Type of validation rule
+    parameters: Rule-specific parameters
+    error_message: Custom error message for validation failures</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="metricconfig"><code>MetricConfig</code></h4>
+<p>Configuration for domain-specific evaluation metrics.</p>
+<p>Defines metrics to track for quality assessment and
+performance monitoring within a domain.</p>
+<p>Attributes:
+    name: Metric identifier
+    params: Metric-specific parameters
+    threshold: Optional threshold for alerts/gating</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="runtimeconfig"><code>RuntimeConfig</code></h4>
+<p>Runtime configuration for domain processing.</p>
+<p>Defines behavior settings for processing items within
+a specific domain context.</p>
+<p>Attributes:
+    language_default: Default language when not specified
+    dedupe_by: Fields to use for deduplication
+    skip_if_missing: Required fields - skip item if missing
+    batch_size: Processing batch size
+    timeout_seconds: Processing timeout in seconds</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="domainpack"><code>DomainPack</code></h4>
+<p>Complete domain pack configuration.</p>
+<p>Represents a full domain.yaml configuration file with all
+necessary settings for adapting the core framework to a
+specific domain like e-commerce, media, or knowledge graphs.</p>
+<p>Attributes:
+    domain: Domain identifier (e.g., "ecommerce", "zh-news")
+    taxonomy_version: Version identifier for the taxonomy
+    input_mapping: Mapping from source fields to core schema fields
+    output_schema: Core item schema and domain-specific attributes
+    attribute_hints: Hints for LLM processing of attributes
+    rules: Normalization and validation rules
+    prompts: Domain-specific prompt templates
+    evaluation: Evaluation metrics configuration
+    runtime: Runtime behavior settings</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_input_mapping(cls, v)</code>: Ensure input mapping has required core fields</li>
+<li><code>validate_output_schema(cls, v)</code>: Ensure output schema has required structure</li>
+<li><code>validate_attribute_consistency(self)</code>: Ensure attributes in output_schema have corresponding hints if provided</li>
+<li><code>get_attribute_config(self, attribute_key)</code>: Get configuration for a specific attribute</li>
+<li><code>get_prompt_template(self, prompt_type)</code>: Get a prompt template with variable substitution</li>
+</ul>
+<h2 id="module-init_4">Module: <strong>init</strong></h2>
+<p>Core data models for echo-roots taxonomy framework.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/models/__init__.py</code></p>
+<h2 id="module-core">Module: core</h2>
+<p>Core data models for echo-roots framework.</p>
+<p>This module defines the fundamental Pydantic v2 models that serve as the
+backbone for data contracts throughout the system. All models follow the
+JSON schemas defined in docs/DATA_SCHEMA.md.</p>
+<p>Key models:
+- IngestionItem: Raw input data from various sources
+- ExtractionResult: LLM-processed attributes and terms
+- ElevationProposal: D→C layer promotion requests<br />
+- Mapping: Versioned alias/merge/replace operations</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/models/core.py</code></p>
+<h3 id="classes_6">Classes</h3>
+<h4 id="processingstatus"><code>ProcessingStatus</code></h4>
+<p>Status of item processing through the ingestion pipeline.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="ingestionitem"><code>IngestionItem</code></h4>
+<p>Raw input item for ingestion into the taxonomy system.</p>
+<p>Represents unprocessed data from various sources (APIs, files, databases)
+before domain adaptation and normalization. Follows the core ingestion
+schema from DATA_SCHEMA.md.</p>
+<p>Attributes:
+    item_id: Unique identifier for the item
+    title: Primary title or name of the item
+    description: Optional detailed description
+    raw_category: Original category from source system
+    raw_attributes: Domain-specific attributes as key-value pairs
+    source: Data origin identifier (API, DB, CSV, etc.)
+    language: Language code (e.g., 'en', 'zh-tw', 'zh-cn')
+    metadata: Additional metadata and collection info
+    ingested_at: Timestamp when item was ingested</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_item_id(cls, v)</code>: Ensure item_id is not just whitespace</li>
+<li><code>validate_title(cls, v)</code>: Ensure title is not just whitespace</li>
+</ul>
+<h4 id="attributeextraction"><code>AttributeExtraction</code></h4>
+<p>Individual attribute extracted from an item.</p>
+<p>Represents a single normalized attribute-value pair with evidence
+from the source text.</p>
+<p>Attributes:
+    name: Normalized attribute name
+    value: Extracted attribute value
+    evidence: Source text that supports this extraction
+    confidence: Optional confidence score (0.0-1.0)</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="semanticterm"><code>SemanticTerm</code></h4>
+<p>Semantic term extracted from item content.</p>
+<p>Represents candidate terms for the D (semantic) layer that may
+eventually be elevated to controlled vocabulary.</p>
+<p>Attributes:
+    term: The extracted semantic term
+    context: Surrounding context from source
+    confidence: Extraction confidence score (0.0-1.0)
+    frequency: Optional frequency count in dataset</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="extractionmetadata"><code>ExtractionMetadata</code></h4>
+<p>Metadata for extraction operations.</p>
+<p>Tracks the model, run, and timing information for LLM extractions.</p>
+<p>Attributes:
+    model: LLM model identifier used for extraction
+    run_id: Unique identifier for this extraction run
+    extracted_at: Timestamp when extraction was performed
+    processing_time_ms: Optional processing duration in milliseconds</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="extractionresult"><code>ExtractionResult</code></h4>
+<p>Result of LLM attribute and term extraction.</p>
+<p>Contains the structured output from LLM processing of an ingestion item,
+including normalized attributes, semantic terms, and extraction metadata.
+Follows the LLM extraction schema from DATA_SCHEMA.md.</p>
+<p>Attributes:
+    item_id: Reference to the source ingestion item
+    attributes: List of extracted and normalized attributes
+    terms: List of semantic terms found in the content
+    metadata: Extraction operation metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_unique_attributes(cls, v)</code>: Ensure attribute names are unique within an extraction</li>
+</ul>
+<h4 id="elevationmetrics"><code>ElevationMetrics</code></h4>
+<p>Metrics supporting a D→C elevation proposal.</p>
+<p>Quantitative data to support promoting a semantic term to 
+controlled vocabulary.</p>
+<p>Attributes:
+    frequency: Number of times term appears in dataset
+    coverage: Percentage of items that contain this term (0.0-1.0)
+    stability_score: Consistency of usage across contexts (0.0-1.0)
+    co_occurrence_strength: Average association with known terms (0.0-1.0)</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="elevationproposal"><code>ElevationProposal</code></h4>
+<p>Proposal to elevate a term from D (semantic) to C (controlled) layer.</p>
+<p>Represents a request to promote a semantic candidate term to the
+controlled vocabulary, including justification and metrics.
+Follows the elevation proposal schema from DATA_SCHEMA.md.</p>
+<p>Attributes:
+    proposal_id: Unique identifier for this proposal
+    term: The semantic term to be elevated
+    proposed_attribute: Target attribute name in controlled vocabulary
+    justification: Human-readable explanation for the promotion
+    metrics: Supporting quantitative metrics
+    submitted_by: Identifier of who submitted the proposal
+    submitted_at: Timestamp of proposal submission
+    status: Current approval status
+    reviewed_at: Optional timestamp of review completion
+    reviewer_notes: Optional reviewer comments</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_review_consistency(self)</code>: Ensure review fields are consistent with status</li>
+</ul>
+<h4 id="mapping"><code>Mapping</code></h4>
+<p>Versioned mapping between terms for alias, merge, or replace operations.</p>
+<p>Tracks the evolution of taxonomy terms over time with full versioning
+support for rollback and audit trails.
+Follows the mapping schema from DATA_SCHEMA.md.</p>
+<p>Attributes:
+    mapping_id: Unique identifier for this mapping
+    from_term: Source term being mapped
+    to_term: Target term for the mapping
+    relation_type: Type of mapping relationship
+    valid_from: Start timestamp for mapping validity
+    valid_to: Optional end timestamp for mapping validity
+    created_by: Identifier of who created the mapping
+    created_at: Timestamp of mapping creation
+    notes: Optional explanatory notes
+    metadata: Additional mapping-specific metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_terms_not_empty(cls, v)</code>: Ensure terms are not just whitespace</li>
+<li><code>validate_term_mapping(self)</code>: Ensure from_term and to_term are different for non-deprecate mappings</li>
+</ul>
+<h2 id="module-taxonomy">Module: taxonomy</h2>
+<p>Taxonomy framework models for A/C/D layers.</p>
+<p>This module defines the Pydantic v2 models for the taxonomy framework
+as described in docs/TAXONOMY.md. It implements the A/C/D layer structure:</p>
+<ul>
+<li>A Layer: Classification skeleton (taxonomy tree)</li>
+<li>C Layer: Controlled attributes and values</li>
+<li>D Layer: Semantic candidate network</li>
+</ul>
+<p>Key models:
+- Category: Hierarchical taxonomy nodes (A layer)
+- Attribute: Controlled vocabulary attributes (C layer)
+- SemanticCandidate: Candidate terms for semantic layer (D layer)</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/models/taxonomy.py</code></p>
+<h3 id="classes_7">Classes</h3>
+<h4 id="category"><code>Category</code></h4>
+<p>Hierarchical taxonomy category node (A layer).</p>
+<p>Represents a node in the classification tree with support for
+multilingual labels, metadata, and hierarchy management.</p>
+<p>Attributes:
+    category_id: Unique identifier for the category
+    name: Primary category name
+    parent_id: Optional parent category ID for hierarchy
+    level: Depth level in the taxonomy tree (0 = root)
+    path: Full path from root (e.g., ["Electronics", "Mobile", "Smartphones"])
+    labels: Multilingual labels for the category
+    description: Optional detailed description
+    status: Category status (active, deprecated, merged)
+    created_at: Creation timestamp
+    updated_at: Last update timestamp
+    metadata: Additional category-specific metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_name(cls, v)</code>: Ensure name is not just whitespace</li>
+<li><code>validate_path(cls, v)</code>: Ensure path components are not empty</li>
+<li><code>validate_hierarchy_consistency(self)</code>: Ensure hierarchy consistency between level, path, and parent</li>
+</ul>
+<h4 id="attributevalue"><code>AttributeValue</code></h4>
+<p>Individual value within a controlled attribute.</p>
+<p>Represents a specific allowed value for a controlled vocabulary
+attribute, with multilingual support and normalization rules.</p>
+<p>Attributes:
+    value: The normalized attribute value
+    labels: Multilingual labels for the value
+    aliases: Alternative forms that map to this value
+    description: Optional description of the value
+    status: Value status (active, deprecated, merged)
+    metadata: Additional value-specific metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_value(cls, v)</code>: Ensure value is not just whitespace</li>
+</ul>
+<h4 id="attribute"><code>Attribute</code></h4>
+<p>Controlled vocabulary attribute (C layer).</p>
+<p>Represents a managed attribute with controlled values, validation rules,
+and governance workflows. Part of the normalization layer between
+raw input and semantic candidates.</p>
+<p>Attributes:
+    attribute_id: Unique identifier for the attribute
+    name: Attribute name (e.g., "brand", "color", "size")
+    display_name: Human-readable display name
+    data_type: Data type for validation (categorical, text, numeric, boolean)
+    values: Controlled values for categorical attributes
+    validation_rules: Optional validation patterns/rules
+    labels: Multilingual labels for the attribute
+    description: Detailed description of the attribute
+    required: Whether this attribute is required for items
+    status: Attribute status (active, deprecated, merged)
+    created_at: Creation timestamp
+    updated_at: Last update timestamp
+    metadata: Additional attribute-specific metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_display_name(cls, v)</code>: Ensure display_name is not just whitespace</li>
+<li><code>validate_categorical_values(self)</code>: Ensure categorical attributes have values</li>
+</ul>
+<h4 id="semanticrelation"><code>SemanticRelation</code></h4>
+<p>Relationship between semantic candidates.</p>
+<p>Represents connections in the semantic candidate network (D layer)
+such as similarity, co-occurrence, or hierarchical relationships.</p>
+<p>Attributes:
+    relation_id: Unique identifier for the relationship
+    from_term: Source term in the relationship
+    to_term: Target term in the relationship
+    relation_type: Type of semantic relationship
+    strength: Relationship strength score (0.0-1.0)
+    evidence_count: Number of supporting evidence instances
+    context: Optional contextual information
+    metadata: Additional relation-specific metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_relation_terms(self)</code>: Ensure from_term and to_term are different</li>
+</ul>
+<h4 id="semanticcandidate"><code>SemanticCandidate</code></h4>
+<p>Semantic candidate term in the D layer.</p>
+<p>Represents a term in the semantic candidate network that may
+eventually be elevated to controlled vocabulary. Includes
+clustering, scoring, and relationship information.</p>
+<p>Attributes:
+    candidate_id: Unique identifier for the candidate
+    term: The candidate term text
+    normalized_term: Normalized form for matching
+    frequency: Occurrence frequency in the dataset
+    contexts: Sample contexts where the term appears
+    cluster_id: Optional cluster assignment for grouping
+    score: Overall quality/stability score (0.0-1.0)
+    relations: Semantic relationships to other candidates
+    language: Primary language of the term
+    status: Candidate status in the workflow
+    created_at: First seen timestamp
+    updated_at: Last update timestamp
+    metadata: Additional candidate-specific metadata</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>validate_terms(cls, v)</code>: Ensure terms are not just whitespace</li>
+<li><code>validate_contexts(cls, v)</code>: Ensure contexts are not empty</li>
+</ul>
+<h2 id="module-init_5">Module: <strong>init</strong></h2>
+<p>Command-line interface for echo-roots.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/cli/__init__.py</code></p>
+<h2 id="module-api_server">Module: api_server</h2>
+<p>FastAPI-based REST API server for Echo-Roots taxonomy system.
+Provides HTTP endpoints for query, search, and system operations.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/cli/api_server.py</code></p>
+<h3 id="classes_8">Classes</h3>
+<h4 id="datetimejsonencoder"><code>DateTimeJSONEncoder</code></h4>
+<p>JSON encoder that can handle datetime objects.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>default(self, obj)</code></li>
+</ul>
+<h4 id="apiqueryfilter"><code>APIQueryFilter</code></h4>
+<p>API model for query filters.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="apisortcriterion"><code>APISortCriterion</code></h4>
+<p>API model for sort criteria.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="apiqueryrequest"><code>APIQueryRequest</code></h4>
+<p>API model for query requests.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="apiqueryresult"><code>APIQueryResult</code></h4>
+<p>API model for query results.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="apiqueryresponse"><code>APIQueryResponse</code></h4>
+<p>API model for query responses.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="apierrorresponse"><code>APIErrorResponse</code></h4>
+<p>API error response model.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="systemstatus"><code>SystemStatus</code></h4>
+<p>System status model.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h3 id="functions_1">Functions</h3>
+<h4 id="convert_api_filter_to_query_filterapi_filter"><code>convert_api_filter_to_query_filter(api_filter)</code></h4>
+<p>Convert API filter to internal query filter.</p>
+<p><strong>Returns:</strong> <code>QueryFilter</code></p>
+<h4 id="convert_api_sort_to_sort_criterionapi_sort"><code>convert_api_sort_to_sort_criterion(api_sort)</code></h4>
+<p>Convert API sort to internal sort criterion.</p>
+<p><strong>Returns:</strong> <code>SortCriterion</code></p>
+<h4 id="convert_query_result_to_apiresult"><code>convert_query_result_to_api(result)</code></h4>
+<p>Convert internal query result to API model.</p>
+<p><strong>Returns:</strong> <code>APIQueryResult</code></p>
+<h4 id="start_api_serverhost-port-reload-workers"><code>start_api_server(host, port, reload, workers)</code></h4>
+<p>Start the API server (called from CLI).</p>
+<h2 id="module-main">Module: main</h2>
+<p>Main CLI entry point for echo-roots.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/cli/main.py</code></p>
+<h3 id="classes_9">Classes</h3>
+<h4 id="querytypechoice"><code>QueryTypeChoice</code></h4>
+<p>CLI-friendly query type choices.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="outputformat"><code>OutputFormat</code></h4>
+<p>Output format choices.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h3 id="functions_2">Functions</h3>
+<h4 id="version"><code>version()</code></h4>
+<p>Show the version information.</p>
+<h4 id="status"><code>status()</code></h4>
+<p>Show system status and configuration.</p>
+<h4 id="initoutput_dir-with_examples"><code>init(output_dir, with_examples)</code></h4>
+<p>Initialize a new echo-roots workspace.</p>
+<h4 id="search_commandquery_text-query_type-limit-threshold-entity_types-output_format-workspace"><code>search_command(query_text, query_type, limit, threshold, entity_types, output_format, workspace)</code></h4>
+<p>Search for entities using various query strategies.</p>
+<h4 id="interactive_queryworkspace"><code>interactive_query(workspace)</code></h4>
+<p>Start interactive query session.</p>
+<h4 id="query_historylimit-success_only-workspace"><code>query_history(limit, success_only, workspace)</code></h4>
+<p>Show recent query history.</p>
+<h4 id="start_api_serverhost-port-reload-workers_1"><code>start_api_server(host, port, reload, workers)</code></h4>
+<p>Start the API server.</p>
+<h4 id="test_api_endpointsbase_url"><code>test_api_endpoints(base_url)</code></h4>
+<p>Test API endpoints.</p>
+<h4 id="open_api_docsbase_url"><code>open_api_docs(base_url)</code></h4>
+<p>Open API documentation in browser.</p>
+<h4 id="governance_status"><code>governance_status()</code></h4>
+<p>Show system governance and monitoring status.</p>
+<h4 id="show_metrics"><code>show_metrics()</code></h4>
+<p>Show detailed system metrics.</p>
+<h4 id="show_alertsseverity-resolved"><code>show_alerts(severity, resolved)</code></h4>
+<p>Show system alerts.</p>
+<h4 id="show_users"><code>show_users()</code></h4>
+<p>Show user accounts and access control.</p>
+<h4 id="show_audit_logsuser-action-limit"><code>show_audit_logs(user, action, limit)</code></h4>
+<p>Show audit logs.</p>
+<h4 id="generate_docsoutput_dir-format-force"><code>generate_docs(output_dir, format, force)</code></h4>
+<p>Generate comprehensive documentation.</p>
+<h4 id="search_docsquery-limit"><code>search_docs(query, limit)</code></h4>
+<p>Search documentation.</p>
+<h4 id="list_docs"><code>list_docs()</code></h4>
+<p>List all available documentation.</p>
+<h4 id="show_docdoc_id-format"><code>show_doc(doc_id, format)</code></h4>
+<p>Show a specific document.</p>
+<h4 id="show_helptopic"><code>show_help(topic)</code></h4>
+<p>Show interactive help and guidance.</p>
+<h4 id="open_docsdoc_id-browser"><code>open_docs(doc_id, browser)</code></h4>
+<p>Open documentation in browser or file manager.</p>
+<h4 id="show_doc_stats"><code>show_doc_stats()</code></h4>
+<p>Show documentation statistics and health.</p>
+<h2 id="module-interfaces">Module: interfaces</h2>
+<p>Storage interface protocols for the echo-roots taxonomy system.</p>
+<p>This module defines the abstract storage interfaces that enable
+pluggable storage backends while maintaining type safety and
+consistency across the application.</p>
+<p>Based on ADR-0001: Hybrid Storage Model
+- DuckDB: Core ingestion, normalization, analytics
+- Neo4j: Graph operations, hierarchy navigation<br />
+- Qdrant: Vector search, semantic similarity</p>
+<p>The interfaces provide a unified API while allowing specialized
+backends to optimize for their strengths.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/storage/interfaces.py</code></p>
+<h3 id="classes_10">Classes</h3>
+<h4 id="storagebackend"><code>StorageBackend</code></h4>
+<p>Protocol defining the core storage interface.</p>
+<p>All storage backends must implement this protocol to ensure
+consistent behavior across different storage technologies.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="ingestionrepository"><code>IngestionRepository</code></h4>
+<p>Repository for managing raw ingestion data.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="extractionrepository"><code>ExtractionRepository</code></h4>
+<p>Repository for managing LLM extraction results.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="taxonomyrepository"><code>TaxonomyRepository</code></h4>
+<p>Repository for managing the canonical taxonomy.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="mappingrepository"><code>MappingRepository</code></h4>
+<p>Repository for managing domain mappings and transformations.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="elevationrepository"><code>ElevationRepository</code></h4>
+<p>Repository for managing elevation proposals and feedback.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="analyticsrepository"><code>AnalyticsRepository</code></h4>
+<p>Repository for analytics and reporting queries.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="storagemanager"><code>StorageManager</code></h4>
+<p>Abstract base class for storage management.</p>
+<p>Coordinates multiple storage backends and provides
+high-level repository interfaces.</p>
+<p><strong>Inherits from:</strong> ABC</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, config)</code></li>
+<li><code>ingestion(self)</code>: Access to ingestion data repository</li>
+<li><code>extraction(self)</code>: Access to extraction results repository</li>
+<li><code>taxonomy(self)</code>: Access to taxonomy repository</li>
+<li><code>mappings(self)</code>: Access to mappings repository</li>
+<li><code>elevation(self)</code>: Access to elevation repository</li>
+<li><code>analytics(self)</code>: Access to analytics repository</li>
+</ul>
+<h4 id="transactioncontext"><code>TransactionContext</code></h4>
+<p>Protocol for transaction management across repositories.</p>
+<p><strong>Inherits from:</strong> Protocol</p>
+<h4 id="storageerror"><code>StorageError</code></h4>
+<p>Base exception for storage operations.</p>
+<p><strong>Inherits from:</strong> Exception</p>
+<h4 id="connectionerror"><code>ConnectionError</code></h4>
+<p>Raised when storage backend connection fails.</p>
+<p><strong>Inherits from:</strong> StorageError</p>
+<h4 id="integrityerror"><code>IntegrityError</code></h4>
+<p>Raised when data integrity constraints are violated.</p>
+<p><strong>Inherits from:</strong> StorageError</p>
+<h4 id="notfounderror"><code>NotFoundError</code></h4>
+<p>Raised when requested entity is not found.</p>
+<p><strong>Inherits from:</strong> StorageError</p>
+<h4 id="conflicterror"><code>ConflictError</code></h4>
+<p>Raised when operation conflicts with existing data.</p>
+<p><strong>Inherits from:</strong> StorageError</p>
+<h2 id="module-init_6">Module: <strong>init</strong></h2>
+<p>Storage layer for echo-roots taxonomy system.</p>
+<p>This package provides a flexible storage abstraction with pluggable
+backends for different storage technologies. The primary backend is
+DuckDB for analytics and ingestion workloads.</p>
+<p>Usage:
+    from echo_roots.storage import create_storage, query_ingestion</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> Create storage manager
+storage = await create_storage()
+
+<span class="gh">#</span> Store and query data
+item_id = await storage.ingestion.store_item(item)
+items = await query_ingestion().filter_by_domain(&quot;ecommerce&quot;).execute(storage)
+</code></pre></div>
+
+<p><strong>Module Path:</strong> <code>src/echo_roots/storage/__init__.py</code></p>
+<h2 id="module-duckdb_backend">Module: duckdb_backend</h2>
+<p>DuckDB storage backend implementation.</p>
+<p>This module provides the core DuckDB-based storage implementation
+for the echo-roots taxonomy system. DuckDB serves as the primary
+backend for ingestion, normalization, and analytics workloads.</p>
+<p>Features:
+- High-performance analytical queries
+- JSON support for flexible schemas
+- In-memory and persistent storage modes
+- SQL-based operations with Python integration
+- Schema versioning and migrations</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/storage/duckdb_backend.py</code></p>
+<h3 id="classes_11">Classes</h3>
+<h4 id="duckdbtransaction"><code>DuckDBTransaction</code></h4>
+<p>Transaction context for DuckDB operations.</p>
+<p><strong>Inherits from:</strong> TransactionContext</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, connection)</code></li>
+</ul>
+<h4 id="duckdbbackend"><code>DuckDBBackend</code></h4>
+<p>Core DuckDB storage backend.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, database_path)</code></li>
+<li><code>transaction(self)</code>: Create a new transaction context</li>
+</ul>
+<h4 id="duckdbingestionrepository"><code>DuckDBIngestionRepository</code></h4>
+<p>DuckDB implementation of IngestionRepository.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, backend)</code></li>
+</ul>
+<h4 id="duckdbstoragemanager"><code>DuckDBStorageManager</code></h4>
+<p>Main storage manager using DuckDB backend.</p>
+<p><strong>Inherits from:</strong> StorageManager</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, config)</code></li>
+<li><code>ingestion(self)</code>: Access to ingestion repository</li>
+<li><code>extraction(self)</code>: Access to extraction repository</li>
+<li><code>taxonomy(self)</code>: Access to taxonomy repository</li>
+<li><code>mappings(self)</code>: Access to mappings repository</li>
+<li><code>elevation(self)</code>: Access to elevation repository</li>
+<li><code>analytics(self)</code>: Access to analytics repository</li>
+</ul>
+<h2 id="module-migrations">Module: migrations</h2>
+<p>Database migration system for echo-roots storage.</p>
+<p>This module provides schema versioning and migration capabilities
+to support evolution of the storage layer over time while maintaining
+data integrity and backward compatibility.</p>
+<p>Features:
+- Version-controlled schema changes
+- Forward and backward migrations
+- Data preservation during schema updates
+- Migration rollback capabilities
+- Environment-specific configurations</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/storage/migrations.py</code></p>
+<h3 id="classes_12">Classes</h3>
+<h4 id="migration"><code>Migration</code></h4>
+<p>Represents a single database migration.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, version, description, up_sql, down_sql, pre_migration, post_migration)</code></li>
+<li><code>__str__(self)</code></li>
+</ul>
+<h4 id="migrationmanager"><code>MigrationManager</code></h4>
+<p>Manages database schema migrations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, backend)</code></li>
+<li><code>_register_migrations(self)</code>: Register all available migrations</li>
+<li><code>_get_initial_schema(self)</code>: Get the initial database schema</li>
+<li><code>add_migration(self, migration)</code>: Add a new migration to the manager</li>
+</ul>
+<h2 id="module-repository">Module: repository</h2>
+<p>High-level repository patterns for echo-roots storage.</p>
+<p>This module provides convenience classes and utilities that build
+on top of the storage interfaces to provide common patterns and
+workflows for working with the taxonomy data.</p>
+<p>Features:
+- Repository composition and coordination
+- Transaction management across repositories
+- Bulk operations and batch processing
+- Query builders and advanced filtering
+- Data validation and integrity checks</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/storage/repository.py</code></p>
+<h3 id="classes_13">Classes</h3>
+<h4 id="repositorycoordinator"><code>RepositoryCoordinator</code></h4>
+<p>Coordinates operations across multiple repositories.</p>
+<p>Provides high-level workflows that involve multiple storage
+components and ensures data consistency across repositories.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, storage_manager)</code></li>
+</ul>
+<h4 id="querybuilder"><code>QueryBuilder</code></h4>
+<p>Builder pattern for constructing complex queries.</p>
+<p>Provides a fluent interface for building filtered queries
+across different repositories.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository_type)</code></li>
+<li><code>filter_by_source(self, source)</code>: Filter results by source</li>
+<li><code>filter_by_status(self, status)</code>: Filter results by status</li>
+<li><code>filter_by_date_range(self, start_date, end_date)</code>: Filter results by date range</li>
+<li><code>filter_by_confidence(self, min_confidence, max_confidence)</code>: Filter results by confidence range</li>
+<li><code>sort_by(self, field, ascending)</code>: Add sorting criteria</li>
+<li><code>limit(self, limit)</code>: Set result limit</li>
+<li><code>offset(self, offset)</code>: Set result offset</li>
+<li><code>page(self, page, page_size)</code>: Set pagination by page number</li>
+</ul>
+<h4 id="datavalidator"><code>DataValidator</code></h4>
+<p>Provides data validation and integrity checking.</p>
+<p>Ensures data consistency and validates relationships
+between different entities in the storage system.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, storage_manager)</code></li>
+</ul>
+<h4 id="storagefactory"><code>StorageFactory</code></h4>
+<p>Factory for creating and configuring storage managers.</p>
+<p>Provides convenient methods for setting up storage with
+different configurations and backends.</p>
+<h3 id="functions_3">Functions</h3>
+<h4 id="query_ingestion"><code>query_ingestion()</code></h4>
+<p>Create a query builder for ingestion items.</p>
+<p><strong>Returns:</strong> <code>QueryBuilder</code></p>
+<h4 id="query_extraction"><code>query_extraction()</code></h4>
+<p>Create a query builder for extraction results.</p>
+<p><strong>Returns:</strong> <code>QueryBuilder</code></p>
+<h2 id="module-init_7">Module: <strong>init</strong></h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/retrieval/__init__.py</code></p>
+<h3 id="classes_14">Classes</h3>
+<h4 id="querytype"><code>QueryType</code></h4>
+<p>Types of queries supported by the retrieval system.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="sortorder"><code>SortOrder</code></h4>
+<p>Sort order options.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="filteroperator"><code>FilterOperator</code></h4>
+<p>Filter operation types.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="aggregationtype"><code>AggregationType</code></h4>
+<p>Types of aggregations.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="queryfilter"><code>QueryFilter</code></h4>
+<p>Individual filter criterion.</p>
+<h4 id="sortcriterion"><code>SortCriterion</code></h4>
+<p>Sort criterion for query results.</p>
+<h4 id="aggregationrequest"><code>AggregationRequest</code></h4>
+<p>Aggregation specification.</p>
+<h4 id="queryrequest"><code>QueryRequest</code></h4>
+<p>Comprehensive query request specification.</p>
+<h4 id="queryresult"><code>QueryResult</code></h4>
+<p>Individual query result item.</p>
+<h4 id="aggregationresult"><code>AggregationResult</code></h4>
+<p>Result of an aggregation query.</p>
+<h4 id="queryresponse"><code>QueryResponse</code></h4>
+<p>Complete query response.</p>
+<h4 id="queryhistory"><code>QueryHistory</code></h4>
+<p>Query execution history for analytics.</p>
+<h4 id="facetconfiguration"><code>FacetConfiguration</code></h4>
+<p>Configuration for faceted search.</p>
+<h4 id="queryprocessor"><code>QueryProcessor</code></h4>
+<p>Abstract base class for query processors.</p>
+<p><strong>Inherits from:</strong> ABC</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>supports_query_type(self, query_type)</code>: Check if processor supports the given query type</li>
+</ul>
+<h4 id="retrievalrepository"><code>RetrievalRepository</code></h4>
+<p>Abstract repository for retrieval operations.</p>
+<p><strong>Inherits from:</strong> ABC</p>
+<h4 id="filtervalidator"><code>FilterValidator</code></h4>
+<p>Validates and normalizes query filters.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>validate_filters(self, filters)</code>: Validate a list of filters and return validation errors</li>
+<li><code>validate_filter(self, filter_item)</code>: Validate a single filter</li>
+<li><code>normalize_filter(self, filter_item)</code>: Normalize filter values and formats</li>
+</ul>
+<h4 id="queryoptimizer"><code>QueryOptimizer</code></h4>
+<p>Optimizes query requests for better performance.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>optimize_query(self, request)</code>: Optimize query request for better performance</li>
+<li><code>_deep_copy_request(self, request)</code>: Create a deep copy of the query request</li>
+<li><code>_optimize_filters(self, request)</code>: Optimize filter conditions</li>
+<li><code>_optimize_sorting(self, request)</code>: Optimize sort criteria</li>
+<li><code>_optimize_aggregations(self, request)</code>: Optimize aggregation requests</li>
+<li><code>_optimize_limits(self, request)</code>: Optimize limit and offset values</li>
+</ul>
+<h4 id="exactmatchprocessor"><code>ExactMatchProcessor</code></h4>
+<p>Processor for exact match queries.</p>
+<p><strong>Inherits from:</strong> QueryProcessor</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>supports_query_type(self, query_type)</code>: Check if processor supports the given query type</li>
+<li><code>_is_exact_match(self, query_text, result)</code>: Check if result is an exact match for the query</li>
+<li><code>_apply_sorting(self, results, sort_criteria)</code>: Apply sorting to results</li>
+</ul>
+<h4 id="fuzzysearchprocessor"><code>FuzzySearchProcessor</code></h4>
+<p>Processor for fuzzy search queries using Levenshtein distance.</p>
+<p><strong>Inherits from:</strong> QueryProcessor</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>supports_query_type(self, query_type)</code>: Check if processor supports the given query type</li>
+<li><code>_calculate_fuzzy_score(self, query_text, result)</code>: Calculate fuzzy match score using Levenshtein distance</li>
+<li><code>_levenshtein_similarity(self, s1, s2)</code>: Calculate similarity using Levenshtein distance</li>
+</ul>
+<h4 id="semanticsearchprocessor"><code>SemanticSearchProcessor</code></h4>
+<p>Processor for semantic search queries using embeddings.</p>
+<p><strong>Inherits from:</strong> QueryProcessor</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository, semantic_engine)</code></li>
+<li><code>supports_query_type(self, query_type)</code>: Check if processor supports the given query type</li>
+<li><code>_cosine_similarity(self, vec1, vec2)</code>: Calculate cosine similarity between two vectors</li>
+</ul>
+<h4 id="queryengine"><code>QueryEngine</code></h4>
+<p>Main query engine that orchestrates different processors.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>register_processor(self, query_type, processor)</code>: Register a query processor for a specific query type</li>
+<li><code>set_semantic_engine(self, semantic_engine)</code>: Set semantic engine and register semantic processor</li>
+<li><code>get_supported_query_types(self)</code>: Get list of supported query types</li>
+<li><code>get_query_history(self, limit, query_type, success_only)</code>: Get query execution history</li>
+</ul>
+<h2 id="module-init_8">Module: <strong>init</strong></h2>
+<p>Taxonomy management and hierarchy operations.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/taxonomy/__init__.py</code></p>
+<h2 id="module-navigator">Module: navigator</h2>
+<p>Taxonomy Navigation and Tree Operations.</p>
+<p>This module provides utilities for navigating and querying the taxonomy hierarchy,
+including tree traversal, search, and structural analysis.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/taxonomy/navigator.py</code></p>
+<h3 id="classes_15">Classes</h3>
+<h4 id="traversalorder"><code>TraversalOrder</code></h4>
+<p>Tree traversal order options.</p>
+<p><strong>Inherits from:</strong> Enum</p>
+<h4 id="treenode"><code>TreeNode</code></h4>
+<p>Tree representation of a category with navigation utilities.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>is_root(self)</code>: Check if this is a root node</li>
+<li><code>is_leaf(self)</code>: Check if this is a leaf node</li>
+<li><code>depth(self)</code>: Get the depth of this node in the tree</li>
+<li><code>subtree_size(self)</code>: Get the total number of nodes in this subtree</li>
+<li><code>find_child(self, name)</code>: Find a direct child by name</li>
+<li><code>get_path_to_root(self)</code>: Get the path from this node to the root</li>
+<li><code>get_common_ancestor(self, other)</code>: Find the lowest common ancestor with another node</li>
+</ul>
+<h4 id="taxonomynavigator"><code>TaxonomyNavigator</code></h4>
+<p>Navigation utilities for taxonomy hierarchies.</p>
+<p>Provides tree-based operations, search capabilities, and structural analysis
+for taxonomy hierarchies.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, taxonomy_repo)</code>: Initialize the navigator</li>
+<li><code>_calculate_category_similarity(self, cat1, cat2)</code>: Calculate similarity score between two categories</li>
+<li><code>clear_cache(self)</code>: Clear navigation caches</li>
+</ul>
+<h2 id="module-manager">Module: manager</h2>
+<p>Taxonomy Management Layer (A Layer) - High-level taxonomy operations.</p>
+<p>This module provides comprehensive management for the A-layer taxonomy hierarchy,
+including creation, navigation, validation, and governance operations.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/taxonomy/manager.py</code></p>
+<h3 id="classes_16">Classes</h3>
+<h4 id="taxonomystats"><code>TaxonomyStats</code></h4>
+<p>Statistics for taxonomy structure and health.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="taxonomypath"><code>TaxonomyPath</code></h4>
+<p>Utility class for working with taxonomy paths.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>build_path(parent_path, category_name)</code>: Build a complete path for a category given its parent path</li>
+<li><code>calculate_level(path)</code>: Calculate the hierarchy level from a path</li>
+<li><code>validate_path_consistency(path, level, name)</code>: Validate that path is consistent with level and category name</li>
+<li><code>get_parent_path(path)</code>: Get the parent path from a category path</li>
+</ul>
+<h4 id="categorycreationrequest"><code>CategoryCreationRequest</code></h4>
+<p>Request model for creating a new category.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="categorymoverequest"><code>CategoryMoveRequest</code></h4>
+<p>Request model for moving a category to a new parent.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="categorymergerequest"><code>CategoryMergeRequest</code></h4>
+<p>Request model for merging categories.</p>
+<p><strong>Inherits from:</strong> BaseModel</p>
+<h4 id="taxonomymanager"><code>TaxonomyManager</code></h4>
+<p>High-level manager for taxonomy operations and governance.</p>
+<p>Provides comprehensive operations for managing the A-layer taxonomy hierarchy
+including creation, navigation, validation, and governance workflows.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, taxonomy_repo)</code>: Initialize the taxonomy manager</li>
+<li><code>clear_cache(self)</code>: Clear internal caches</li>
+</ul>
+<h2 id="module-graph">Module: graph</h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/semantic/graph.py</code></p>
+<h3 id="classes_17">Classes</h3>
+<h4 id="graphquerytype"><code>GraphQueryType</code></h4>
+<p>Types of knowledge graph queries.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="graphmetric"><code>GraphMetric</code></h4>
+<p>Knowledge graph metrics.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="integrationtype"><code>IntegrationType</code></h4>
+<p>Types of semantic integration.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="graphnode"><code>GraphNode</code></h4>
+<p>Node in the knowledge graph.</p>
+<h4 id="graphedge"><code>GraphEdge</code></h4>
+<p>Edge in the knowledge graph.</p>
+<h4 id="graphpath"><code>GraphPath</code></h4>
+<p>Path through the knowledge graph.</p>
+<h4 id="graphcluster"><code>GraphCluster</code></h4>
+<p>Cluster of related nodes in the graph.</p>
+<h4 id="graphmetrics"><code>GraphMetrics</code></h4>
+<p>Comprehensive graph metrics.</p>
+<h4 id="integrationtask"><code>IntegrationTask</code></h4>
+<p>Task for semantic integration with existing systems.</p>
+<h4 id="knowledgegraphbuilder"><code>KnowledgeGraphBuilder</code></h4>
+<p>Builds and maintains the semantic knowledge graph.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>_calculate_cluster_cohesion(self, cluster_nodes, all_edges)</code>: Calculate internal cohesion of a cluster</li>
+<li><code>_get_dominant_entity_types(self, cluster_nodes, all_nodes)</code>: Get dominant entity types in a cluster</li>
+<li><code>_get_representative_terms(self, cluster_nodes, all_nodes)</code>: Get representative terms for a cluster</li>
+</ul>
+<h4 id="semanticintegrator"><code>SemanticIntegrator</code></h4>
+<p>Integrates semantic enrichment with existing systems.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository, graph_builder)</code></li>
+</ul>
+<h2 id="module-init_9">Module: <strong>init</strong></h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/semantic/__init__.py</code></p>
+<h3 id="classes_18">Classes</h3>
+<h4 id="embeddingmodel"><code>EmbeddingModel</code></h4>
+<p>Supported embedding models.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="semanticrelationtype"><code>SemanticRelationType</code></h4>
+<p>Types of semantic relationships.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="enrichmentstatus"><code>EnrichmentStatus</code></h4>
+<p>Status of semantic enrichment process.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="confidencelevel"><code>ConfidenceLevel</code></h4>
+<p>Confidence levels for semantic relationships.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="semanticembedding"><code>SemanticEmbedding</code></h4>
+<p>Semantic embedding representation.</p>
+<h4 id="semanticrelationship"><code>SemanticRelationship</code></h4>
+<p>Semantic relationship between entities.</p>
+<h4 id="semanticconcept"><code>SemanticConcept</code></h4>
+<p>High-level semantic concept extracted from data.</p>
+<h4 id="enrichmenttask"><code>EnrichmentTask</code></h4>
+<p>Task for semantic enrichment processing.</p>
+<h4 id="semanticquery"><code>SemanticQuery</code></h4>
+<p>Query for semantic search and analysis.</p>
+<h4 id="semanticsearchresult"><code>SemanticSearchResult</code></h4>
+<p>Result from semantic search.</p>
+<h4 id="enrichmentstats"><code>EnrichmentStats</code></h4>
+<p>Statistics for semantic enrichment.</p>
+<h4 id="embeddingprovider"><code>EmbeddingProvider</code></h4>
+<p>Abstract base class for embedding providers.</p>
+<p><strong>Inherits from:</strong> ABC</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>get_embedding_dimensions(self, model)</code>: Get dimensions for specific model</li>
+</ul>
+<h4 id="semanticrepository"><code>SemanticRepository</code></h4>
+<p>Abstract repository for semantic data storage.</p>
+<p><strong>Inherits from:</strong> ABC</p>
+<h4 id="textprocessor"><code>TextProcessor</code></h4>
+<p>Advanced text processing for semantic analysis.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>extract_keywords(self, text, max_keywords)</code>: Extract key terms from text</li>
+<li><code>extract_phrases(self, text, min_length, max_length)</code>: Extract meaningful phrases from text</li>
+<li><code>clean_text_for_embedding(self, text)</code>: Clean and prepare text for embedding generation</li>
+<li><code>calculate_text_similarity(self, text1, text2)</code>: Calculate basic text similarity using word overlap</li>
+</ul>
+<h4 id="relationshipextractor"><code>RelationshipExtractor</code></h4>
+<p>Extract semantic relationships between entities.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, embedding_provider)</code></li>
+<li><code>_is_hyponym(self, source, target)</code>: Check if source is a more specific term than target</li>
+<li><code>_is_hypernym(self, source, target)</code>: Check if source is a more general term than target</li>
+<li><code>_is_meronym(self, source, target)</code>: Check if source is part of target</li>
+<li><code>_is_holonym(self, source, target)</code>: Check if source contains target as part</li>
+<li><code>_score_to_confidence_level(self, score)</code>: Convert numeric score to confidence level</li>
+<li><code>_generate_relationship_id(self)</code>: Generate unique relationship ID</li>
+</ul>
+<h4 id="conceptextractor"><code>ConceptExtractor</code></h4>
+<p>Extract high-level semantic concepts from entity collections.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, embedding_provider)</code></li>
+<li><code>_generate_concept_name(self, keywords, entities)</code>: Generate meaningful concept name</li>
+<li><code>_determine_concept_type(self, entity_types)</code>: Determine concept type based on entity types</li>
+<li><code>_extract_domains(self, entities)</code>: Extract domain information from entities</li>
+</ul>
+<h4 id="semanticenrichmentengine"><code>SemanticEnrichmentEngine</code></h4>
+<p>Main engine for semantic enrichment operations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository, embedding_provider)</code></li>
+</ul>
+<h2 id="module-search">Module: search</h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/semantic/search.py</code></p>
+<h3 id="classes_19">Classes</h3>
+<h4 id="searchstrategy"><code>SearchStrategy</code></h4>
+<p>Different semantic search strategies.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="rankingstrategy"><code>RankingStrategy</code></h4>
+<p>Ranking strategies for search results.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="searchscope"><code>SearchScope</code></h4>
+<p>Scope of semantic search.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="searchconfiguration"><code>SearchConfiguration</code></h4>
+<p>Configuration for semantic search operations.</p>
+<h4 id="rankingfactors"><code>RankingFactors</code></h4>
+<p>Factors used in result ranking.</p>
+<h4 id="searchcontext"><code>SearchContext</code></h4>
+<p>Context for semantic search session.</p>
+<h4 id="searchmetrics"><code>SearchMetrics</code></h4>
+<p>Metrics for search performance tracking.</p>
+<h4 id="queryexpander"><code>QueryExpander</code></h4>
+<p>Expands search queries with related terms.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository, embedding_provider)</code></li>
+<li><code>_get_relationship_weight(self, rel_type)</code>: Get weight for relationship type in expansion</li>
+</ul>
+<h4 id="resultranker"><code>ResultRanker</code></h4>
+<p>Ranks search results using multiple factors.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>_calculate_freshness_score(self, result)</code>: Calculate freshness score based on recency</li>
+<li><code>_extract_confidence_score(self, result)</code>: Extract confidence score from result metadata</li>
+<li><code>_calculate_domain_relevance(self, result, context)</code>: Calculate domain relevance score</li>
+<li><code>_calculate_final_score(self, factors, config)</code>: Calculate final ranking score based on strategy</li>
+</ul>
+<h4 id="semanticsearchengine"><code>SemanticSearchEngine</code></h4>
+<p>Advanced semantic search engine with multiple strategies.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository, embedding_provider)</code></li>
+<li><code>_generate_cache_key(self, query, config)</code>: Generate cache key for search query and config</li>
+</ul>
+<h2 id="module-init_10">Module: <strong>init</strong></h2>
+<p>System governance, monitoring, access control, and operational management.
+Provides administrative oversight and production-ready operational capabilities.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/governance/__init__.py</code></p>
+<h3 id="classes_20">Classes</h3>
+<h4 id="accesslevel"><code>AccessLevel</code></h4>
+<p>Access control levels.</p>
+<p><strong>Inherits from:</strong> Enum</p>
+<h4 id="alertseverity"><code>AlertSeverity</code></h4>
+<p>Alert severity levels.</p>
+<p><strong>Inherits from:</strong> Enum</p>
+<h4 id="user"><code>User</code></h4>
+<p>User representation for access control.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__post_init__(self)</code></li>
+<li><code>_generate_api_key(self)</code>: Generate secure API key</li>
+<li><code>has_permission(self, permission)</code>: Check if user has specific permission</li>
+<li><code>can_access_resource(self, resource_access_level)</code>: Check if user can access resource based on access level</li>
+</ul>
+<h4 id="auditlogentry"><code>AuditLogEntry</code></h4>
+<p>Audit log entry for tracking system activities.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__post_init__(self)</code></li>
+</ul>
+<h4 id="systemmetrics"><code>SystemMetrics</code></h4>
+<p>System performance and health metrics.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>to_dict(self)</code>: Convert to dictionary for JSON serialization</li>
+</ul>
+<h4 id="alert"><code>Alert</code></h4>
+<p>System alert representation.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__post_init__(self)</code></li>
+<li><code>resolve(self, resolved_by)</code>: Mark alert as resolved</li>
+</ul>
+<h4 id="usermanager"><code>UserManager</code></h4>
+<p>User management and access control.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>_setup_default_admin(self)</code>: Create default admin user if none exists</li>
+<li><code>add_user(self, user)</code>: Add new user to the system</li>
+<li><code>authenticate_user(self, username, password)</code>: Authenticate user by username and password</li>
+<li><code>authenticate_api_key(self, api_key)</code>: Authenticate user by API key</li>
+<li><code>create_session(self, user)</code>: Create user session</li>
+<li><code>validate_session(self, session_id)</code>: Validate session and return user</li>
+<li><code>revoke_session(self, session_id)</code>: Revoke user session</li>
+<li><code>get_active_users(self)</code>: Get list of active users</li>
+</ul>
+<h4 id="auditlogger"><code>AuditLogger</code></h4>
+<p>Audit logging for tracking system activities.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, log_file)</code></li>
+<li><code>_load_existing_logs(self)</code>: Load existing audit logs from file</li>
+<li><code>log_action(self, user_id, action, resource, details, success, error_message, ip_address, user_agent)</code>: Log user action for audit trail</li>
+<li><code>_write_entry_to_file(self, entry)</code>: Write audit entry to log file</li>
+<li><code>get_logs(self, user_id, action, start_time, end_time, limit)</code>: Retrieve audit logs with filtering</li>
+</ul>
+<h4 id="systemmonitor"><code>SystemMonitor</code></h4>
+<p>System monitoring and health checking.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>collect_metrics(self)</code>: Collect current system metrics</li>
+<li><code>_check_alert_conditions(self, metrics)</code>: Check for conditions that should trigger alerts</li>
+<li><code>create_alert(self, severity, title, message, component, metadata)</code>: Create system alert</li>
+<li><code>resolve_alert(self, alert_id, resolved_by)</code>: Resolve an alert</li>
+<li><code>get_active_alerts(self)</code>: Get all unresolved alerts</li>
+<li><code>get_alerts_by_severity(self, severity)</code>: Get alerts by severity level</li>
+<li><code>record_query_time(self, duration)</code>: Record query execution time for metrics</li>
+<li><code>record_error(self)</code>: Record an error occurrence</li>
+<li><code>get_system_health(self)</code>: Get comprehensive system health report</li>
+</ul>
+<h4 id="governancemanager"><code>GovernanceManager</code></h4>
+<p>Main governance and monitoring coordinator.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>_load_config(self)</code>: Load governance configuration</li>
+<li><code>_start_monitoring_tasks(self)</code>: Start background monitoring tasks</li>
+<li><code>log_request(self, user_id, action, resource, details, success, error_message)</code>: Log API request for audit trail</li>
+<li><code>get_dashboard_data(self)</code>: Get data for governance dashboard</li>
+</ul>
+<h3 id="functions_4">Functions</h3>
+<h4 id="require_permissionpermission"><code>require_permission(permission)</code></h4>
+<p>Decorator to require specific permission for API endpoint.</p>
+<h2 id="module-adapter">Module: adapter</h2>
+<p>Domain adapter for field mapping and data transformation.</p>
+<p>This module provides the core domain adaptation functionality, transforming
+raw input data according to domain pack specifications. It handles field
+mapping, normalization, validation, and prompt template resolution.</p>
+<p>Key components:
+- DomainAdapter: Main adapter class with transformation logic
+- FieldMapper: Handles input field mapping to core schema
+- DataTransformer: Applies normalization rules and transformations</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/domain/adapter.py</code></p>
+<h3 id="classes_21">Classes</h3>
+<h4 id="domainadaptererror"><code>DomainAdapterError</code></h4>
+<p>Raised when domain adaptation fails.</p>
+<p><strong>Inherits from:</strong> Exception</p>
+<h4 id="fieldmapper"><code>FieldMapper</code></h4>
+<p>Handles mapping of input fields to core schema fields.</p>
+<p>Uses the input_mapping configuration from domain packs to transform
+raw data dictionaries into standardized core schema format.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize field mapper with domain pack configuration</li>
+<li><code>map_fields(self, raw_data)</code>: Map raw input fields to core schema fields</li>
+<li><code>generate_stable_id(self, mapped_data)</code>: Generate a stable ID for an item based on title and source URI</li>
+</ul>
+<h4 id="datatransformer"><code>DataTransformer</code></h4>
+<p>Applies normalization rules and data transformations.</p>
+<p>Uses rules from domain packs to normalize values, apply mappings,
+and filter blocked terms.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize data transformer with domain pack rules</li>
+<li><code>normalize_text(self, text)</code>: Apply text normalization rules</li>
+<li><code>normalize_attribute_value(self, attribute_key, value)</code>: Apply attribute-specific value normalization</li>
+<li><code>is_blocked_term(self, text)</code>: Check if text contains blocked terms</li>
+<li><code>filter_blocked_content(self, data)</code>: Filter out content with blocked terms</li>
+</ul>
+<h4 id="domainadapter"><code>DomainAdapter</code></h4>
+<p>Main domain adapter for transforming raw data using domain packs.</p>
+<p>Combines field mapping, data transformation, and validation to convert
+raw input data into standardized IngestionItem objects according to
+domain pack specifications.</p>
+<p>Example:
+    &gt;&gt;&gt; adapter = DomainAdapter.from_file("domains/ecommerce/domain.yaml")
+    &gt;&gt;&gt; raw_item = {"product_name": "iPhone", "desc": "Great phone"}
+    &gt;&gt;&gt; item = adapter.adapt(raw_item)
+    &gt;&gt;&gt; print(item.title, item.description)</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize domain adapter with a domain pack</li>
+<li><code>from_file(cls, path)</code>: Create domain adapter from a domain pack file</li>
+<li><code>from_domain_name(cls, domain_name, base_path)</code>: Create domain adapter by domain name</li>
+<li><code>adapt(self, raw_data, source)</code>: Adapt raw input data to an IngestionItem</li>
+<li><code>adapt_batch(self, raw_items, source)</code>: Adapt a batch of raw items</li>
+<li><code>get_prompt_template(self, prompt_type)</code>: Get a formatted prompt template from the domain pack</li>
+<li><code>get_attribute_config(self, attribute_key)</code>: Get configuration for a specific attribute</li>
+<li><code>get_runtime_config(self)</code>: Get runtime configuration from the domain pack</li>
+<li><code>validate_required_fields(self, data)</code>: Check if data has required fields according to runtime config</li>
+<li><code>should_dedupe_items(self, item1, item2)</code>: Check if two items should be considered duplicates</li>
+<li><code>_get_nested_value(self, data, field_path)</code>: Get value from nested dictionary using dot notation</li>
+</ul>
+<h2 id="module-init_11">Module: <strong>init</strong></h2>
+<p>Domain adaptation and configuration management.</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/domain/__init__.py</code></p>
+<h2 id="module-loader">Module: loader</h2>
+<p>Domain pack loader for YAML configuration files.</p>
+<p>This module handles loading, validation, and caching of domain.yaml files.
+Domain packs provide flexible configuration for adapting the core framework
+to specific domains like e-commerce, media, or knowledge graphs.</p>
+<p>Key components:
+- DomainPackLoader: Main loader with caching and validation
+- load_domain_pack: Convenience function for simple loading
+- validate_domain_pack: Standalone validation function</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/domain/loader.py</code></p>
+<h3 id="classes_22">Classes</h3>
+<h4 id="domainpackloaderror"><code>DomainPackLoadError</code></h4>
+<p>Raised when domain pack loading fails.</p>
+<p><strong>Inherits from:</strong> Exception</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, message, path, cause)</code></li>
+</ul>
+<h4 id="domainpackloader"><code>DomainPackLoader</code></h4>
+<p>Loads and validates domain pack YAML files with caching.</p>
+<p>Provides loading, validation, and caching of domain.yaml files.
+Supports both file paths and directory scanning.</p>
+<p>Example:
+    &gt;&gt;&gt; loader = DomainPackLoader()
+    &gt;&gt;&gt; pack = loader.load("domains/ecommerce/domain.yaml")
+    &gt;&gt;&gt; print(pack.domain, pack.taxonomy_version)</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="c1"># Load from directory (looks for domain.yaml)</span>
+<span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">pack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">loader</span><span class="o">.</span><span class="n">load_from_directory</span><span class="p">(</span><span class="s2">&quot;domains/ecommerce&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, cache_size, validate_on_load)</code>: Initialize the domain pack loader</li>
+<li><code>load(self, path)</code>: Load a domain pack from a YAML file</li>
+<li><code>load_from_directory(self, directory)</code>: Load a domain pack from a directory (looks for domain</li>
+<li><code>reload(self, path)</code>: Reload a domain pack, bypassing cache</li>
+<li><code>clear_cache(self)</code>: Clear the domain pack cache</li>
+<li><code>list_cached(self)</code>: List currently cached domain packs</li>
+</ul>
+<h3 id="functions_5">Functions</h3>
+<h4 id="load_domain_packpath-validate"><code>load_domain_pack(path, validate)</code></h4>
+<p>Load a domain pack from a YAML file (convenience function).</p>
+<p>Args:
+    path: Path to the domain.yaml file
+    validate: Whether to validate the pack during loading</p>
+<p>Returns:
+    Loaded DomainPack</p>
+<p>Raises:
+    DomainPackLoadError: If loading or validation fails</p>
+<p>Example:
+    &gt;&gt;&gt; pack = load_domain_pack("domains/ecommerce/domain.yaml")
+    &gt;&gt;&gt; print(f"Loaded {pack.domain} v{pack.taxonomy_version}")</p>
+<p><strong>Returns:</strong> <code>DomainPack</code></p>
+<h4 id="validate_domain_packdata"><code>validate_domain_pack(data)</code></h4>
+<p>Validate raw domain pack data.</p>
+<p>Args:
+    data: Raw domain pack data (from YAML)</p>
+<p>Returns:
+    Validated DomainPack</p>
+<p>Raises:
+    ValidationError: If validation fails</p>
+<p>Example:
+    &gt;&gt;&gt; with open("domain.yaml") as f:
+    ...     raw_data = yaml.safe_load(f)
+    &gt;&gt;&gt; pack = validate_domain_pack(raw_data)</p>
+<p><strong>Returns:</strong> <code>DomainPack</code></p>
+<h4 id="load_cached_domain_packpath"><code>load_cached_domain_pack(path)</code></h4>
+<p>Load a domain pack with simple LRU caching.</p>
+<p>Args:
+    path: Path to the domain.yaml file (as string for hashing)</p>
+<p>Returns:
+    Cached DomainPack</p>
+<p>Note:
+    This is a simple caching function. For more control,
+    use DomainPackLoader directly.</p>
+<p><strong>Decorators:</strong> lru_cache</p>
+<p><strong>Returns:</strong> <code>DomainPack</code></p>
+<h4 id="scan_domain_packsbase_directory"><code>scan_domain_packs(base_directory)</code></h4>
+<p>Scan a directory tree for domain packs.</p>
+<p>Args:
+    base_directory: Root directory to scan</p>
+<p>Returns:
+    Dict mapping domain names to loaded DomainPacks</p>
+<p>Raises:
+    DomainPackLoadError: If any domain pack fails to load</p>
+<p>Example:
+    &gt;&gt;&gt; packs = scan_domain_packs("domains/")
+    &gt;&gt;&gt; print(f"Found domains: {list(packs.keys())}")</p>
+<h4 id="get_domain_pack_infopath"><code>get_domain_pack_info(path)</code></h4>
+<p>Get basic info about a domain pack without full validation.</p>
+<p>Args:
+    path: Path to the domain.yaml file</p>
+<p>Returns:
+    Dict with basic domain pack information</p>
+<p>Raises:
+    DomainPackLoadError: If file cannot be read</p>
+<p>Example:
+    &gt;&gt;&gt; info = get_domain_pack_info("domains/ecommerce/domain.yaml")
+    &gt;&gt;&gt; print(f"Domain: {info['domain']}, Version: {info['taxonomy_version']}")</p>
+<h2 id="module-merger">Module: merger</h2>
+<p>Schema merging and validation utilities.</p>
+<p>This module provides utilities for merging domain-specific schemas with
+the core schema, validating attribute definitions, and resolving conflicts.
+It supports both schema-level merging and runtime validation.</p>
+<p>Key components:
+- SchemaMerger: Main class for schema merging operations
+- AttributeValidator: Validates attribute definitions and values
+- SchemaConflictResolver: Handles conflicts during merging</p>
+<p><strong>Module Path:</strong> <code>src/echo_roots/domain/merger.py</code></p>
+<h3 id="classes_23">Classes</h3>
+<h4 id="conflictresolution"><code>ConflictResolution</code></h4>
+<p>Strategies for resolving schema conflicts.</p>
+<p><strong>Inherits from:</strong> Enum</p>
+<h4 id="schemavalidationerror"><code>SchemaValidationError</code></h4>
+<p>Raised when schema validation fails.</p>
+<p><strong>Inherits from:</strong> Exception</p>
+<h4 id="schemaconflicterror"><code>SchemaConflictError</code></h4>
+<p>Raised when schema conflicts cannot be resolved.</p>
+<p><strong>Inherits from:</strong> Exception</p>
+<h4 id="attributevalidator"><code>AttributeValidator</code></h4>
+<p>Validates attribute definitions and values against schema rules.</p>
+<p>Provides validation for both domain-specific attribute configurations
+and extracted attribute values.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, domain_pack)</code>: Initialize validator with domain pack configuration</li>
+<li><code>_build_attribute_configs(self)</code>: Build attribute configurations from domain pack</li>
+<li><code>validate_attribute_definition(self, key, definition)</code>: Validate an attribute definition</li>
+<li><code>validate_attribute_value(self, key, value)</code>: Validate an attribute value against its configuration</li>
+<li><code>validate_extraction(self, extraction)</code>: Validate an attribute extraction against schema rules</li>
+</ul>
+<h4 id="schemaconflictresolver"><code>SchemaConflictResolver</code></h4>
+<p>Handles conflicts during schema merging operations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, resolution_strategy)</code>: Initialize conflict resolver with strategy</li>
+<li><code>resolve_attribute_conflict(self, key, core_definition, domain_definition)</code>: Resolve conflicting attribute definitions</li>
+<li><code>_find_conflicts(self, core_def, domain_def)</code>: Find conflicting fields between definitions</li>
+<li><code>_merge_definitions(self, core_def, domain_def)</code>: Merge two attribute definitions intelligently</li>
+</ul>
+<h4 id="schemamerger"><code>SchemaMerger</code></h4>
+<p>Main class for schema merging operations.</p>
+<p>Merges domain-specific schemas with core schemas, validates the result,
+and provides utilities for working with merged schemas.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, conflict_resolution, validate_merge)</code>: Initialize schema merger</li>
+<li><code>_load_core_schema(self)</code>: Load the core schema definition</li>
+<li><code>merge_schemas(self, domain_pack)</code>: Merge domain pack schema with core schema</li>
+<li><code>validate_merged_schema(self, schema)</code>: Validate a merged schema for consistency and completeness</li>
+<li><code>get_attribute_schema(self, schema, attribute_key)</code>: Get schema definition for a specific attribute</li>
+<li><code>list_attributes(self, schema)</code>: List all attributes in a merged schema</li>
+<li><code>export_schema(self, schema, format)</code>: Export merged schema in specified format</li>
+</ul>
+<h3 id="functions_6">Functions</h3>
+<h4 id="merge_domain_schemas"><code>merge_domain_schemas()</code></h4>
+<p>Convenience function to merge multiple domain pack schemas.</p>
+<p>Args:
+    *domain_packs: Domain packs to merge
+    conflict_resolution: Strategy for resolving conflicts</p>
+<p>Returns:
+    Merged schema from all domain packs</p>
+<h2 id="module-init_12">Module: <strong>init</strong></h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/vocabulary/__init__.py</code></p>
+<h2 id="module-navigator_1">Module: navigator</h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/vocabulary/navigator.py</code></p>
+<h3 id="classes_24">Classes</h3>
+<h4 id="vocabularyhierarchy"><code>VocabularyHierarchy</code></h4>
+<p>Represents a vocabulary hierarchy tree.</p>
+<h4 id="vocabularycluster"><code>VocabularyCluster</code></h4>
+<p>A cluster of related vocabulary terms.</p>
+<h4 id="vocabularyrecommendation"><code>VocabularyRecommendation</code></h4>
+<p>Recommendation for vocabulary improvement.</p>
+<h4 id="vocabularynavigator"><code>VocabularyNavigator</code></h4>
+<p>Navigation utilities for vocabulary hierarchies and relationships.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>_calculate_depths(self, hierarchy)</code>: Calculate depth for each term in hierarchy</li>
+<li><code>_calculate_string_similarity(self, str1, str2)</code>: Calculate string similarity using simple algorithm</li>
+</ul>
+<h4 id="vocabularyanalyzer"><code>VocabularyAnalyzer</code></h4>
+<p>Analyzes vocabulary for quality, coverage, and improvement opportunities.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository, navigator)</code></li>
+</ul>
+<h2 id="module-manager_1">Module: manager</h2>
+<p><strong>Module Path:</strong> <code>src/echo_roots/vocabulary/manager.py</code></p>
+<h3 id="classes_25">Classes</h3>
+<h4 id="vocabularytype"><code>VocabularyType</code></h4>
+<p>Types of controlled vocabularies.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="validationlevel"><code>ValidationLevel</code></h4>
+<p>Validation strictness levels.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="mappingconfidence"><code>MappingConfidence</code></h4>
+<p>Confidence levels for vocabulary mappings.</p>
+<p><strong>Inherits from:</strong> str, Enum</p>
+<h4 id="vocabularyterm"><code>VocabularyTerm</code></h4>
+<p>A controlled vocabulary term with metadata.</p>
+<h4 id="vocabularymapping"><code>VocabularyMapping</code></h4>
+<p>Mapping between raw input and controlled vocabulary.</p>
+<h4 id="validationresult"><code>ValidationResult</code></h4>
+<p>Result of vocabulary validation.</p>
+<h4 id="vocabularyrequest"><code>VocabularyRequest</code></h4>
+<p>Request to create or update vocabulary terms.</p>
+<h4 id="vocabularystats"><code>VocabularyStats</code></h4>
+<p>Statistics about vocabulary coverage and quality.</p>
+<h4 id="vocabularyrepository"><code>VocabularyRepository</code></h4>
+<p>Abstract repository for vocabulary storage.</p>
+<p><strong>Inherits from:</strong> ABC</p>
+<h4 id="vocabularynormalizer"><code>VocabularyNormalizer</code></h4>
+<p>Normalizes vocabulary values for consistent matching.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self)</code></li>
+<li><code>normalize_term(self, term)</code>: Normalize a term for consistent matching</li>
+<li><code>extract_units(self, text)</code>: Extract units and measurements from text</li>
+<li><code>_expand_abbreviations(self, text)</code>: Expand common abbreviations</li>
+</ul>
+<h4 id="vocabularymatcher"><code>VocabularyMatcher</code></h4>
+<p>Matches raw input to controlled vocabulary terms.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, normalizer)</code></li>
+<li><code>_score_to_confidence(self, score)</code>: Convert numeric score to confidence level</li>
+</ul>
+<h4 id="vocabularyvalidator"><code>VocabularyValidator</code></h4>
+<p>Validates vocabulary values against controlled vocabularies.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, matcher)</code></li>
+</ul>
+<h4 id="vocabularymanager"><code>VocabularyManager</code></h4>
+<p>High-level manager for controlled vocabulary operations.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>__init__(self, repository)</code></li>
+<li><code>_generate_term_id(self)</code>: Generate a unique term ID</li>
+<li><code>_generate_mapping_id(self)</code>: Generate a unique mapping ID</li>
+<li><code>_score_to_confidence(self, score)</code>: Convert numeric score to confidence level</li>
+<li><code>_clear_cache(self)</code>: Clear internal caches</li>
+</ul>
+</body>
+</html>
+        

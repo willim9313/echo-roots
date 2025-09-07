@@ -13,7 +13,7 @@ from typing import List, Optional, Dict, Any, Union
 import uvicorn
 from fastapi import FastAPI, HTTPException, Query, Depends, BackgroundTasks, Request, Query as QueryParam
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field, ConfigDict
 import json
 
@@ -607,6 +607,144 @@ async def get_audit_logs(
     except Exception as e:
         logger.error(f"Audit logs retrieval error: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to get audit logs: {str(e)}")
+
+
+# ================================
+# Documentation Endpoints
+# ================================
+
+@app.get("/docs/list", tags=["Documentation"])
+async def list_documentation():
+    """List all available documentation."""
+    from echo_roots.documentation import documentation_manager
+    
+    try:
+        docs = documentation_manager.knowledge_base.list_documents()
+        docs_data = []
+        
+        for doc_id, doc in docs:
+            docs_data.append({
+                "id": doc_id,
+                "title": doc.title,
+                "type": doc.doc_type.value,
+                "sections": len(doc.sections),
+                "created_at": doc.created_at.isoformat(),
+                "updated_at": doc.updated_at.isoformat(),
+                "version": doc.version,
+                "authors": doc.authors,
+                "tags": doc.tags
+            })
+        
+        return {"message": "Documentation list retrieved", "documents": docs_data}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error listing documentation: {str(e)}")
+
+
+@app.get("/docs/search", tags=["Documentation"])
+async def search_documentation(
+    q: str = Query(..., description="Search query"),
+    limit: int = Query(5, description="Maximum number of results")
+):
+    """Search documentation."""
+    from echo_roots.documentation import documentation_manager
+    
+    try:
+        results = documentation_manager.search_docs(q, limit)
+        search_results = []
+        
+        for doc_id, doc, score in results:
+            search_results.append({
+                "id": doc_id,
+                "title": doc.title,
+                "type": doc.doc_type.value,
+                "score": score,
+                "updated_at": doc.updated_at.isoformat(),
+                "preview": doc.sections[0].content[:200] + "..." if doc.sections else ""
+            })
+        
+        return {"message": "Documentation search completed", "query": q, "results": search_results}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error searching documentation: {str(e)}")
+
+
+@app.get("/docs/{doc_id}", tags=["Documentation"])
+async def get_document(
+    doc_id: str,
+    format: str = Query("json", description="Response format (json, markdown, html)")
+):
+    """Get a specific document."""
+    from echo_roots.documentation import documentation_manager
+    
+    try:
+        doc = documentation_manager.knowledge_base.get_document(doc_id)
+        
+        if not doc:
+            raise HTTPException(status_code=404, detail=f"Document not found: {doc_id}")
+        
+        if format == "markdown":
+            return Response(
+                content=doc.to_markdown(),
+                media_type="text/markdown"
+            )
+        elif format == "html":
+            return Response(
+                content=doc.to_html(),
+                media_type="text/html"
+            )
+        else:
+            # JSON format
+            return {
+                "id": doc_id,
+                "title": doc.title,
+                "type": doc.doc_type.value,
+                "created_at": doc.created_at.isoformat(),
+                "updated_at": doc.updated_at.isoformat(),
+                "version": doc.version,
+                "authors": doc.authors,
+                "tags": doc.tags,
+                "sections": [section.to_dict() for section in doc.sections],
+                "metadata": doc.metadata
+            }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving document: {str(e)}")
+
+
+@app.post("/docs/generate", tags=["Documentation"])
+async def generate_documentation():
+    """Generate all documentation."""
+    from echo_roots.documentation import documentation_manager
+    
+    try:
+        documentation_manager.initialize()
+        documentation_manager.generate_all_docs()
+        
+        stats = documentation_manager.get_doc_stats()
+        
+        return {
+            "message": "Documentation generated successfully",
+            "stats": stats
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating documentation: {str(e)}")
+
+
+@app.get("/docs/stats", tags=["Documentation"])
+async def get_documentation_stats():
+    """Get documentation statistics."""
+    from echo_roots.documentation import documentation_manager
+    
+    try:
+        stats = documentation_manager.get_doc_stats()
+        return {"message": "Documentation stats retrieved", "stats": stats}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting documentation stats: {str(e)}")
 
 
 # Error handlers

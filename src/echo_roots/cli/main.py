@@ -17,6 +17,7 @@ from echo_roots.retrieval import (
     QueryType, QueryRequest, QueryEngine, FilterOperator, QueryFilter,
     SortCriterion, SortOrder
 )
+from echo_roots.documentation import documentation_manager, interactive_help
 
 console = Console()
 
@@ -30,9 +31,11 @@ app = typer.Typer(
 query_app = typer.Typer(name="query", help="Query and search operations")
 api_app = typer.Typer(name="api", help="API server operations")
 gov_app = typer.Typer(name="governance", help="System governance and monitoring")
+docs_app = typer.Typer(name="docs", help="Documentation and help system")
 app.add_typer(query_app, name="query")
 app.add_typer(api_app, name="api")
 app.add_typer(gov_app, name="governance")
+app.add_typer(docs_app, name="docs")
 
 
 class QueryTypeChoice(str, Enum):
@@ -781,6 +784,310 @@ def show_audit_logs(
         
     except Exception as e:
         console.print(f"❌ [red]Error getting audit logs:[/red] {str(e)}")
+
+
+# ================================
+# Documentation Commands
+# ================================
+
+@docs_app.command("generate")
+def generate_docs(
+    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o", help="Output directory for documentation"),
+    format: str = typer.Option("all", "--format", "-f", help="Output format (markdown, html, all)"),
+    force: bool = typer.Option(False, "--force", help="Overwrite existing documentation")
+):
+    """Generate comprehensive documentation."""
+    try:
+        console.print("📚 [blue]Generating documentation...[/blue]")
+        
+        # Initialize documentation manager with custom path if provided
+        if output_dir:
+            from echo_roots.documentation import DocumentationManager
+            doc_manager = DocumentationManager(output_dir)
+        else:
+            doc_manager = documentation_manager
+        
+        # Initialize and generate docs
+        doc_manager.initialize()
+        doc_manager.generate_all_docs()
+        
+        # Show statistics
+        stats = doc_manager.get_doc_stats()
+        
+        stats_table = Table(title="📊 Documentation Statistics", show_header=True, header_style="bold magenta")
+        stats_table.add_column("Metric", style="cyan")
+        stats_table.add_column("Value", style="green")
+        
+        stats_table.add_row("Total Documents", str(stats['total_documents']))
+        stats_table.add_row("Total Sections", str(stats['total_sections']))
+        
+        for doc_type, count in stats['by_type'].items():
+            stats_table.add_row(f"  {doc_type.replace('_', ' ').title()}", str(count))
+        
+        if stats['last_updated']:
+            stats_table.add_row("Last Updated", stats['last_updated'].strftime('%Y-%m-%d %H:%M'))
+        
+        console.print(stats_table)
+        console.print(f"\n✅ [green]Documentation generated in:[/green] {doc_manager.docs_path}")
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error generating documentation:[/red] {str(e)}")
+
+
+@docs_app.command("search")
+def search_docs(
+    query: str = typer.Argument(..., help="Search query"),
+    limit: int = typer.Option(5, "--limit", "-l", help="Maximum number of results")
+):
+    """Search documentation."""
+    try:
+        console.print(f"🔍 [blue]Searching documentation for:[/blue] {query}")
+        
+        results = documentation_manager.search_docs(query, limit)
+        
+        if not results:
+            console.print("❌ [yellow]No documentation found matching your query.[/yellow]")
+            return
+        
+        search_table = Table(title=f"📖 Search Results for '{query}'", show_header=True, header_style="bold magenta")
+        search_table.add_column("Document", style="cyan")
+        search_table.add_column("Type", style="blue")
+        search_table.add_column("Score", style="green")
+        search_table.add_column("Updated", style="white")
+        
+        for doc_id, doc, score in results:
+            search_table.add_row(
+                doc.title,
+                doc.doc_type.value.replace('_', ' ').title(),
+                f"{score:.1f}",
+                doc.updated_at.strftime('%Y-%m-%d')
+            )
+        
+        console.print(search_table)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error searching documentation:[/red] {str(e)}")
+
+
+@docs_app.command("list")
+def list_docs():
+    """List all available documentation."""
+    try:
+        docs = documentation_manager.knowledge_base.list_documents()
+        
+        if not docs:
+            console.print("❌ [yellow]No documentation available. Run 'docs generate' first.[/yellow]")
+            return
+        
+        docs_table = Table(title="📚 Available Documentation", show_header=True, header_style="bold magenta")
+        docs_table.add_column("ID", style="cyan")
+        docs_table.add_column("Title", style="blue")
+        docs_table.add_column("Type", style="green")
+        docs_table.add_column("Sections", style="white")
+        docs_table.add_column("Updated", style="white")
+        
+        for doc_id, doc in docs:
+            docs_table.add_row(
+                doc_id,
+                doc.title,
+                doc.doc_type.value.replace('_', ' ').title(),
+                str(len(doc.sections)),
+                doc.updated_at.strftime('%Y-%m-%d')
+            )
+        
+        console.print(docs_table)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error listing documentation:[/red] {str(e)}")
+
+
+@docs_app.command("show")
+def show_doc(
+    doc_id: str = typer.Argument(..., help="Document ID to display"),
+    format: str = typer.Option("markdown", "--format", "-f", help="Display format (markdown, plain)")
+):
+    """Show a specific document."""
+    try:
+        doc = documentation_manager.knowledge_base.get_document(doc_id)
+        
+        if not doc:
+            console.print(f"❌ [red]Document not found:[/red] {doc_id}")
+            available_docs = [doc_id for doc_id, _ in documentation_manager.knowledge_base.list_documents()]
+            if available_docs:
+                console.print(f"Available documents: {', '.join(available_docs)}")
+            return
+        
+        if format == "markdown":
+            from rich.markdown import Markdown
+            console.print(Panel(
+                Markdown(doc.to_markdown()),
+                title=f"📄 {doc.title}",
+                border_style="blue"
+            ))
+        else:
+            console.print(Panel(
+                doc.to_markdown(),
+                title=f"📄 {doc.title}",
+                border_style="blue"
+            ))
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error displaying document:[/red] {str(e)}")
+
+
+@docs_app.command("help")
+def show_help(
+    topic: Optional[str] = typer.Argument(None, help="Help topic (command name or general topic)")
+):
+    """Show interactive help and guidance."""
+    try:
+        if topic:
+            # Check if it's a command
+            if topic in ["query", "api", "governance", "docs"]:
+                interactive_help.show_command_help(topic)
+            else:
+                interactive_help.show_topic_help(topic)
+        else:
+            # Show general help
+            help_panel = Panel(
+                """
+# 🚀 Echo-Roots Help System
+
+## Available Commands
+- **query**: Search and query operations  
+- **api**: API server management
+- **governance**: System administration and monitoring
+- **docs**: Documentation and help system
+
+## Available Topics
+- **getting-started**: Quick start guide
+- **configuration**: Configuration and setup
+- **troubleshooting**: Common issues and solutions
+
+## Usage Examples
+```bash
+# Get help for query commands
+echo-roots docs help query
+
+# Get getting started guide  
+echo-roots docs help getting-started
+
+# Search documentation
+echo-roots docs search "API reference"
+
+# Generate documentation
+echo-roots docs generate
+```
+
+## Quick Commands
+```bash
+echo-roots query search "machine learning"
+echo-roots api start
+echo-roots governance status
+echo-roots docs generate
+```
+                """,
+                title="📖 Echo-Roots Help",
+                border_style="green"
+            )
+            console.print(help_panel)
+            
+    except Exception as e:
+        console.print(f"❌ [red]Error showing help:[/red] {str(e)}")
+
+
+@docs_app.command("open")
+def open_docs(
+    doc_id: Optional[str] = typer.Option(None, "--doc", "-d", help="Specific document to open"),
+    browser: bool = typer.Option(True, "--browser", "-b", help="Open in browser")
+):
+    """Open documentation in browser or file manager."""
+    try:
+        docs_path = documentation_manager.docs_path
+        
+        if doc_id:
+            # Open specific document
+            html_file = docs_path / "knowledge_base" / "generated" / f"{doc_id}.html"
+            if html_file.exists():
+                if browser:
+                    import webbrowser
+                    webbrowser.open(html_file.as_uri())
+                    console.print(f"🌐 [green]Opened document in browser:[/green] {doc_id}")
+                else:
+                    console.print(f"📄 [blue]Document location:[/blue] {html_file}")
+            else:
+                console.print(f"❌ [red]Document file not found:[/red] {html_file}")
+        else:
+            # Open index page
+            index_file = docs_path / "knowledge_base" / "index.html"
+            if index_file.exists():
+                if browser:
+                    import webbrowser
+                    webbrowser.open(index_file.as_uri())
+                    console.print(f"🌐 [green]Opened documentation index in browser[/green]")
+                else:
+                    console.print(f"📄 [blue]Documentation index:[/blue] {index_file}")
+            else:
+                console.print("❌ [yellow]Documentation not generated. Run 'docs generate' first.[/yellow]")
+                
+    except Exception as e:
+        console.print(f"❌ [red]Error opening documentation:[/red] {str(e)}")
+
+
+@docs_app.command("stats")
+def show_doc_stats():
+    """Show documentation statistics and health."""
+    try:
+        stats = documentation_manager.get_doc_stats()
+        
+        # Main stats table
+        stats_table = Table(title="📊 Documentation Statistics", show_header=True, header_style="bold magenta")
+        stats_table.add_column("Metric", style="cyan")
+        stats_table.add_column("Value", style="green")
+        
+        stats_table.add_row("Total Documents", str(stats['total_documents']))
+        stats_table.add_row("Total Sections", str(stats['total_sections']))
+        
+        if stats['last_updated']:
+            stats_table.add_row("Last Updated", stats['last_updated'].strftime('%Y-%m-%d %H:%M'))
+        
+        console.print(stats_table)
+        
+        # Document types breakdown
+        if stats['by_type']:
+            types_table = Table(title="📝 Documents by Type", show_header=True, header_style="bold blue")
+            types_table.add_column("Document Type", style="cyan")
+            types_table.add_column("Count", style="green")
+            
+            for doc_type, count in stats['by_type'].items():
+                types_table.add_row(doc_type.replace('_', ' ').title(), str(count))
+            
+            console.print(types_table)
+        
+        # File system info
+        docs_path = documentation_manager.docs_path
+        if docs_path.exists():
+            kb_path = docs_path / "knowledge_base"
+            if kb_path.exists():
+                generated_files = list((kb_path / "generated").glob("*")) if (kb_path / "generated").exists() else []
+                
+                file_info = Table(title="📁 File System", show_header=True, header_style="bold green")
+                file_info.add_column("Location", style="cyan")
+                file_info.add_column("Status", style="green")
+                
+                file_info.add_row("Documentation Root", str(docs_path))
+                file_info.add_row("Knowledge Base", str(kb_path))
+                file_info.add_row("Generated Files", str(len(generated_files)))
+                
+                if (kb_path / "index.html").exists():
+                    file_info.add_row("Index Page", "✅ Available")
+                else:
+                    file_info.add_row("Index Page", "❌ Missing")
+                
+                console.print(file_info)
+        
+    except Exception as e:
+        console.print(f"❌ [red]Error getting documentation stats:[/red] {str(e)}")
 
 
 if __name__ == "__main__":
