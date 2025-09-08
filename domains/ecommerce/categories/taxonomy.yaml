@@ -1,0 +1,1269 @@
+# domains/ecommerce/categories/taxonomy.yaml
+categories:
+  - id: "electronics"
+    name: "電子產品"
+    level: 1
+    children:
+      - id: "smartphones"
+        name: "智慧型手機"
+        level: 2
+        attributes: ["brand", "storage_capacity", "screen_size", "color"]
+        children:
+          - id: "iphone"
+            name: "iPhone"
+            level: 3
+          - id: "android"
+            name: "Android手機"
+            level: 3
+      - id: "laptops"
+        name: "筆記型電腦"
+        level: 2
+        attributes: ["brand", "cpu", "ram", "storage"]
+      - id: "tablets"
+        name: "平板電腦"
+        level: 2
+        attributes: ["brand", "screen_size", "storage", "os"]
+      - id: "audio"
+        name: "音響設備"
+        level: 2
+        attributes: ["brand", "type", "connectivity"]
+      - id: "cameras"
+        name: "相機"
+        level: 2
+        attributes: ["brand", "type", "megapixels", "lens_mount"]
+
+  - id: "clothing"
+    name: "服飾"
+    level: 1
+    children:
+      - id: "mens_clothing"
+        name: "男裝"
+        level: 2
+        attributes: ["size", "color", "material", "fit"]
+      - id: "womens_clothing"
+        name: "女裝"
+        level: 2
+        attributes: ["size", "color", "style", "material"]
+      - id: "kids_clothing"
+        name: "童裝"
+        level: 2
+        attributes: ["size", "color", "age_group"]
+
+  - id: "footwear"
+    name: "鞋類"
+    level: 1
+    children:
+      - id: "sneakers"
+        name: "運動鞋"
+        level: 2
+        attributes: ["brand", "size", "color"]
+      - id: "formal_shoes"
+        name: "正式鞋"
+        level: 2
+        attributes: ["size", "material"]
+      - id: "boots"
+        name: "靴子"
+        level: 2
+        attributes: ["size", "shaft_height", "material"]
+
+  - id: "home_appliances"
+    name: "家電"
+    level: 1
+    children:
+      - id: "refrigerators"
+        name: "冰箱"
+        level: 2
+        attributes: ["capacity_l", "door_style", "energy_rating"]
+      - id: "washing_machines"
+        name: "洗衣機"
+        level: 2
+        attributes: ["type", "capacity_kg", "energy_rating"]
+      - id: "air_conditioners"
+        name: "冷氣機"
+        level: 2
+        attributes: ["type", "btu", "energy_rating"]
+      - id: "vacuum_cleaners"
+        name: "吸塵器"
+        level: 2
+        attributes: ["type", "power_w", "bagged"]
+
+  - id: "furniture"
+    name: "家具"
+    level: 1
+    children:
+      - id: "living_room"
+        name: "客廳家具"
+        level: 2
+        attributes: ["material", "seats"]
+      - id: "bedroom"
+        name: "臥室家具"
+        level: 2
+        attributes: ["size", "material"]
+      - id: "office_furniture"
+        name: "辦公家具"
+        level: 2
+        attributes: ["material", "adjustable"]
+
+  - id: "beauty"
+    name: "美妝保養"
+    level: 1
+    children:
+      - id: "skincare"
+        name: "保養品"
+        level: 2
+        attributes: ["skin_type", "concern", "active_ingredient"]
+      - id: "makeup"
+        name: "彩妝"
+        level: 2
+        attributes: ["shade", "finish", "skin_type"]
+      - id: "fragrance"
+        name: "香水"
+        level: 2
+        attributes: ["concentration", "notes"]
+
+  - id: "groceries"
+    name: "食品雜貨"
+    level: 1
+    children:
+      - id: "fresh_food"
+        name: "生鮮食品"
+        level: 2
+        attributes: ["origin", "weight", "organic"]
+      - id: "snacks"
+        name: "零食"
+        level: 2
+        attributes: ["flavor", "pack_size"]
+      - id: "beverages"
+        name: "飲料"
+        level: 2
+        attributes: ["type", "volume_ml", "sugar_free"]
+      - id: "alcohol"
+        name: "酒類"
+        level: 2
+        attributes: ["type", "abv", "volume_ml"]
+
+  - id: "sports"
+    name: "運動休閒"
+    level: 1
+    children:
+      - id: "fitness"
+        name: "健身器材"
+        level: 2
+        attributes: ["equipment_type", "max_load"]
+      - id: "outdoor_sports"
+        name: "戶外運動"
+        level: 2
+        attributes: ["sport_type", "capacity"]
+      - id: "team_sports"
+        name: "團隊運動"
+        level: 2
+        attributes: ["sport_type", "size"]
+
+  - id: "automotive"
+    name: "汽車與機車"
+    level: 1
+    children:
+      - id: "car_accessories"
+        name: "汽車配件"
+        level: 2
+        attributes: ["compatibility", "material"]
+      - id: "motorcycle_gear"
+        name: "機車裝備"
+        level: 2
+        attributes: ["size", "certification"]
+      - id: "tires"
+        name: "輪胎"
+        level: 2
+        attributes: ["size", "type", "speed_rating"]
+
+  - id: "books"
+    name: "書籍"
+    level: 1
+    children:
+      - id: "fiction"
+        name: "小說"
+        level: 2
+        attributes: ["genre", "language", "format"]
+      - id: "non_fiction"
+        name: "非小說"
+        level: 2
+        attributes: ["subject", "language", "format"]
+      - id: "comics"
+        name: "漫畫"
+        level: 2
+        attributes: ["series", "language", "format"]
+
+  - id: "toys"
+    name: "玩具"
+    level: 1
+    children:
+      - id: "educational_toys"
+        name: "益智玩具"
+        level: 2
+        attributes: ["age_group", "material"]
+      - id: "action_figures"
+        name: "公仔模型"
+        level: 2
+        attributes: ["series", "scale"]
+      - id: "board_games"
+        name: "桌遊"
+        level: 2
+        attributes: ["players", "age_group"]
+
+  - id: "pets"
+    name: "寵物用品"
+    level: 1
+    children:
+      - id: "dog_supplies"
+        name: "狗用品"
+        level: 2
+        attributes: ["breed_size", "flavor"]
+      - id: "cat_supplies"
+        name: "貓用品"
+        level: 2
+        attributes: ["litter_type", "flavor"]
+      - id: "aquatic"
+        name: "水族"
+        level: 2
+        attributes: ["tank_size", "filter_type"]
+
+  - id: "baby"
+    name: "嬰幼兒"
+    level: 1
+    children:
+      - id: "diapers"
+        name: "紙尿褲"
+        level: 2
+        attributes: ["size", "count"]
+      - id: "baby_care"
+        name: "嬰兒護理"
+        level: 2
+        attributes: ["skin_type", "scent"]
+      - id: "strollers"
+        name: "嬰兒車"
+        level: 2
+        attributes: ["fold_type", "weight_kg"]
+
+  - id: "health"
+    name: "保健"
+    level: 1
+    children:
+      - id: "supplements"
+        name: "營養補充"
+        level: 2
+        attributes: ["form", "dosage", "ingredient"]
+      - id: "health_monitoring"
+        name: "健康監測"
+        level: 2
+        attributes: ["device_type", "connectivity"]
+      - id: "first_aid"
+        name: "急救用品"
+        level: 2
+        attributes: ["type", "count"]
+
+  - id: "personal_care"
+    name: "個人清潔"
+    level: 1
+    children:
+      - id: "oral_care"
+        name: "口腔護理"
+        level: 2
+        attributes: ["type", "flavor"]
+      - id: "hair_care"
+        name: "髮品"
+        level: 2
+        attributes: ["hair_type", "concern"]
+      - id: "bath_body"
+        name: "沐浴護膚"
+        level: 2
+        attributes: ["scent", "skin_type"]
+
+  - id: "office_supplies"
+    name: "辦公用品"
+    level: 1
+    children:
+      - id: "paper"
+        name: "紙品"
+        level: 2
+        attributes: ["size", "gsm"]
+      - id: "printers"
+        name: "印表機"
+        level: 2
+        attributes: ["type", "dpi", "connectivity"]
+      - id: "office_equipment"
+        name: "辦公設備"
+        level: 2
+        attributes: ["type", "capacity"]
+
+  - id: "stationery"
+    name: "文具"
+    level: 1
+    children:
+      - id: "writing_instruments"
+        name: "書寫工具"
+        level: 2
+        attributes: ["tip_size", "ink_type"]
+      - id: "notebooks"
+        name: "筆記本"
+        level: 2
+        attributes: ["size", "pages", "paper_type"]
+      - id: "art_paper"
+        name: "美術紙"
+        level: 2
+        attributes: ["texture", "gsm"]
+
+  - id: "musical_instruments"
+    name: "樂器"
+    level: 1
+    children:
+      - id: "guitars"
+        name: "吉他"
+        level: 2
+        attributes: ["type", "scale_length"]
+      - id: "keyboards"
+        name: "鍵盤樂器"
+        level: 2
+        attributes: ["keys", "polyphony"]
+      - id: "percussion"
+        name: "打擊樂器"
+        level: 2
+        attributes: ["type", "pieces"]
+
+  - id: "travel"
+    name: "旅遊用品"
+    level: 1
+    children:
+      - id: "travel_accessories"
+        name: "旅行配件"
+        level: 2
+        attributes: ["material", "size"]
+      - id: "adapters"
+        name: "轉接與變壓"
+        level: 2
+        attributes: ["plug_type", "watt"]
+      - id: "travel_bottles"
+        name: "分裝瓶罐"
+        level: 2
+        attributes: ["volume_ml", "material"]
+
+  - id: "luggage"
+    name: "行李箱與包袋"
+    level: 1
+    children:
+      - id: "suitcases"
+        name: "行李箱"
+        level: 2
+        attributes: ["size", "material", "wheels"]
+      - id: "backpacks"
+        name: "背包"
+        level: 2
+        attributes: ["capacity_l", "laptop_compartment"]
+      - id: "handbags"
+        name: "手提／肩背包"
+        level: 2
+        attributes: ["material", "strap_type"]
+
+  - id: "jewelry"
+    name: "珠寶首飾"
+    level: 1
+    children:
+      - id: "rings"
+        name: "戒指"
+        level: 2
+        attributes: ["size", "material", "stone"]
+      - id: "necklaces"
+        name: "項鍊"
+        level: 2
+        attributes: ["length_cm", "material"]
+      - id: "earrings"
+        name: "耳環"
+        level: 2
+        attributes: ["material", "style"]
+
+  - id: "watches"
+    name: "手錶"
+    level: 1
+    children:
+      - id: "smartwatches"
+        name: "智慧錶"
+        level: 2
+        attributes: ["os", "case_size_mm", "battery_life"]
+      - id: "analog_watches"
+        name: "指針錶"
+        level: 2
+        attributes: ["movement", "case_size_mm"]
+      - id: "digital_watches"
+        name: "數位錶"
+        level: 2
+        attributes: ["display_type", "features"]
+
+  - id: "eyewear"
+    name: "眼鏡與配件"
+    level: 1
+    children:
+      - id: "glasses_frames"
+        name: "鏡框"
+        level: 2
+        attributes: ["material", "bridge_mm", "temple_mm"]
+      - id: "sunglasses"
+        name: "太陽眼鏡"
+        level: 2
+        attributes: ["lens_width_mm", "uv_rating"]
+      - id: "contact_lenses"
+        name: "隱形眼鏡"
+        level: 2
+        attributes: ["base_curve", "power", "water_content"]
+
+  - id: "home_improvement"
+    name: "居家修繕"
+    level: 1
+    children:
+      - id: "building_materials"
+        name: "建材"
+        level: 2
+        attributes: ["material", "size"]
+      - id: "plumbing"
+        name: "水電五金"
+        level: 2
+        attributes: ["type", "diameter"]
+      - id: "flooring"
+        name: "地板地磚"
+        level: 2
+        attributes: ["material", "size"]
+
+  - id: "tools"
+    name: "工具"
+    level: 1
+    children:
+      - id: "hand_tools"
+        name: "手工具"
+        level: 2
+        attributes: ["type", "size"]
+      - id: "power_tools"
+        name: "電動工具"
+        level: 2
+        attributes: ["voltage", "power_w"]
+      - id: "measuring_tools"
+        name: "量測工具"
+        level: 2
+        attributes: ["accuracy", "range"]
+
+  - id: "lighting"
+    name: "照明"
+    level: 1
+    children:
+      - id: "bulbs"
+        name: "燈泡"
+        level: 2
+        attributes: ["base_type", "watt", "color_temp_k"]
+      - id: "fixtures"
+        name: "燈具"
+        level: 2
+        attributes: ["mount_type", "material"]
+      - id: "smart_lighting"
+        name: "智慧照明"
+        level: 2
+        attributes: ["protocol", "dimmable"]
+
+  - id: "kitchenware"
+    name: "廚房用品"
+    level: 1
+    children:
+      - id: "knives"
+        name: "刀具"
+        level: 2
+        attributes: ["steel_type", "length_cm"]
+      - id: "utensils"
+        name: "餐廚工具"
+        level: 2
+        attributes: ["material", "heat_resistance_c"]
+      - id: "storage_containers"
+        name: "密封保鮮"
+        level: 2
+        attributes: ["volume_ml", "material"]
+
+  - id: "cookware_tableware"
+    name: "鍋具與餐具"
+    level: 1
+    children:
+      - id: "cookware"
+        name: "鍋具"
+        level: 2
+        attributes: ["diameter_cm", "coating", "material"]
+      - id: "bakeware"
+        name: "烘焙器具"
+        level: 2
+        attributes: ["material", "size"]
+      - id: "tableware"
+        name: "餐具"
+        level: 2
+        attributes: ["material", "pieces"]
+
+  - id: "home_decor"
+    name: "居家佈置"
+    level: 1
+    children:
+      - id: "bedding"
+        name: "寢具"
+        level: 2
+        attributes: ["size", "thread_count", "material"]
+      - id: "curtains"
+        name: "窗簾"
+        level: 2
+        attributes: ["size", "material", "light_blocking"]
+      - id: "rugs"
+        name: "地毯"
+        level: 2
+        attributes: ["size", "pile_height", "material"]
+
+  - id: "cleaning_household"
+    name: "清潔與家用"
+    level: 1
+    children:
+      - id: "cleaners"
+        name: "清潔劑"
+        level: 2
+        attributes: ["surface", "scent", "concentration"]
+      - id: "paper_goods"
+        name: "紙類用品"
+        level: 2
+        attributes: ["ply", "sheet_count"]
+      - id: "laundry"
+        name: "洗衣用品"
+        level: 2
+        attributes: ["type", "scent", "he_compatible"]
+
+  - id: "storage_organization"
+    name: "收納與整理"
+    level: 1
+    children:
+      - id: "closet_storage"
+        name: "衣物收納"
+        level: 2
+        attributes: ["capacity_l", "material"]
+      - id: "boxes_bins"
+        name: "收納箱籃"
+        level: 2
+        attributes: ["volume_l", "stackable"]
+      - id: "shelves_racks"
+        name: "層架與掛架"
+        level: 2
+        attributes: ["size", "material", "max_load"]
+
+  - id: "garden"
+    name: "園藝"
+    level: 1
+    children:
+      - id: "plants"
+        name: "植物花卉"
+        level: 2
+        attributes: ["light_need", "pot_size"]
+      - id: "garden_tools"
+        name: "園藝工具"
+        level: 2
+        attributes: ["type", "length_cm"]
+      - id: "soil_fertilizer"
+        name: "土壤肥料"
+        level: 2
+        attributes: ["type", "weight_kg"]
+
+  - id: "outdoor"
+    name: "戶外用品"
+    level: 1
+    children:
+      - id: "patio_furniture"
+        name: "戶外家具"
+        level: 2
+        attributes: ["material", "seats"]
+      - id: "bbq_grills"
+        name: "烤爐與配件"
+        level: 2
+        attributes: ["fuel_type", "cooking_area"]
+      - id: "coolers"
+        name: "保冰箱"
+        level: 2
+        attributes: ["capacity_l", "insulation"]
+
+  - id: "camping_hiking"
+    name: "露營登山"
+    level: 1
+    children:
+      - id: "tents"
+        name: "帳篷"
+        level: 2
+        attributes: ["capacity", "season_rating"]
+      - id: "sleeping_bags"
+        name: "睡袋"
+        level: 2
+        attributes: ["temp_rating_c", "fill_material"]
+      - id: "camp_cookware"
+        name: "野炊用具"
+        level: 2
+        attributes: ["material", "pieces"]
+
+  - id: "cycling"
+    name: "自行車與配件"
+    level: 1
+    children:
+      - id: "bikes"
+        name: "整車"
+        level: 2
+        attributes: ["type", "frame_size", "wheel_size"]
+      - id: "bike_parts"
+        name: "零件維修"
+        level: 2
+        attributes: ["compatibility", "speed"]
+      - id: "helmets"
+        name: "安全帽"
+        level: 2
+        attributes: ["size", "certification"]
+
+  - id: "video_games"
+    name: "電玩遊戲"
+    level: 1
+    children:
+      - id: "game_software"
+        name: "遊戲軟體"
+        level: 2
+        attributes: ["platform", "genre", "edition"]
+      - id: "gaming_accessories"
+        name: "周邊配件"
+        level: 2
+        attributes: ["type", "connectivity"]
+      - id: "gift_cards"
+        name: "點數卡"
+        level: 2
+        attributes: ["value", "region"]
+
+  - id: "consoles_accessories"
+    name: "主機與配件"
+    level: 1
+    children:
+      - id: "consoles"
+        name: "遊戲主機"
+        level: 2
+        attributes: ["storage", "edition"]
+      - id: "controllers"
+        name: "控制器"
+        level: 2
+        attributes: ["connectivity", "compatibility"]
+      - id: "vr_devices"
+        name: "VR裝置"
+        level: 2
+        attributes: ["resolution", "refresh_rate"]
+
+  - id: "pc_components"
+    name: "電腦零組件"
+    level: 1
+    children:
+      - id: "cpu"
+        name: "處理器"
+        level: 2
+        attributes: ["cores", "threads", "clock_speed"]
+      - id: "gpu"
+        name: "顯示卡"
+        level: 2
+        attributes: ["vram_gb", "length_mm", "tdp_w"]
+      - id: "memory"
+        name: "記憶體"
+        level: 2
+        attributes: ["capacity_gb", "speed_mhz"]
+      - id: "storage"
+        name: "儲存裝置"
+        level: 2
+        attributes: ["type", "capacity_gb", "interface"]
+
+  - id: "networking"
+    name: "網路設備"
+    level: 1
+    children:
+      - id: "routers"
+        name: "路由器"
+        level: 2
+        attributes: ["wifi_standard", "band", "ports"]
+      - id: "switches"
+        name: "交換器"
+        level: 2
+        attributes: ["ports", "managed"]
+      - id: "nas"
+        name: "網路儲存"
+        level: 2
+        attributes: ["bay_count", "cpu", "ram"]
+
+  - id: "smart_home"
+    name: "智慧家庭"
+    level: 1
+    children:
+      - id: "smart_speakers"
+        name: "智慧喇叭"
+        level: 2
+        attributes: ["assistant", "connectivity"]
+      - id: "smart_plugs"
+        name: "智慧插座"
+        level: 2
+        attributes: ["protocol", "max_load"]
+      - id: "smart_sensors"
+        name: "感應器"
+        level: 2
+        attributes: ["sensor_type", "protocol"]
+
+  - id: "security_surveillance"
+    name: "安防監控"
+    level: 1
+    children:
+      - id: "ip_cameras"
+        name: "網路攝影機"
+        level: 2
+        attributes: ["resolution", "night_vision", "storage"]
+      - id: "alarms"
+        name: "警報系統"
+        level: 2
+        attributes: ["sensor_type", "protocol"]
+      - id: "locks"
+        name: "智慧鎖"
+        level: 2
+        attributes: ["lock_type", "protocol"]
+
+  - id: "photography"
+    name: "攝影器材"
+    level: 1
+    children:
+      - id: "lenses"
+        name: "鏡頭"
+        level: 2
+        attributes: ["mount", "focal_length", "aperture"]
+      - id: "tripods"
+        name: "腳架"
+        level: 2
+        attributes: ["max_height_cm", "load_kg"]
+      - id: "lighting_photo"
+        name: "攝影燈光"
+        level: 2
+        attributes: ["power_w", "color_temp_k"]
+
+  - id: "drones"
+    name: "空拍機與配件"
+    level: 1
+    children:
+      - id: "camera_drones"
+        name: "空拍機"
+        level: 2
+        attributes: ["max_flight_time", "camera_mp", "range_km"]
+      - id: "drone_batteries"
+        name: "電池與充電"
+        level: 2
+        attributes: ["capacity_mah", "voltage"]
+      - id: "drone_accessories"
+        name: "配件"
+        level: 2
+        attributes: ["type", "compatibility"]
+
+  - id: "arts_crafts"
+    name: "手作與美術"
+    level: 1
+    children:
+      - id: "paints"
+        name: "顏料"
+        level: 2
+        attributes: ["type", "volume_ml"]
+      - id: "brushes"
+        name: "畫筆"
+        level: 2
+        attributes: ["hair_type", "size"]
+      - id: "craft_kits"
+        name: "手作套件"
+        level: 2
+        attributes: ["skill_level", "pieces"]
+
+  - id: "collectibles"
+    name: "收藏與周邊"
+    level: 1
+    children:
+      - id: "trading_cards"
+        name: "卡牌"
+        level: 2
+        attributes: ["series", "rarity"]
+      - id: "scale_models"
+        name: "模型"
+        level: 2
+        attributes: ["scale", "material"]
+      - id: "limited_merch"
+        name: "限量周邊"
+        level: 2
+        attributes: ["edition_size", "serial"]
+
+  - id: "party_supplies"
+    name: "派對與節慶"
+    level: 1
+    children:
+      - id: "decorations"
+        name: "裝飾"
+        level: 2
+        attributes: ["theme", "pieces"]
+      - id: "balloons"
+        name: "氣球"
+        level: 2
+        attributes: ["size", "material"]
+      - id: "tableware_party"
+        name: "餐具與一次性"
+        level: 2
+        attributes: ["material", "count"]
+
+  - id: "gifts"
+    name: "禮品"
+    level: 1
+    children:
+      - id: "gift_sets"
+        name: "禮盒組"
+        level: 2
+        attributes: ["occasion", "pieces"]
+      - id: "personalized"
+        name: "客製化"
+        level: 2
+        attributes: ["engraving", "print_area"]
+      - id: "flowers"
+        name: "花禮"
+        level: 2
+        attributes: ["flower_type", "stem_count"]
+
+  - id: "subscription_services"
+    name: "訂閱服務"
+    level: 1
+    children:
+      - id: "food_boxes"
+        name: "餐食箱"
+        level: 2
+        attributes: ["frequency", "servings"]
+      - id: "beauty_boxes"
+        name: "美妝盒"
+        level: 2
+        attributes: ["frequency", "items"]
+      - id: "software_subs"
+        name: "軟體訂閱"
+        level: 2
+        attributes: ["term", "seats"]
+
+  - id: "software"
+    name: "軟體"
+    level: 1
+    children:
+      - id: "os"
+        name: "作業系統"
+        level: 2
+        attributes: ["license_type", "term"]
+      - id: "productivity"
+        name: "生產力工具"
+        level: 2
+        attributes: ["platform", "seats"]
+      - id: "security"
+        name: "資安防護"
+        level: 2
+        attributes: ["devices", "term"]
+
+  - id: "education_learning"
+    name: "教育學習"
+    level: 1
+    children:
+      - id: "courses"
+        name: "課程"
+        level: 2
+        attributes: ["level", "duration_hr"]
+      - id: "learning_kits"
+        name: "學習套件"
+        level: 2
+        attributes: ["age_group", "subject"]
+      - id: "language_tools"
+        name: "語言學習"
+        level: 2
+        attributes: ["language", "format"]
+
+  - id: "financial_services"
+    name: "金融相關"
+    level: 1
+    children:
+      - id: "prepaid_cards"
+        name: "儲值卡／禮卡"
+        level: 2
+        attributes: ["value", "region"]
+      - id: "insurance_plans"
+        name: "保險方案"
+        level: 2
+        attributes: ["term", "coverage"]
+      - id: "tax_software"
+        name: "報稅工具"
+        level: 2
+        attributes: ["year", "seats"]
+
+  - id: "wearables"
+    name: "智慧穿戴"
+    level: 1
+    children:
+      - id: "fitness_trackers"
+        name: "健身手環"
+        level: 2
+        attributes: ["battery_life", "waterproof"]
+      - id: "ar_glasses"
+        name: "AR眼鏡"
+        level: 2
+        attributes: ["fov_deg", "resolution"]
+      - id: "hearables"
+        name: "智慧耳機"
+        level: 2
+        attributes: ["anc", "battery_life"]
+
+  - id: "mobility_aids"
+    name: "行動輔具"
+    level: 1
+    children:
+      - id: "wheelchairs"
+        name: "輪椅"
+        level: 2
+        attributes: ["type", "seat_width"]
+      - id: "walkers"
+        name: "助行器"
+        level: 2
+        attributes: ["foldable", "weight_kg"]
+      - id: "canes"
+        name: "手杖"
+        level: 2
+        attributes: ["height_adjustable", "tip_type"]
+
+  - id: "medical_devices"
+    name: "醫療器材（非處方）"
+    level: 1
+    children:
+      - id: "thermometers"
+        name: "體溫計"
+        level: 2
+        attributes: ["type", "accuracy"]
+      - id: "bp_monitors"
+        name: "血壓計"
+        level: 2
+        attributes: ["cuff_size", "memory"]
+      - id: "nebulizers"
+        name: "霧化器"
+        level: 2
+        attributes: ["capacity_ml", "noise_db"]
+
+  - id: "pharmacy_otc"
+    name: "藥妝OTC"
+    level: 1
+    children:
+      - id: "pain_relief"
+        name: "止痛藥"
+        level: 2
+        attributes: ["form", "dose"]
+      - id: "cold_flu"
+        name: "感冒用藥"
+        level: 2
+        attributes: ["symptom", "dose"]
+      - id: "allergy"
+        name: "過敏用藥"
+        level: 2
+        attributes: ["antihistamine", "dose"]
+
+  - id: "audio_hi_fi"
+    name: "高階音響"
+    level: 1
+    children:
+      - id: "headphones"
+        name: "耳機"
+        level: 2
+        attributes: ["type", "impedance", "sensitivity"]
+      - id: "dac_amp"
+        name: "DAC/耳擴"
+        level: 2
+        attributes: ["bit_depth", "output_power"]
+      - id: "speakers"
+        name: "喇叭"
+        level: 2
+        attributes: ["driver_size", "power_w"]
+
+  - id: "pc_peripherals"
+    name: "電腦周邊"
+    level: 1
+    children:
+      - id: "monitors"
+        name: "螢幕"
+        level: 2
+        attributes: ["size_in", "resolution", "refresh_hz"]
+      - id: "keyboards"
+        name: "鍵盤"
+        level: 2
+        attributes: ["switch_type", "layout"]
+      - id: "mice"
+        name: "滑鼠"
+        level: 2
+        attributes: ["sensor_dpi", "weight_g"]
+
+  - id: "printing_scanning"
+    name: "列印掃描"
+    level: 1
+    children:
+      - id: "scanners"
+        name: "掃描器"
+        level: 2
+        attributes: ["dpi", "adf"]
+      - id: "printer_supplies"
+        name: "耗材"
+        level: 2
+        attributes: ["cartridge_model", "yield_pages"]
+      - id: "label_printers"
+        name: "標籤機"
+        level: 2
+        attributes: ["width_mm", "connectivity"]
+
+  - id: "energy_solutions"
+    name: "能源解決方案"
+    level: 1
+    children:
+      - id: "power_banks"
+        name: "行動電源"
+        level: 2
+        attributes: ["capacity_mah", "output_w"]
+      - id: "solar_panels"
+        name: "太陽能板"
+        level: 2
+        attributes: ["watt", "efficiency"]
+      - id: "ups"
+        name: "不斷電系統"
+        level: 2
+        attributes: ["va", "outlets"]
+
+  - id: "green_living"
+    name: "永續生活"
+    level: 1
+    children:
+      - id: "reusable_items"
+        name: "重複使用品"
+        level: 2
+        attributes: ["material", "capacity"]
+      - id: "eco_cleaners"
+        name: "環保清潔"
+        level: 2
+        attributes: ["certification", "biodegradable"]
+      - id: "water_filters"
+        name: "濾水設備"
+        level: 2
+        attributes: ["filter_type", "capacity_l"]
+
+  - id: "home_entertainment"
+    name: "家庭娛樂"
+    level: 1
+    children:
+      - id: "tv"
+        name: "電視"
+        level: 2
+        attributes: ["size_in", "panel_type", "hdr"]
+      - id: "streaming_devices"
+        name: "串流設備"
+        level: 2
+        attributes: ["resolution", "codec"]
+      - id: "projectors"
+        name: "投影機"
+        level: 2
+        attributes: ["lumens", "resolution"]
+
+  - id: "car_electronics"
+    name: "車用電子"
+    level: 1
+    children:
+      - id: "dashcams"
+        name: "行車記錄器"
+        level: 2
+        attributes: ["resolution", "gps", "parking_mode"]
+      - id: "car_audio"
+        name: "車用音響"
+        level: 2
+        attributes: ["channels", "power_w"]
+      - id: "chargers_mounts"
+        name: "充電與支架"
+        level: 2
+        attributes: ["power_w", "mount_type"]
+
+  - id: "clean_air"
+    name: "空氣與淨化"
+    level: 1
+    children:
+      - id: "air_purifiers"
+        name: "空氣清淨機"
+        level: 2
+        attributes: ["cad_r", "hepa_class"]
+      - id: "dehumidifiers"
+        name: "除濕機"
+        level: 2
+        attributes: ["capacity_l_day", "tank_l"]
+      - id: "humidifiers"
+        name: "加濕器"
+        level: 2
+        attributes: ["type", "output_ml_h"]
+
+  - id: "heating_cooling"
+    name: "冷暖設備"
+    level: 1
+    children:
+      - id: "heaters"
+        name: "暖氣機"
+        level: 2
+        attributes: ["power_w", "safety_features"]
+      - id: "fans"
+        name: "電風扇"
+        level: 2
+        attributes: ["size_in", "speed_levels"]
+      - id: "evaporative_coolers"
+        name: "冷風機"
+        level: 2
+        attributes: ["airflow_cmh", "tank_l"]
+
+  - id: "bathroom"
+    name: "浴室用品"
+    level: 1
+    children:
+      - id: "showerheads"
+        name: "蓮蓬頭"
+        level: 2
+        attributes: ["spray_modes", "flow_l_min"]
+      - id: "bath_storage"
+        name: "浴室收納"
+        level: 2
+        attributes: ["material", "size"]
+      - id: "scales"
+        name: "體重計"
+        level: 2
+        attributes: ["max_weight_kg", "smart_connect"]
+
+  - id: "laundry_appliances"
+    name: "洗衣烘衣"
+    level: 1
+    children:
+      - id: "dryers"
+        name: "烘衣機"
+        level: 2
+        attributes: ["capacity_kg", "type"]
+      - id: "steam_irons"
+        name: "蒸氣熨斗"
+        level: 2
+        attributes: ["steam_g_min", "soleplate"]
+      - id: "garment_care"
+        name: "衣物護理"
+        level: 2
+        attributes: ["type", "temp_settings"]
+
+  - id: "event_tickets"
+    name: "活動票券"
+    level: 1
+    children:
+      - id: "concerts"
+        name: "演唱會"
+        level: 2
+        attributes: ["section", "date"]
+      - id: "sports_events"
+        name: "體育賽事"
+        level: 2
+        attributes: ["league", "date"]
+      - id: "attractions"
+        name: "景點門票"
+        level: 2
+        attributes: ["date", "time_slot"]
+
+  - id: "food_services"
+    name: "餐飲服務"
+    level: 1
+    children:
+      - id: "meal_kits"
+        name: "料理包"
+        level: 2
+        attributes: ["servings", "cuisine"]
+      - id: "frozen_meals"
+        name: "冷凍餐"
+        level: 2
+        attributes: ["portion", "calories"]
+      - id: "beverage_boxes"
+        name: "飲品組"
+        level: 2
+        attributes: ["bottles", "volume_ml_each"]
+
+  - id: "printing_photo"
+    name: "相片與印刷"
+    level: 1
+    children:
+      - id: "photo_prints"
+        name: "相片沖印"
+        level: 2
+        attributes: ["size", "paper_type"]
+      - id: "canvas_prints"
+        name: "帆布畫"
+        level: 2
+        attributes: ["size", "wrap_type"]
+      - id: "custom_merch"
+        name: "客製周邊"
+        level: 2
+        attributes: ["item_type", "print_area"]
+
+  - id: "hobbies_diy"
+    name: "興趣與DIY"
+    level: 1
+    children:
+      - id: "rc_models"
+        name: "遙控模型"
+        level: 2
+        attributes: ["scale", "power_type"]
+      - id: "miniatures"
+        name: "微縮／塗裝"
+        level: 2
+        attributes: ["scale", "material"]
+      - id: "woodworking"
+        name: "木工材料"
+        level: 2
+        attributes: ["wood_type", "size"]
+
+  - id: "smart_devices"
+    name: "智慧小家電"
+    level: 1
+    children:
+      - id: "robot_vacuums"
+        name: "掃地機器人"
+        level: 2
+        attributes: ["suction_pa", "mapping", "runtime_min"]
+      - id: "smart_kitchen"
+        name: "智慧廚電"
+        level: 2
+        attributes: ["capacity_l", "connectivity"]
+      - id: "smart_health"
+        name: "智慧健康量測"
+        level: 2
+        attributes: ["metric", "connectivity"]
+
+  - id: "safety_household"
+    name: "居家安全"
+    level: 1
+    children:
+      - id: "detectors"
+        name: "偵測器"
+        level: 2
+        attributes: ["type", "battery_life"]
+      - id: "safes"
+        name: "保險箱"
+        level: 2
+        attributes: ["capacity_l", "lock_type"]
+      - id: "childproof"
+        name: "兒童安全"
+        level: 2
+        attributes: ["type", "pack_count"]
+
+  - id: "seasonal_festive"
+    name: "季節與節慶"
+    level: 1
+    children:
+      - id: "holiday_decor"
+        name: "節慶裝飾"
+        level: 2
+        attributes: ["theme", "lighted"]
+      - id: "seasonal_wear"
+        name: "季節服飾"
+        level: 2
+        attributes: ["season", "material"]
+      - id: "gift_wrap"
+        name: "包裝材料"
+        level: 2
+        attributes: ["size", "material"]

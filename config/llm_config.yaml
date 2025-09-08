@@ -1,0 +1,44 @@
+llm:
+  provider: gemini  # 選擇: openai, anthropic, azure, gemini, custom
+  api_key: your-api-key-here  # 請替換為您的實際 API 金鑰
+  model_name: gemini-1.5-flash
+  temperature: 0.3
+  max_tokens: 2000
+  base_url: https://api.openai.com/v1  # 可選，用於 API 代理
+
+  # OpenAI 配置
+  openai:
+    api_key: your-openai-key
+    model_name: gpt-4
+
+  # Anthropic 配置
+  anthropic:
+    api_key: your-anthropic-key
+    model_name: claude-3-sonnet-20240229
+
+  # Google Gemini 配置
+  gemini:
+    api_key: your-google-gemini-api-key
+    model_name: gemini-1.5-flash
+    project_id: your-google-project-id
+
+  # Azure OpenAI 配置
+  azure:
+    api_key: your-azure-key
+    endpoint: https://your-resource.openai.azure.com/
+    deployment_name: your-deployment-name
+    api_version: 2024-02-15-preview
+
+  # 自訂 API 配置
+  custom:
+    api_key: your-custom-key
+    base_url: https://your-api.com/v1
+    model_name: your-model-name
+    headers:
+      Custom-Header: value
+
+extraction:
+  retry_attempts: 3
+  retry_delay: 1.0
+  timeout: 30
+  enable_validation: true
