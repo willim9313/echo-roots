@@ -291,8 +291,8 @@ class MockLLMClient:
         if "iPhone" in prompt or "Apple" in prompt:
             return json.dumps({
                 "attributes": [
-                    {"name": "brand", "value": "Apple", "evidence": "Apple iPhone mentioned in title"},
-                    {"name": "category", "value": "smartphone", "evidence": "iPhone is a smartphone"}
+                    {"name": "brand", "value": "Apple", "evidence": "Apple iPhone mentioned in title", "confidence": 0.95},
+                    {"name": "category", "value": "smartphone", "evidence": "iPhone is a smartphone", "confidence": 0.90}
                 ],
                 "terms": [
                     {"term": "smartphone", "context": "mobile device technology", "confidence": 0.95},
@@ -303,7 +303,7 @@ class MockLLMClient:
             # Generic response
             return json.dumps({
                 "attributes": [
-                    {"name": "category", "value": "unknown", "evidence": "category not clearly identified"}
+                    {"name": "category", "value": "unknown", "evidence": "category not clearly identified", "confidence": 0.60}
                 ],
                 "terms": [
                     {"term": "product", "context": "general product reference", "confidence": 0.7}
