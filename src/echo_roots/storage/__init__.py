@@ -1,20 +1,79 @@
 """
-Storage layer for echo-roots taxonomy system.
+Storage interfaces and implementations for echo-roots.
 
-This package provides a flexible storage abstraction with pluggable
-backends for different storage technologies. The primary backend is
-DuckDB for analytics and ingestion workloads.
-
-Usage:
-    from echo_roots.storage import create_storage, query_ingestion
-    
-    # Create storage manager
-    storage = await create_storage()
-    
-    # Store and query data
-    item_id = await storage.ingestion.store_item(item)
-    items = await query_ingestion().filter_by_domain("ecommerce").execute(storage)
+This module provides the storage layer abstractions and concrete
+implementations for different backend technologies.
 """
+
+from .interfaces import (
+    StorageManager,
+    StorageBackend,
+    IngestionRepository,
+    ExtractionRepository,
+    TaxonomyRepository,
+    MappingRepository,
+    ElevationRepository,
+    AnalyticsRepository,
+    TransactionContext,
+    StorageError,
+    ConnectionError,
+    IntegrityError,
+    NotFoundError,
+    ConflictError,
+)
+
+from .duckdb_backend import DuckDBStorageManager
+from .repository import create_storage, RepositoryCoordinator, QueryBuilder, DataValidator
+
+# Neo4j support (optional)
+try:
+    from .neo4j_backend import Neo4jBackend, Neo4jTaxonomyRepository
+    from .hybrid_manager import HybridStorageManager, create_hybrid_storage
+    
+    NEO4J_AVAILABLE = True
+    
+    __all_neo4j__ = [
+        "Neo4jBackend",
+        "Neo4jTaxonomyRepository", 
+        "HybridStorageManager",
+        "create_hybrid_storage",
+    ]
+except ImportError:
+    NEO4J_AVAILABLE = False
+    __all_neo4j__ = []
+
+
+__all__ = [
+    # Interfaces
+    "StorageManager",
+    "StorageBackend",
+    "IngestionRepository", 
+    "ExtractionRepository",
+    "TaxonomyRepository",
+    "MappingRepository",
+    "ElevationRepository",
+    "AnalyticsRepository",
+    "TransactionContext",
+    
+    # Exceptions
+    "StorageError",
+    "ConnectionError", 
+    "IntegrityError",
+    "NotFoundError",
+    "ConflictError",
+    
+    # Implementations
+    "DuckDBStorageManager",
+    
+    # Utilities
+    "create_storage",
+    "RepositoryCoordinator",
+    "QueryBuilder", 
+    "DataValidator",
+    
+    # Capabilities
+    "NEO4J_AVAILABLE",
+] + __all_neo4j__
 
 from .interfaces import (
     StorageManager, StorageBackend, TransactionContext,

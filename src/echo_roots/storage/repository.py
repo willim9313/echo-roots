@@ -388,6 +388,7 @@ class StorageFactory:
 
 # Convenience functions for common operations
 
+# Storage factory convenience function
 async def create_storage(config: Optional[Dict[str, Any]] = None) -> StorageManager:
     """
     Create and initialize a storage manager with default configuration.
@@ -401,7 +402,12 @@ async def create_storage(config: Optional[Dict[str, Any]] = None) -> StorageMana
     if config is None:
         return await StorageFactory.create_test_storage()
     
-    # For now, only DuckDB is implemented
+    # Check if hybrid storage is requested
+    if config.get("neo4j", {}).get("enabled", False):
+        from .hybrid_manager import create_hybrid_storage
+        return await create_hybrid_storage(config)
+    
+    # Fallback to DuckDB only
     return await StorageFactory.create_duckdb_storage(
         database_path=config.get("duckdb", {}).get("database_path"),
         initialize_schema=config.get("initialize_schema", True)
