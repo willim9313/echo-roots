@@ -29,7 +29,7 @@ output_schema:
     metadata: "dict"
   attributes:
     - key: brand
-      type: categorical
+      type: text
     - key: color
       type: categorical
     - key: material
