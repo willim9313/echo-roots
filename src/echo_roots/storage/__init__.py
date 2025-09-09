@@ -42,6 +42,26 @@ except ImportError:
     NEO4J_AVAILABLE = False
     __all_neo4j__ = []
 
+# Qdrant support (optional)
+try:
+    from .qdrant_backend import (
+        QdrantBackend, QdrantSemanticRepository, QdrantConnectionConfig,
+        create_qdrant_backend, create_qdrant_repository
+    )
+    
+    QDRANT_AVAILABLE = True
+    
+    __all_qdrant__ = [
+        "QdrantBackend",
+        "QdrantSemanticRepository",
+        "QdrantConnectionConfig", 
+        "create_qdrant_backend",
+        "create_qdrant_repository",
+    ]
+except ImportError:
+    QDRANT_AVAILABLE = False
+    __all_qdrant__ = []
+
 
 __all__ = [
     # Interfaces
@@ -73,7 +93,8 @@ __all__ = [
     
     # Capabilities
     "NEO4J_AVAILABLE",
-] + __all_neo4j__
+    "QDRANT_AVAILABLE",
+] + __all_neo4j__ + __all_qdrant__
 
 from .interfaces import (
     StorageManager, StorageBackend, TransactionContext,

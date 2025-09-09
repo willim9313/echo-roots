@@ -1,0 +1,177 @@
+# Qdrant Vector Database Configuration for Echo Roots
+
+# Vector Storage Configuration
+vector_storage:
+  enabled: true
+  backend: "qdrant"  # Options: qdrant, disabled
+  fallback_to_duckdb: true
+  
+  # Qdrant Connection Settings
+  qdrant:
+    # Connection Configuration
+    host: "localhost"
+    port: 6333
+    prefer_grpc: false
+    https: false
+    api_key: null  # Set for Qdrant Cloud
+    prefix: null   # URL prefix for reverse proxy
+    timeout: 30.0
+    
+    # Connection Pool Settings
+    max_connections: 100
+    max_keepalive_connections: 20
+    keepalive_expiry: 30.0
+    
+    # Collection Configuration
+    collections:
+      # Main semantic embeddings collection
+      semantic_candidates:
+        vector_size: 384  # Default for sentence-transformers
+        distance: "Cosine"
+        on_disk_payload: false
+        hnsw_config:
+          m: 16
+          ef_construct: 200
+          full_scan_threshold: 10000
+        optimizers_config:
+          deleted_threshold: 0.2
+          vacuum_min_vector_number: 1000
+          default_segment_number: 0
+        wal_config:
+          wal_capacity_mb: 32
+          wal_segments_ahead: 0
+        quantization_config: null  # Set for memory optimization
+      
+      # Taxonomy concepts collection
+      taxonomy_concepts:
+        vector_size: 384
+        distance: "Cosine"
+        on_disk_payload: true
+        hnsw_config:
+          m: 16
+          ef_construct: 100
+        optimizers_config:
+          deleted_threshold: 0.2
+          vacuum_min_vector_number: 1000
+        wal_config:
+          wal_capacity_mb: 16
+
+# Embedding Providers Configuration
+embedding:
+  # Primary embedding provider
+  primary:
+    type: "sentence_transformers"  # Options: sentence_transformers, openai, multimodal
+    config:
+      model_name: "all-MiniLM-L6-v2"
+      device: "cpu"  # Options: cpu, cuda, mps
+      batch_size: 32
+      normalize_embeddings: true
+      show_progress_bar: false
+      
+  # Fallback embedding provider
+  fallback:
+    type: "openai"
+    config:
+      model: "text-embedding-3-small"
+      api_key: "${OPENAI_API_KEY}"  # Set via environment variable
+      batch_size: 100
+      max_retries: 3
+      timeout: 30.0
+      
+  # Embedding pipeline settings
+  pipeline:
+    batch_size: 50
+    max_retries: 3
+    quality_threshold: 0.5
+    enable_caching: true
+    cache_size: 10000
+
+# Semantic Search Configuration
+semantic_search:
+  # Default search strategy
+  default_strategy: "hybrid_semantic"  # Options: vector_similarity, hybrid_semantic, graph_traversal, contextual_expansion
+  
+  # Default ranking strategy
+  default_ranking: "confidence_weighted"  # Options: similarity_score, popularity_weighted, freshness_weighted, confidence_weighted
+  
+  # Search limits and thresholds
+  similarity_threshold: 0.5
+  max_results: 20
+  max_expansion_terms: 5
+  diversity_threshold: 0.8
+  
+  # Caching configuration
+  cache:
+    enabled: true
+    ttl_seconds: 3600  # 1 hour
+    max_size: 1000
+  
+  # Relationship weights for hybrid search
+  relationship_weights:
+    synonym: 1.0
+    hyponym: 0.9
+    hypernym: 0.9
+    similar: 0.8
+    meronym: 0.7
+    holonym: 0.7
+    related: 0.6
+    association: 0.5
+    antonym: 0.0
+
+# Hybrid Storage Configuration
+hybrid_storage:
+  # Backend coordination
+  coordination:
+    primary_storage: "duckdb"  # Core data
+    graph_storage: "neo4j"     # Taxonomy relationships  
+    vector_storage: "qdrant"   # Semantic embeddings
+    
+  # Health check settings
+  health_checks:
+    enabled: true
+    interval_seconds: 30
+    timeout_seconds: 5
+    failure_threshold: 3
+    
+  # Fallback strategies
+  fallback:
+    on_vector_failure: "duckdb_similarity"
+    on_graph_failure: "duckdb_relationships"
+    retry_attempts: 3
+    retry_delay_seconds: 1.0
+
+# Performance and Monitoring
+performance:
+  # Connection settings
+  connection_timeout: 30.0
+  query_timeout: 60.0
+  batch_timeout: 120.0
+  
+  # Memory settings
+  max_batch_size: 1000
+  embedding_cache_size: 50000
+  result_cache_size: 10000
+  
+  # Logging configuration
+  logging:
+    level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+    log_queries: false
+    log_performance: true
+    slow_query_threshold_ms: 1000
+
+# Development and Testing
+development:
+  # Enable debug features
+  debug_mode: false
+  
+  # Test configurations
+  test_mode: false
+  test_collections:
+    use_memory_storage: true
+    cleanup_after_tests: true
+  
+  # Sample data settings
+  sample_data:
+    auto_load: false
+    size: "small"  # Options: small, medium, large
+    domains: ["ecommerce"]

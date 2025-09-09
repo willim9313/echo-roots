@@ -15,13 +15,16 @@ backends to optimize for their strengths.
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any, AsyncIterator, Protocol
+from typing import List, Optional, Dict, Any, AsyncIterator, Protocol, Tuple, TYPE_CHECKING
 from datetime import datetime
 from uuid import UUID
 
 from ..models.core import IngestionItem, ExtractionResult, ElevationProposal, Mapping
 from ..models.taxonomy import Category, Attribute, SemanticCandidate
 from ..models.domain import DomainPack
+
+if TYPE_CHECKING:
+    from ..semantic import SemanticEmbedding
 
 
 class StorageBackend(Protocol):
@@ -231,6 +234,59 @@ class AnalyticsRepository(Protocol):
         days: int = 30
     ) -> List[Dict[str, Any]]:
         """Get quality score trends over time."""
+        ...
+
+
+class SemanticVectorRepository(Protocol):
+    """Repository for semantic vector operations (Layer D)."""
+    
+    async def store_semantic_embedding(self, embedding: "SemanticEmbedding") -> str:
+        """Store semantic embedding in vector storage."""
+        ...
+    
+    async def find_similar_embeddings(
+        self,
+        query_vector: List[float],
+        limit: int = 10,
+        threshold: float = 0.5,
+        entity_types: Optional[List[str]] = None,
+        domains: Optional[List[str]] = None,
+        active_only: bool = True
+    ) -> List[Tuple["SemanticEmbedding", float]]:
+        """Find semantically similar embeddings using vector search."""
+        ...
+    
+    async def get_embedding_by_entity(self, entity_id: str) -> Optional["SemanticEmbedding"]:
+        """Get embedding for specific entity."""
+        ...
+    
+    async def batch_store_embeddings(self, embeddings: List["SemanticEmbedding"]) -> List[str]:
+        """Batch store multiple embeddings."""
+        ...
+    
+    async def update_embedding_metadata(
+        self, 
+        entity_id: str, 
+        metadata: Dict[str, Any]
+    ) -> bool:
+        """Update metadata for embedding by entity ID."""
+        ...
+    
+    async def delete_embedding(self, entity_id: str) -> bool:
+        """Delete embedding by entity ID."""
+        ...
+    
+    async def count_embeddings(
+        self,
+        entity_types: Optional[List[str]] = None,
+        domains: Optional[List[str]] = None,
+        active_only: bool = True
+    ) -> int:
+        """Count embeddings with optional filters."""
+        ...
+    
+    async def get_embeddings_stats(self) -> Dict[str, Any]:
+        """Get statistics about stored embeddings."""
         ...
 
 

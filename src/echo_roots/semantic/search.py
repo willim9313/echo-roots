@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from datetime import datetime, UTC
 from enum import Enum
-from typing import Dict, List, Optional, Any, Set, Tuple, Union, Callable
+from typing import Dict, List, Optional, Any, Set, Tuple, Union, Callable, TYPE_CHECKING
 import numpy as np
 import logging
 from collections import defaultdict
@@ -17,6 +17,9 @@ from . import (
     SemanticQuery, SemanticSearchResult, SemanticRelationType,
     ConfidenceLevel, EmbeddingProvider, SemanticRepository
 )
+
+if TYPE_CHECKING:
+    from ..storage.interfaces import SemanticVectorRepository
 
 logger = logging.getLogger(__name__)
 
@@ -396,10 +399,12 @@ class SemanticSearchEngine:
     def __init__(
         self, 
         repository: SemanticRepository,
-        embedding_provider: EmbeddingProvider
+        embedding_provider: EmbeddingProvider,
+        vector_repository: Optional['SemanticVectorRepository'] = None
     ):
         self.repository = repository
         self.embedding_provider = embedding_provider
+        self.vector_repository = vector_repository
         self.query_expander = QueryExpander(repository, embedding_provider)
         self.result_ranker = ResultRanker(repository)
         self.search_cache = {}
@@ -495,17 +500,42 @@ class SemanticSearchEngine:
         config: SearchConfiguration,
         metrics: SearchMetrics
     ) -> Tuple[List[SemanticSearchResult], SearchMetrics]:
-        """Pure vector similarity search."""
+        """Pure vector similarity search using best available backend."""
         # Generate query embedding
         query_embedding = await self.embedding_provider.generate_embedding(query.query_text)
         
-        # Find similar embeddings
-        similar_embeddings = await self.repository.find_similar_embeddings(
-            query_embedding,
-            limit=config.max_results * 2,
-            threshold=config.similarity_threshold,
-            entity_types=query.target_entity_types
-        )
+        similar_embeddings = []
+        
+        # Prefer Qdrant vector repository if available
+        if self.vector_repository:
+            try:
+                # Use Qdrant for high-performance vector search
+                similar_embeddings = await self.vector_repository.find_similar_embeddings(
+                    query_vector=query_embedding,
+                    limit=config.max_results * 2,
+                    threshold=config.similarity_threshold,
+                    entity_types=query.target_entity_types,
+                    domains=query.filters.get("domains") if query.filters else None,
+                    active_only=True
+                )
+                logger.debug(f"Used Qdrant vector search: {len(similar_embeddings)} results")
+            except Exception as e:
+                logger.warning(f"Qdrant vector search failed, falling back to repository: {e}")
+                # Fallback to standard repository
+                similar_embeddings = await self.repository.find_similar_embeddings(
+                    query_embedding,
+                    limit=config.max_results * 2,
+                    threshold=config.similarity_threshold,
+                    entity_types=query.target_entity_types
+                )
+        else:
+            # Use standard repository
+            similar_embeddings = await self.repository.find_similar_embeddings(
+                query_embedding,
+                limit=config.max_results * 2,
+                threshold=config.similarity_threshold,
+                entity_types=query.target_entity_types
+            )
         
         metrics.total_candidates = len(similar_embeddings)
         metrics.filtered_candidates = len(similar_embeddings)
