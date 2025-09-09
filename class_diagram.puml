@@ -1,0 +1,211 @@
+@startuml Echo-Roots Data Pipeline Architecture
+
+!define TIER1 #E8F4FD
+!define TIER2 #D4E6F1
+!define TIER3 #A9CCE3
+!define TIER4 #7FB3D3
+!define TIER5 #5DADE2
+
+package "T2: Domain Layer" TIER2 {
+    class DomainAdapter {
+        +load_domain_data(source: Path): Dict[str, Any]
+        +get_domain_config(): DomainConfig
+        +validate_domain_schema(): bool
+    }
+    
+    class DomainPack {
+        +attributes: Dict[str, Any]
+        +terms: List[str]
+        +validation_rules: List[Rule]
+        +schema: Dict[str, Any]
+    }
+}
+
+package "T3: Extraction Layer" TIER3 {
+    class ExtractorConfig {
+        +model: str
+        +temperature: float
+        +max_tokens: int
+        +timeout: int
+        +retry_attempts: int
+        +batch_size: int
+    }
+    
+    class PromptBuilder {
+        +build_extraction_prompt(domain_pack: DomainPack): str
+        +build_attribute_prompt(attributes: Dict): str
+        +build_term_prompt(terms: List): str
+    }
+    
+    class LLMExtractor {
+        +config: ExtractorConfig
+        +extract_async(item: IngestionItem): ExtractionResult
+        +extract_batch(items: List[IngestionItem]): List[ExtractionResult]
+        +_call_llm_api(prompt: str): str
+        +_parse_response(response: str): Dict
+    }
+    
+    class ExtractionPipeline {
+        +domains_path: Path
+        +llm_client: Any
+        +config: ExtractorConfig
+        +get_extractor(domain: str): LLMExtractor
+        +list_available_domains(): List[str]
+        +extract_single(item: IngestionItem, domain: str): ExtractionResult
+    }
+    
+    class ExtractionValidator {
+        +validate_schema_compliance(result: ExtractionResult): bool
+        +validate_quality(result: ExtractionResult): float
+        +validate_confidence(result: ExtractionResult): bool
+    }
+    
+    class ResultNormalizer {
+        +normalize_attributes(data: Dict): Dict
+        +standardize_values(data: Dict): Dict
+        +clean_text(text: str): str
+    }
+    
+    class PostProcessor {
+        +validator: ExtractionValidator
+        +normalizer: ResultNormalizer
+        +process_result(result: ExtractionResult): ExtractionResult
+        +process_batch(results: List[ExtractionResult]): List[ExtractionResult]
+    }
+}
+
+package "T4: Storage Layer" TIER4 {
+    class StorageRepository {
+        +store_extraction_result(result: ExtractionResult): str
+        +retrieve_by_id(id: str): ExtractionResult
+        +query_by_attributes(criteria: Dict): List[ExtractionResult]
+        +get_statistics(): StorageStats
+    }
+    
+    class DuckDBBackend {
+        +connection: Connection
+        +create_tables(): void
+        +insert_batch(results: List[ExtractionResult]): void
+        +query(sql: str): List[Dict]
+    }
+}
+
+package "T5: Ingestion Layer" TIER5 {
+    class IngestionConfig {
+        +batch_size: int
+        +quality_threshold: float
+        +enable_progress: bool
+        +retry_attempts: int
+        +concurrent_files: int
+    }
+    
+    class IngestionStats {
+        +total_processed: int
+        +successful: int
+        +failed: int
+        +avg_quality_score: float
+        +processing_time: float
+        +error_count: int
+    }
+    
+    class IngestionPipeline {
+        +domain_adapter: DomainAdapter
+        +extraction_pipeline: ExtractionPipeline
+        +storage_repo: StorageRepository
+        +config: IngestionConfig
+        +stats: IngestionStats
+        +process_files(file_paths: List[str]): IngestionStats
+        +process_single_file(file_path: str): ProcessingResult
+        +_validate_quality(result: ExtractionResult): bool
+    }
+    
+    class BatchProcessor {
+        +pipeline: IngestionPipeline
+        +process_batch(files: List[str]): List[ProcessingResult]
+        +_process_file_async(file_path: str): ProcessingResult
+        +_handle_file_error(file_path: str, error: Exception): void
+    }
+    
+    class StreamProcessor {
+        +pipeline: IngestionPipeline
+        +process_stream(data_stream: AsyncIterator): AsyncIterator[ProcessingResult]
+        +stop_stream(): void
+        +_handle_backpressure(): void
+    }
+    
+    class PipelineCoordinator {
+        +pipelines: Dict[str, IngestionPipeline]
+        +register_pipeline(name: str, config: IngestionConfig): void
+        +process_with_pipeline(name: str, files: List[str]): IngestionStats
+        +cleanup(): void
+        +get_aggregate_stats(): Dict[str, IngestionStats]
+    }
+}
+
+package "Core Models" TIER1 {
+    class IngestionItem {
+        +id: str
+        +content: str
+        +metadata: Dict[str, Any]
+        +source_path: str
+        +created_at: datetime
+    }
+    
+    class ExtractionResult {
+        +item_id: str
+        +extracted_data: Dict[str, Any]
+        +quality_score: float
+        +confidence_scores: Dict[str, float]
+        +processing_metadata: Dict[str, Any]
+        +created_at: datetime
+    }
+    
+    class ProcessingResult {
+        +item_id: str
+        +status: ProcessingStatus
+        +extraction_result: Optional[ExtractionResult]
+        +error: Optional[str]
+        +quality_score: float
+    }
+    
+    enum ProcessingStatus {
+        PENDING
+        PROCESSING
+        COMPLETED
+        FAILED
+        RETRYING
+    }
+}
+
+' Relationships
+DomainAdapter --> DomainPack : loads
+PromptBuilder --> DomainPack : uses
+LLMExtractor --> ExtractorConfig : configured_by
+LLMExtractor --> PromptBuilder : uses
+ExtractionPipeline --> LLMExtractor : manages
+ExtractionPipeline --> DomainAdapter : uses
+PostProcessor --> ExtractionValidator : uses
+PostProcessor --> ResultNormalizer : uses
+StorageRepository --> DuckDBBackend : implements
+IngestionPipeline --> DomainAdapter : uses
+IngestionPipeline --> ExtractionPipeline : orchestrates
+IngestionPipeline --> StorageRepository : stores_to
+IngestionPipeline --> IngestionConfig : configured_by
+IngestionPipeline --> IngestionStats : tracks
+BatchProcessor --> IngestionPipeline : uses
+StreamProcessor --> IngestionPipeline : uses
+PipelineCoordinator --> IngestionPipeline : manages
+IngestionPipeline ..> IngestionItem : processes
+ExtractionPipeline ..> ExtractionResult : produces
+IngestionPipeline ..> ProcessingResult : produces
+ProcessingResult --> ProcessingStatus : has_status
+ProcessingResult --> ExtractionResult : contains
+
+' Data Flow
+IngestionItem --> DomainAdapter : 1. Domain Adaptation
+DomainAdapter --> ExtractionPipeline : 2. Extraction
+ExtractionPipeline --> PostProcessor : 3. Validation
+PostProcessor --> StorageRepository : 4. Storage
+StorageRepository --> ProcessingResult : 5. Result
+
+@enduml
